@@ -2,16 +2,6 @@
 --!optimize 2
 --!native
 
-if getconnections then
-    if cloneref then
-        for _,v in pairs(getconnections(cloneref(game:GetService("LogService")).MessageOut)) do v:Disable() end
-        for _,v in pairs(getconnections(cloneref(game:GetService("ScriptContext")).Error)) do v:Disable() end
-    else
-        for _,v in pairs(getconnections(game:GetService("LogService")).MessageOut) do v:Disable() end
-        for _,v in pairs(getconnections(game:GetService("ScriptContext")).Error) do v:Disable() end
-    end
-end
-
 local function randomHex(len)
     local str = ""
     for i = 1, len do
@@ -36,24 +26,18 @@ local ESP_KEY = randstr()
 if not getgenv()[ESP_KEY] then
     getgenv()[ESP_KEY] = {
         Enabled = false,
-        
         BoxType = "3DCorner",
         TracersEnabled = false,
         SkeletonEnabled = false,
-        
         Color = Color3.fromRGB(255, 255, 255),
         Thickness = 1.0,
         Transparency = 1,
-        
         CornerSize = 0.3,
-        
         TracerOrigin = "Bottom",
         TracerThickness = 1.0,
         TracerTransparency = 1,
-        
         SkeletonThickness = 1.0,
         SkeletonTransparency = 1,
-        
         Objects = {},
         PlayerData = {},
         Initialized = false,
@@ -65,29 +49,34 @@ local ESP = getgenv()[ESP_KEY]
 
 local function gs(service)
     local ok, result = pcall(function()
-        if clonefunction and game.GetService then
-            return clonefunction(game.GetService)(game, service)
-        else
-            return game:GetService(service)
-        end
+        return game:GetService(service)
     end)
-    return ok and result or nil
-end
-
-local function define(instance)
-    if cloneref then
-        local ok, protected = pcall(cloneref, instance)
-        if ok and protected then
-            return protected
-        end
+    if not ok then
+        warn("Failed to get service: " .. service .. " - " .. tostring(result))
+        return nil
     end
-    return instance
+    return result
 end
 
-local RunService = define(gs("RunService"))
-local Players = define(gs("Players"))
-local LocalPlayer = define(Players.LocalPlayer)
-local Camera = define(workspace.CurrentCamera)
+-- Define services with error checking
+local RunService = gs("RunService")
+local Players = gs("Players")
+local Workspace = gs("Workspace")
+local UserInputService = gs("UserInputService")
+
+-- Validate critical services
+if not RunService or not Players or not Workspace then
+    warn("Critical services unavailable. ESP script cannot initialize.")
+    return
+end
+
+local LocalPlayer = Players.LocalPlayer
+local Camera = Workspace.CurrentCamera
+
+if not LocalPlayer or not Camera then
+    warn("LocalPlayer or Camera unavailable. ESP script cannot initialize.")
+    return
+end
 
 local function GetCharacterBounds(character)
     if not character then return nil end
@@ -213,19 +202,15 @@ end
 local SKELETON_CONNECTIONS = {
     {"Head", "UpperTorso"},
     {"UpperTorso", "LowerTorso"},
-    
     {"UpperTorso", "RightUpperArm"},
     {"RightUpperArm", "RightLowerArm"},
     {"RightLowerArm", "RightHand"},
-    
     {"UpperTorso", "LeftUpperArm"},
     {"LeftUpperArm", "LeftLowerArm"},
     {"LeftLowerArm", "LeftHand"},
-    
     {"LowerTorso", "RightUpperLeg"},
     {"RightUpperLeg", "RightLowerLeg"},
     {"RightLowerLeg", "RightFoot"},
-    
     {"LowerTorso", "LeftUpperLeg"},
     {"LeftUpperLeg", "LeftLowerLeg"},
     {"LeftLowerLeg", "LeftFoot"}
@@ -288,33 +273,39 @@ function ESP:CreateSkeletonESP(player)
     
     playerData.Objects.Skeleton = {}
     
-    for _, connection in ipairs(SKELETON_CONNECTIONS) do
-        local line = Drawing.new("Line")
-        line.Thickness = self.SkeletonThickness
-        line.Color = self.Color
-        line.Transparency = self.SkeletonTransparency
-        line.Visible = false
+    local success, err = pcall(function()
+        for _, connection in ipairs(SKELETON_CONNECTIONS) do
+            local line = Drawing.new("Line")
+            line.Thickness = self.SkeletonThickness
+            line.Color = self.Color
+            line.Transparency = self.SkeletonTransparency
+            line.Visible = false
+            
+            table.insert(playerData.Objects.Skeleton, {
+                Line = line,
+                From = connection[1],
+                To = connection[2]
+            })
+        end
         
-        table.insert(playerData.Objects.Skeleton, {
-            Line = line,
-            From = connection[1],
-            To = connection[2]
-        })
-    end
+        for _, connection in ipairs(R6_CONNECTIONS) do
+            local line = Drawing.new("Line")
+            line.Thickness = self.SkeletonThickness
+            line.Color = self.Color
+            line.Transparency = self.SkeletonTransparency
+            line.Visible = false
+            
+            table.insert(playerData.Objects.Skeleton, {
+                Line = line,
+                From = connection[1],
+                To = connection[2],
+                IsR6 = true
+            })
+        end
+    end)
     
-    for _, connection in ipairs(R6_CONNECTIONS) do
-        local line = Drawing.new("Line")
-        line.Thickness = self.SkeletonThickness
-        line.Color = self.Color
-        line.Transparency = self.SkeletonTransparency
-        line.Visible = false
-        
-        table.insert(playerData.Objects.Skeleton, {
-            Line = line,
-            From = connection[1],
-            To = connection[2],
-            IsR6 = true
-        })
+    if not success then
+        warn("Failed to create skeleton ESP for player " .. tostring(player) .. ": " .. tostring(err))
     end
 end
 
@@ -429,55 +420,62 @@ function ESP:CreatePlayerESP(player)
         Connection = nil
     }
     
-    local box2D = {}
-    for i = 1, 4 do
-        box2D[i] = Drawing.new("Line")
-        box2D[i].Thickness = self.Thickness
-        box2D[i].Color = self.Color
-        box2D[i].Transparency = self.Transparency
-        box2D[i].Visible = false
-    end
-    playerData.Objects.Box2D = box2D
-    
-    local box2DCorner = {}
-    for i = 1, 8 do
-        box2DCorner[i] = Drawing.new("Line")
-        box2DCorner[i].Thickness = self.Thickness
-        box2DCorner[i].Color = self.Color
-        box2DCorner[i].Transparency = self.Transparency
-        box2DCorner[i].Visible = false
-    end
-    playerData.Objects.Box2DCorner = box2DCorner
-    
-    local box3D = {}
-    for i = 1, 12 do
-        box3D[i] = Drawing.new("Line")
-        box3D[i].Thickness = self.Thickness
-        box3D[i].Color = self.Color
-        box3D[i].Transparency = self.Transparency
-        box3D[i].Visible = false
-    end
-    playerData.Objects.Box3D = box3D
-    
-    local box3DCorner = {}
-    for i = 1, 8 do
-        box3DCorner[i] = {}
-        for j = 1, 3 do
-            box3DCorner[i][j] = Drawing.new("Line")
-            box3DCorner[i][j].Thickness = self.Thickness
-            box3DCorner[i][j].Color = self.Color
-            box3DCorner[i][j].Transparency = self.Transparency
-            box3DCorner[i][j].Visible = false
+    local success, err = pcall(function()
+        local box2D = {}
+        for i = 1, 4 do
+            box2D[i] = Drawing.new("Line")
+            box2D[i].Thickness = self.Thickness
+            box2D[i].Color = self.Color
+            box2D[i].Transparency = self.Transparency
+            box2D[i].Visible = false
         end
-    end
-    playerData.Objects.Box3DCorner = box3DCorner
+        playerData.Objects.Box2D = box2D
+        
+        local box2DCorner = {}
+        for i = 1, 8 do
+            box2DCorner[i] = Drawing.new("Line")
+            box2DCorner[i].Thickness = self.Thickness
+            box2DCorner[i].Color = self.Color
+            box2DCorner[i].Transparency = self.Transparency
+            box2DCorner[i].Visible = false
+        end
+        playerData.Objects.Box2DCorner = box2DCorner
+        
+        local box3D = {}
+        for i = 1, 12 do
+            box3D[i] = Drawing.new("Line")
+            box3D[i].Thickness = self.Thickness
+            box3D[i].Color = self.Color
+            box3D[i].Transparency = self.Transparency
+            box3D[i].Visible = false
+        end
+        playerData.Objects.Box3D = box3D
+        
+        local box3DCorner = {}
+        for i = 1, 8 do
+            box3DCorner[i] = {}
+            for j = 1, 3 do
+                box3DCorner[i][j] = Drawing.new("Line")
+                box3DCorner[i][j].Thickness = self.Thickness
+                box3DCorner[i][j].Color = self.Color
+                box3DCorner[i][j].Transparency = self.Transparency
+                box3DCorner[i][j].Visible = false
+            end
+        end
+        playerData.Objects.Box3DCorner = box3DCorner
+        
+        local tracer = Drawing.new("Line")
+        tracer.Thickness = self.TracerThickness
+        tracer.Color = self.Color
+        tracer.Transparency = self.TracerTransparency
+        tracer.Visible = false
+        playerData.Objects.Tracer = tracer
+    end)
     
-    local tracer = Drawing.new("Line")
-    tracer.Thickness = self.TracerThickness
-    tracer.Color = self.Color
-    tracer.Transparency = self.TracerTransparency
-    tracer.Visible = false
-    playerData.Objects.Tracer = tracer
+    if not success then
+        warn("Failed to create player ESP for " .. tostring(player) .. ": " .. tostring(err))
+        return
+    end
     
     self.PlayerData[player] = playerData
     
@@ -488,30 +486,36 @@ function ESP:RemovePlayerESP(player)
     local playerData = self.PlayerData[player]
     if not playerData then return end
     
-    for _, line in ipairs(playerData.Objects.Box2D) do
-        line:Remove()
-    end
-    
-    for _, line in ipairs(playerData.Objects.Box2DCorner) do
-        line:Remove()
-    end
-    
-    for _, line in ipairs(playerData.Objects.Box3D) do
-        line:Remove()
-    end
-    
-    for _, corner in ipairs(playerData.Objects.Box3DCorner) do
-        for _, line in ipairs(corner) do
+    local success, err = pcall(function()
+        for _, line in ipairs(playerData.Objects.Box2D) do
             line:Remove()
         end
-    end
-    
-    playerData.Objects.Tracer:Remove()
-    
-    if playerData.Objects.Skeleton then
-        for _, connection in ipairs(playerData.Objects.Skeleton) do
-            connection.Line:Remove()
+        
+        for _, line in ipairs(playerData.Objects.Box2DCorner) do
+            line:Remove()
         end
+        
+        for _, line in ipairs(playerData.Objects.Box3D) do
+            line:Remove()
+        end
+        
+        for _, corner in ipairs(playerData.Objects.Box3DCorner) do
+            for _, line in ipairs(corner) do
+                line:Remove()
+            end
+        end
+        
+        playerData.Objects.Tracer:Remove()
+        
+        if playerData.Objects.Skeleton then
+            for _, connection in ipairs(playerData.Objects.Skeleton) do
+                connection.Line:Remove()
+            end
+        end
+    end)
+    
+    if not success then
+        warn("Failed to remove player ESP for " .. tostring(player) .. ": " .. tostring(err))
     end
     
     self.PlayerData[player] = nil
@@ -521,25 +525,31 @@ function ESP:HidePlayerESP(player)
     local playerData = self.PlayerData[player]
     if not playerData then return end
     
-    for _, line in ipairs(playerData.Objects.Box2D) do
-        line.Visible = false
-    end
-    
-    for _, line in ipairs(playerData.Objects.Box2DCorner) do
-        line.Visible = false
-    end
-    
-    for _, line in ipairs(playerData.Objects.Box3D) do
-        line.Visible = false
-    end
-    
-    for _, corner in ipairs(playerData.Objects.Box3DCorner) do
-        for _, line in ipairs(corner) do
+    local success, err = pcall(function()
+        for _, line in ipairs(playerData.Objects.Box2D) do
             line.Visible = false
         end
-    end
+        
+        for _, line in ipairs(playerData.Objects.Box2DCorner) do
+            line.Visible = false
+        end
+        
+        for _, line in ipairs(playerData.Objects.Box3D) do
+            line.Visible = false
+        end
+        
+        for _, corner in ipairs(playerData.Objects.Box3DCorner) do
+            for _, line in ipairs(corner) do
+                line.Visible = false
+            end
+        end
+        
+        playerData.Objects.Tracer.Visible = false
+    end)
     
-    playerData.Objects.Tracer.Visible = false
+    if not success then
+        warn("Failed to hide player ESP for " .. tostring(player) .. ": " .. tostring(err))
+    end
     
     self:HideSkeletonESP(player)
 end
@@ -556,21 +566,27 @@ function ESP:Update2DBox(player, bounds)
         return
     end
     
-    playerData.Objects.Box2D[1].From = box.TopLeft
-    playerData.Objects.Box2D[1].To = box.TopRight
-    playerData.Objects.Box2D[1].Visible = true
+    local success, err = pcall(function()
+        playerData.Objects.Box2D[1].From = box.TopLeft
+        playerData.Objects.Box2D[1].To = box.TopRight
+        playerData.Objects.Box2D[1].Visible = true
+        
+        playerData.Objects.Box2D[2].From = box.TopRight
+        playerData.Objects.Box2D[2].To = box.BottomRight
+        playerData.Objects.Box2D[2].Visible = true
+        
+        playerData.Objects.Box2D[3].From = box.BottomRight
+        playerData.Objects.Box2D[3].To = box.BottomLeft
+        playerData.Objects.Box2D[3].Visible = true
+        
+        playerData.Objects.Box2D[4].From = box.BottomLeft
+        playerData.Objects.Box2D[4].To = box.TopLeft
+        playerData.Objects.Box2D[4].Visible = true
+    end)
     
-    playerData.Objects.Box2D[2].From = box.TopRight
-    playerData.Objects.Box2D[2].To = box.BottomRight
-    playerData.Objects.Box2D[2].Visible = true
-    
-    playerData.Objects.Box2D[3].From = box.BottomRight
-    playerData.Objects.Box2D[3].To = box.BottomLeft
-    playerData.Objects.Box2D[3].Visible = true
-    
-    playerData.Objects.Box2D[4].From = box.BottomLeft
-    playerData.Objects.Box2D[4].To = box.TopLeft
-    playerData.Objects.Box2D[4].Visible = true
+    if not success then
+        warn("Failed to update 2D box for " .. tostring(player) .. ": " .. tostring(err))
+    end
 end
 
 function ESP:Update2DCornerBox(player, bounds)
@@ -590,37 +606,43 @@ function ESP:Update2DCornerBox(player, bounds)
         cornerSize = box.Height * self.CornerSize
     end
     
-    playerData.Objects.Box2DCorner[1].From = box.TopLeft
-    playerData.Objects.Box2DCorner[1].To = Vector2.new(box.TopLeft.X + cornerSize, box.TopLeft.Y)
-    playerData.Objects.Box2DCorner[1].Visible = true
+    local success, err = pcall(function()
+        playerData.Objects.Box2DCorner[1].From = box.TopLeft
+        playerData.Objects.Box2DCorner[1].To = Vector2.new(box.TopLeft.X + cornerSize, box.TopLeft.Y)
+        playerData.Objects.Box2DCorner[1].Visible = true
+        
+        playerData.Objects.Box2DCorner[2].From = box.TopLeft
+        playerData.Objects.Box2DCorner[2].To = Vector2.new(box.TopLeft.X, box.TopLeft.Y + cornerSize)
+        playerData.Objects.Box2DCorner[2].Visible = true
+        
+        playerData.Objects.Box2DCorner[3].From = box.TopRight
+        playerData.Objects.Box2DCorner[3].To = Vector2.new(box.TopRight.X - cornerSize, box.TopRight.Y)
+        playerData.Objects.Box2DCorner[3].Visible = true
+        
+        playerData.Objects.Box2DCorner[4].From = box.TopRight
+        playerData.Objects.Box2DCorner[4].To = Vector2.new(box.TopRight.X, box.TopRight.Y + cornerSize)
+        playerData.Objects.Box2DCorner[4].Visible = true
+        
+        playerData.Objects.Box2DCorner[5].From = box.BottomLeft
+        playerData.Objects.Box2DCorner[5].To = Vector2.new(box.BottomLeft.X + cornerSize, box.BottomLeft.Y)
+        playerData.Objects.Box2DCorner[5].Visible = true
+        
+        playerData.Objects.Box2DCorner[6].From = box.BottomLeft
+        playerData.Objects.Box2DCorner[6].To = Vector2.new(box.BottomLeft.X, box.BottomLeft.Y - cornerSize)
+        playerData.Objects.Box2DCorner[6].Visible = true
+        
+        playerData.Objects.Box2DCorner[7].From = box.BottomRight
+        playerData.Objects.Box2DCorner[7].To = Vector2.new(box.BottomRight.X - cornerSize, box.BottomRight.Y)
+        playerData.Objects.Box2DCorner[7].Visible = true
+        
+        playerData.Objects.Box2DCorner[8].From = box.BottomRight
+        playerData.Objects.Box2DCorner[8].To = Vector2.new(box.BottomRight.X, box.BottomRight.Y - cornerSize)
+        playerData.Objects.Box2DCorner[8].Visible = true
+    end)
     
-    playerData.Objects.Box2DCorner[2].From = box.TopLeft
-    playerData.Objects.Box2DCorner[2].To = Vector2.new(box.TopLeft.X, box.TopLeft.Y + cornerSize)
-    playerData.Objects.Box2DCorner[2].Visible = true
-    
-    playerData.Objects.Box2DCorner[3].From = box.TopRight
-    playerData.Objects.Box2DCorner[3].To = Vector2.new(box.TopRight.X - cornerSize, box.TopRight.Y)
-    playerData.Objects.Box2DCorner[3].Visible = true
-    
-    playerData.Objects.Box2DCorner[4].From = box.TopRight
-    playerData.Objects.Box2DCorner[4].To = Vector2.new(box.TopRight.X, box.TopRight.Y + cornerSize)
-    playerData.Objects.Box2DCorner[4].Visible = true
-    
-    playerData.Objects.Box2DCorner[5].From = box.BottomLeft
-    playerData.Objects.Box2DCorner[5].To = Vector2.new(box.BottomLeft.X + cornerSize, box.BottomLeft.Y)
-    playerData.Objects.Box2DCorner[5].Visible = true
-    
-    playerData.Objects.Box2DCorner[6].From = box.BottomLeft
-    playerData.Objects.Box2DCorner[6].To = Vector2.new(box.BottomLeft.X, box.BottomLeft.Y - cornerSize)
-    playerData.Objects.Box2DCorner[6].Visible = true
-    
-    playerData.Objects.Box2DCorner[7].From = box.BottomRight
-    playerData.Objects.Box2DCorner[7].To = Vector2.new(box.BottomRight.X - cornerSize, box.BottomRight.Y)
-    playerData.Objects.Box2DCorner[7].Visible = true
-    
-    playerData.Objects.Box2DCorner[8].From = box.BottomRight
-    playerData.Objects.Box2DCorner[8].To = Vector2.new(box.BottomRight.X, box.BottomRight.Y - cornerSize)
-    playerData.Objects.Box2DCorner[8].Visible = true
+    if not success then
+        warn("Failed to update 2D corner box for " .. tostring(player) .. ": " .. tostring(err))
+    end
 end
 
 function ESP:Update3DBox(player, bounds)
@@ -666,17 +688,23 @@ function ESP:Update3DBox(player, bounds)
         {7, 8}
     }
     
-    for i, edge in ipairs(edges) do
-        local p1 = screenCorners[edge[1]]
-        local p2 = screenCorners[edge[2]]
-        
-        if p1.Visible or p2.Visible then
-            playerData.Objects.Box3D[i].From = p1.Position
-            playerData.Objects.Box3D[i].To = p2.Position
-            playerData.Objects.Box3D[i].Visible = true
-        else
-            playerData.Objects.Box3D[i].Visible = false
+    local success, err = pcall(function()
+        for i, edge in ipairs(edges) do
+            local p1 = screenCorners[edge[1]]
+            local p2 = screenCorners[edge[2]]
+            
+            if p1.Visible or p2.Visible then
+                playerData.Objects.Box3D[i].From = p1.Position
+                playerData.Objects.Box3D[i].To = p2.Position
+                playerData.Objects.Box3D[i].Visible = true
+            else
+                playerData.Objects.Box3D[i].Visible = false
+            end
         end
+    end)
+    
+    if not success then
+        warn("Failed to update 3D box for " .. tostring(player) .. ": " .. tostring(err))
     end
 end
 
@@ -728,27 +756,33 @@ function ESP:Update3DCornerBox(player, bounds)
         { {8, 4}, {8, 6}, {8, 7} }
     }
     
-    for cornerIndex, connections in ipairs(cornerConnections) do
-        local cornerVisible = screenCorners[cornerIndex].Visible
-        local cornerPos = screenCorners[cornerIndex].Position
-        
-        for lineIndex, connection in ipairs(connections) do
-            local line = playerData.Objects.Box3DCorner[cornerIndex][lineIndex]
+    local success, err = pcall(function()
+        for cornerIndex, connections in ipairs(cornerConnections) do
+            local cornerVisible = screenCorners[cornerIndex].Visible
+            local cornerPos = screenCorners[cornerIndex].Position
             
-            if cornerVisible then
-                local connectedCornerIndex = connection[2]
-                local connectedCornerPos = screenCorners[connectedCornerIndex].Position
+            for lineIndex, connection in ipairs(connections) do
+                local line = playerData.Objects.Box3DCorner[cornerIndex][lineIndex]
                 
-                local direction = (connectedCornerPos - cornerPos).Unit
-                local endPoint = cornerPos + direction * (cornerPos - connectedCornerPos).Magnitude * self.CornerSize
-                
-                line.From = cornerPos
-                line.To = endPoint
-                line.Visible = true
-            else
-                line.Visible = false
+                if cornerVisible then
+                    local connectedCornerIndex = connection[2]
+                    local connectedCornerPos = screenCorners[connectedCornerIndex].Position
+                    
+                    local direction = (connectedCornerPos - cornerPos).Unit
+                    local endPoint = cornerPos + direction * (cornerPos - connectedCornerPos).Magnitude * self.CornerSize
+                    
+                    line.From = cornerPos
+                    line.To = endPoint
+                    line.Visible = true
+                else
+                    line.Visible = false
+                end
             end
         end
+    end)
+    
+    if not success then
+        warn("Failed to update 3D corner box for " .. tostring(player) .. ": " .. tostring(err))
     end
 end
 
@@ -778,8 +812,11 @@ function ESP:UpdateTracer(player, character)
     elseif self.TracerOrigin == "Center" then
         from = screenCenter
     elseif self.TracerOrigin == "Mouse" then
-        local UserInputService = gs("UserInputService")
-        from = UserInputService:GetMouseLocation()
+        if UserInputService then
+            from = UserInputService:GetMouseLocation()
+        else
+            from = screenCenter -- Fallback if UserInputService is unavailable
+        end
     end
     
     playerData.Objects.Tracer.From = from
@@ -805,14 +842,22 @@ function ESP:UpdatePlayerESP(player)
         return
     end
     
-    if self.BoxType == "2D" then
-        self:Update2DBox(player, bounds)
-    elseif self.BoxType == "2DCorner" then
-        self:Update2DCornerBox(player, bounds)
-    elseif self.BoxType == "3D" then
-        self:Update3DBox(player, bounds)
-    elseif self.BoxType == "3DCorner" then
-        self:Update3DCornerBox(player, bounds)
+    local success, err = pcall(function()
+        if self.BoxType == "2D" then
+            self:Update2DBox(player, bounds)
+        elseif self.BoxType == "2DCorner" then
+            self:Update2DCornerBox(player, bounds)
+        elseif self.BoxType == "3D" then
+            self:Update3DBox(player, bounds)
+        elseif self.BoxType == "3DCorner" then
+            self:Update3DCornerBox(player, bounds)
+        end
+    end)
+    
+    if not success then
+        warn("Failed to update player ESP for " .. tostring(player) .. ": " .. tostring(err))
+        self:HidePlayerESP(player)
+        return
     end
     
     if self.BoxType ~= "2D" and self.BoxType ~= "None" then
@@ -848,32 +893,38 @@ end
 function ESP:SetColor(color)
     self.Color = color
     
-    for player, playerData in pairs(self.PlayerData) do
-        for _, line in ipairs(playerData.Objects.Box2D) do
-            line.Color = color
-        end
-        
-        for _, line in ipairs(playerData.Objects.Box2DCorner) do
-            line.Color = color
-        end
-        
-        for _, line in ipairs(playerData.Objects.Box3D) do
-            line.Color = color
-        end
-        
-        for _, corner in ipairs(playerData.Objects.Box3DCorner) do
-            for _, line in ipairs(corner) do
+    local success, err = pcall(function()
+        for player, playerData in pairs(self.PlayerData) do
+            for _, line in ipairs(playerData.Objects.Box2D) do
                 line.Color = color
             end
-        end
-        
-        playerData.Objects.Tracer.Color = color
-        
-        if playerData.Objects.Skeleton then
-            for _, connection in ipairs(playerData.Objects.Skeleton) do
-                connection.Line.Color = color
+            
+            for _, line in ipairs(playerData.Objects.Box2DCorner) do
+                line.Color = color
+            end
+            
+            for _, line in ipairs(playerData.Objects.Box3D) do
+                line.Color = color
+            end
+            
+            for _, corner in ipairs(playerData.Objects.Box3DCorner) do
+                for _, line in ipairs(corner) do
+                    line.Color = color
+                end
+            end
+            
+            playerData.Objects.Tracer.Color = color
+            
+            if playerData.Objects.Skeleton then
+                for _, connection in ipairs(playerData.Objects.Skeleton) do
+                    connection.Line.Color = color
+                end
             end
         end
+    end)
+    
+    if not success then
+        warn("Failed to set ESP color: " .. tostring(err))
     end
     
     return self
@@ -882,24 +933,30 @@ end
 function ESP:SetThickness(thickness)
     self.Thickness = thickness
     
-    for player, playerData in pairs(self.PlayerData) do
-        for _, line in ipairs(playerData.Objects.Box2D) do
-            line.Thickness = thickness
-        end
-        
-        for _, line in ipairs(playerData.Objects.Box2DCorner) do
-            line.Thickness = thickness
-        end
-        
-        for _, line in ipairs(playerData.Objects.Box3D) do
-            line.Thickness = thickness
-        end
-        
-        for _, corner in ipairs(playerData.Objects.Box3DCorner) do
-            for _, line in ipairs(corner) do
+    local success, err = pcall(function()
+        for player, playerData in pairs(self.PlayerData) do
+            for _, line in ipairs(playerData.Objects.Box2D) do
                 line.Thickness = thickness
             end
+            
+            for _, line in ipairs(playerData.Objects.Box2DCorner) do
+                line.Thickness = thickness
+            end
+            
+            for _, line in ipairs(playerData.Objects.Box3D) do
+                line.Thickness = thickness
+            end
+            
+            for _, corner in ipairs(playerData.Objects.Box3DCorner) do
+                for _, line in ipairs(corner) do
+                    line.Thickness = thickness
+                end
+            end
         end
+    end)
+    
+    if not success then
+        warn("Failed to set ESP thickness: " .. tostring(err))
     end
     
     return self
@@ -908,8 +965,14 @@ end
 function ESP:SetTracerThickness(thickness)
     self.TracerThickness = thickness
     
-    for player, playerData in pairs(self.PlayerData) do
-        playerData.Objects.Tracer.Thickness = thickness
+    local success, err = pcall(function()
+        for player, playerData in pairs(self.PlayerData) do
+            playerData.Objects.Tracer.Thickness = thickness
+        end
+    end)
+    
+    if not success then
+        warn("Failed to set tracer thickness: " .. tostring(err))
     end
     
     return self
@@ -928,8 +991,14 @@ end
 function ESP:SetTracerTransparency(transparency)
     self.TracerTransparency = transparency
     
-    for player, playerData in pairs(self.PlayerData) do
-        playerData.Objects.Tracer.Transparency = transparency
+    local success, err = pcall(function()
+        for player, playerData in pairs(self.PlayerData) do
+            playerData.Objects.Tracer.Transparency = transparency
+        end
+    end)
+    
+    if not success then
+        warn("Failed to set tracer transparency: " .. tostring(err))
     end
     
     return self
@@ -938,24 +1007,30 @@ end
 function ESP:SetTransparency(transparency)
     self.Transparency = transparency
     
-    for player, playerData in pairs(self.PlayerData) do
-        for _, line in ipairs(playerData.Objects.Box2D) do
-            line.Transparency = transparency
-        end
-        
-        for _, line in ipairs(playerData.Objects.Box2DCorner) do
-            line.Transparency = transparency
-        end
-        
-        for _, line in ipairs(playerData.Objects.Box3D) do
-            line.Transparency = transparency
-        end
-        
-        for _, corner in ipairs(playerData.Objects.Box3DCorner) do
-            for _, line in ipairs(corner) do
+    local success, err = pcall(function()
+        for player, playerData in pairs(self.PlayerData) do
+            for _, line in ipairs(playerData.Objects.Box2D) do
                 line.Transparency = transparency
             end
+            
+            for _, line in ipairs(playerData.Objects.Box2DCorner) do
+                line.Transparency = transparency
+            end
+            
+            for _, line in ipairs(playerData.Objects.Box3D) do
+                line.Transparency = transparency
+            end
+            
+            for _, corner in ipairs(playerData.Objects.Box3DCorner) do
+                for _, line in ipairs(corner) do
+                    line.Transparency = transparency
+                end
+            end
         end
+    end)
+    
+    if not success then
+        warn("Failed to set ESP transparency: " .. tostring(err))
     end
     
     return self
@@ -966,39 +1041,53 @@ function ESP:SetupUpdate()
         self.UpdateConnection:Disconnect()
     end
     
-    self.UpdateConnection = RunService.RenderStepped:Connect(function()
-        if not self.Enabled then return end
-        
-        for player, _ in pairs(self.PlayerData) do
-            self:UpdatePlayerESP(player)
-        end
+    local success, err = pcall(function()
+        self.UpdateConnection = RunService.RenderStepped:Connect(function()
+            if not self.Enabled then return end
+            
+            for player, _ in pairs(self.PlayerData) do
+                self:UpdatePlayerESP(player)
+            end
+        end)
     end)
+    
+    if not success then
+        warn("Failed to setup update loop: " .. tostring(err))
+    end
 end
 
 function ESP:Init()
     if self.Initialized then return self end
     
-    self:ToggleESP(true)
-    
-    for _, player in ipairs(Players:GetPlayers()) do
-        if player ~= LocalPlayer then
-            self:CreatePlayerESP(player)
+    local success, err = pcall(function()
+        self:ToggleESP(true)
+        
+        for _, player in ipairs(Players:GetPlayers()) do
+            if player ~= LocalPlayer then
+                self:CreatePlayerESP(player)
+            end
         end
+        
+        Players.PlayerAdded:Connect(function(player)
+            if player ~= LocalPlayer then
+                self:CreatePlayerESP(player)
+            end
+        end)
+        
+        Players.PlayerRemoving:Connect(function(player)
+            self:RemovePlayerESP(player)
+        end)
+        
+        self:SetupUpdate()
+        
+        self.Initialized = true
+    end)
+    
+    if not success then
+        warn("Failed to initialize ESP: " .. tostring(err))
+        return self
     end
     
-    Players.PlayerAdded:Connect(function(player)
-        if player ~= LocalPlayer then
-            self:CreatePlayerESP(player)
-        end
-    end)
-    
-    Players.PlayerRemoving:Connect(function(player)
-        self:RemovePlayerESP(player)
-    end)
-    
-    self:SetupUpdate()
-    
-    self.Initialized = true
     return self
 end
 
@@ -1059,13 +1148,19 @@ function ESP:ToggleTracers(enabled)
 end
 
 function ESP:Destroy()
-    if self.UpdateConnection then
-        self.UpdateConnection:Disconnect()
-        self.UpdateConnection = nil
-    end
+    local success, err = pcall(function()
+        if self.UpdateConnection then
+            self.UpdateConnection:Disconnect()
+            self.UpdateConnection = nil
+        end
+        
+        for player, _ in pairs(self.PlayerData) do
+            self:RemovePlayerESP(player)
+        end
+    end)
     
-    for player, _ in pairs(self.PlayerData) do
-        self:RemovePlayerESP(player)
+    if not success then
+        warn("Failed to destroy ESP: " .. tostring(err))
     end
     
     self.Initialized = false
@@ -1074,17 +1169,25 @@ function ESP:Destroy()
     return self
 end
 
-ESP:Init()
-ESP:ToggleESP(false)
-getgenv().ToggleESP           = function(val)   ESP:ToggleESP(val) end
-getgenv().SetBoxType          = function(opt)   ESP:SetBoxType(opt) end
-getgenv().ToggleTracers       = function(val)   ESP:ToggleTracers(val) end
-getgenv().ToggleSkeleton      = function(val)   ESP:ToggleSkeleton(val) end
-getgenv().SetTracerOrigin     = function(opt)   ESP:SetTracerOrigin(opt) end
-getgenv().SetThickness        = function(val)   ESP:SetThickness(val) end
-getgenv().SetCornerSize       = function(val)   ESP:SetCornerSize(val) end
-getgenv().SetColor            = function(col)   ESP:SetColor(col) end
-getgenv().SetTransparency     = function(val)   ESP:SetTransparency(val) end
-getgenv().SetTracerThickness  = function(val)   ESP:SetTracerThickness(val) end
-getgenv().SetSkeletonThickness = function(val)  ESP:SetSkeletonThickness(val) end
+-- Initialize and set global functions
+local success, err = pcall(function()
+    ESP:Init()
+    ESP:ToggleESP(false)
+end)
+
+if not success then
+    warn("ESP initialization failed: " .. tostring(err))
+end
+
+getgenv().ToggleESP = function(val) ESP:ToggleESP(val) end
+getgenv().SetBoxType = function(opt) ESP:SetBoxType(opt) end
+getgenv().ToggleTracers = function(val) ESP:ToggleTracers(val) end
+getgenv().ToggleSkeleton = function(val) ESP:ToggleSkeleton(val) end
+getgenv().SetTracerOrigin = function(opt) ESP:SetTracerOrigin(opt) end
+getgenv().SetThickness = function(val) ESP:SetThickness(val) end
+getgenv().SetCornerSize = function(val) ESP:SetCornerSize(val) end
+getgenv().SetColor = function(col) ESP:SetColor(col) end
+getgenv().SetTransparency = function(val) ESP:SetTransparency(val) end
+getgenv().SetTracerThickness = function(val) ESP:SetTracerThickness(val) end
+getgenv().SetSkeletonThickness = function(val) ESP:SetSkeletonThickness(val) end
 getgenv().SetSkeletonTransparency = function(val) ESP:SetSkeletonTransparency(val) end
