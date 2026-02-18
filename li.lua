@@ -1,4 +1,5 @@
 --[[
+
     assign different flags to each element to prevent from configs overriding eachother
     example is at the bottom
 
@@ -8429,7 +8430,7 @@ local Library do
                     AutomaticSize = Enum.AutomaticSize.X,
                     Size = UDim2New(0, 0, 0, 15),
                     BackgroundTransparency = 1,
-                    Position = UDim2New(0, 65, 1, -84),
+                    Position = UDim2New(0, 65, 1, -75),
                     BorderSizePixel = 0,
                     ZIndex = 2,
                     TextSize = 14,
@@ -8446,7 +8447,7 @@ local Library do
                     AutomaticSize = Enum.AutomaticSize.X,
                     Size = UDim2New(0, 0, 0, 15),
                     BackgroundTransparency = 1,
-                    Position = UDim2New(0, 65, 1, -67),
+                    Position = UDim2New(0, 65, 1, -57),
                     BorderSizePixel = 0,
                     ZIndex = 2,
                     TextSize = 14,
@@ -8463,7 +8464,7 @@ local Library do
                     AutomaticSize = Enum.AutomaticSize.X,
                     Size = UDim2New(0, 0, 0, 15),
                     BackgroundTransparency = 1,
-                    Position = UDim2New(0, 65, 1, -50),
+                    Position = UDim2New(0, 195, 1, -57),
                     BorderSizePixel = 0,
                     ZIndex = 2,
                     TextSize = 14,
@@ -8480,7 +8481,7 @@ local Library do
                     AutomaticSize = Enum.AutomaticSize.X,
                     Size = UDim2New(0, 0, 0, 15),
                     BackgroundTransparency = 1,
-                    Position = UDim2New(0, 65, 1, -33),
+                    Position = UDim2New(0, 65, 1, -38),
                     BorderSizePixel = 0,
                     ZIndex = 2,
                     TextSize = 14,
@@ -8497,7 +8498,7 @@ local Library do
                     AutomaticSize = Enum.AutomaticSize.X,
                     Size = UDim2New(0, 0, 0, 15),
                     BackgroundTransparency = 1,
-                    Position = UDim2New(0, 65, 1, -16),
+                    Position = UDim2New(0, 195, 1, -38),
                     BorderSizePixel = 0,
                     ZIndex = 2,
                     TextSize = 14,
@@ -8514,7 +8515,7 @@ local Library do
                     AnchorPoint = Vector2New(1, 0),
                     Size = UDim2New(0, 72, 0, 14),
                     BackgroundColor3 = FromRGB(34, 39, 45),
-                    Position = UDim2New(1, -8, 1, -18),
+                    Position = UDim2New(1, -8, 1, -40),
                     BorderSizePixel = 0,
                     ZIndex = 3,
                     TextSize = 12,
