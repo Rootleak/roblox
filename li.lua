@@ -8330,7 +8330,11 @@ local Library do
             local Dropdown
 
             local Items = { } do
-                Playerlist.Page.Items.Columns.Instance:FindFirstChildOfClass("UIListLayout"):Destroy()
+                local container = Playerlist.Page.Items.Columns or Playerlist.Page.Items.PageContent
+                if container and container.Instance then
+                    local layout = container.Instance:FindFirstChildOfClass("UIListLayout")
+                    if layout then layout:Destroy() end
+                end
 
                 Items["Playerlist"] = Instances:Create("Frame", {
                     Parent = Playerlist.Page.Items["PageContent"].Instance,
