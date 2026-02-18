@@ -9188,8 +9188,8 @@ local Library do
                         Items["PlayerUsername"].Instance.Text = "None"
                         Items["PlayerUserID"].Instance.Text = "None"
                         Items["PlayerAccountAge"].Instance.Text = "None"
-                        Items["PlayerTeamLabel"].Instance.Text = "Team: \u2014"
-                        Items["PlayerLeaksLabel"].Instance.Text = "Leaks: \u2014"
+                        Items["PlayerTeamLabel"].Instance.Text = "Team: —"
+                        Items["PlayerLeaksLabel"].Instance.Text = "Leaks: —"
                         Items["PlayerDetailsBtn"].Instance.Visible = false
                         Items["LeakPanel"].Instance.Visible = false
                         Items["PlayerlistInline"].Instance.Size = UDim2New(1, -16, 1, -90)
