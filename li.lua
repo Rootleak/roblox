@@ -8381,13 +8381,41 @@ local Library do
                     MidImage = "rbxassetid://107505658214891",
                     BorderColor3 = FromRGB(0, 0, 0),
                     ScrollBarThickness = 2,
-                    Size = UDim2New(1, -8, 1, 0),
+                    Size = UDim2New(1, -8, 1, -30),
                     BackgroundTransparency = 1,
-                    Position = UDim2New(0, 4, 0, 4),
+                    Position = UDim2New(0, 4, 0, 30),
                     BottomImage = "rbxassetid://107505658214891",
                     TopImage = "rbxassetid://107505658214891",
                     BackgroundColor3 = FromRGB(255, 255, 255)
                 })  Items["PlayerHolder"]:AddToTheme({ScrollBarImageColor3 = "Border"})
+
+                Items["SearchBox"] = Instances:Create("TextBox", {
+                    Parent = Items["PlayerlistInline"].Instance,
+                    Name = "\0",
+                    FontFace = Library.Font,
+                    TextColor3 = FromRGB(200, 210, 220),
+                    PlaceholderText = "search players...",
+                    PlaceholderColor3 = FromRGB(80, 90, 100),
+                    Text = "",
+                    Size = UDim2New(1, -8, 0, 22),
+                    Position = UDim2New(0, 4, 0, 4),
+                    BackgroundColor3 = FromRGB(22, 25, 29),
+                    BorderSizePixel = 0,
+                    ZIndex = 3,
+                    TextSize = 13,
+                    ClearTextOnFocus = false
+                })  Items["SearchBox"]:AddToTheme({BackgroundColor3 = "Inline"})
+                Instances:Create("UICorner", {Parent = Items["SearchBox"].Instance, Name = "\0", CornerRadius = UDimNew(0, 4)})
+                Instances:Create("UIPadding", {Parent = Items["SearchBox"].Instance, Name = "\0", PaddingLeft = UDimNew(0, 6), PaddingRight = UDimNew(0, 6)})
+
+                Items["SearchBox"].Instance:GetPropertyChangedSignal("Text"):Connect(function()
+                    local query = Items["SearchBox"].Instance.Text:lower()
+                    for _, pd in pairs(Playerlist.Players) do
+                        local nm = pd.Name:lower()
+                        local dn = (pd.Player and pd.Player.DisplayName or ""):lower()
+                        pd.PlayerButton.Instance.Visible = query == "" or nm:find(query, 1, true) ~= nil or dn:find(query, 1, true) ~= nil
+                    end
+                end)
 
                 Instances:Create("UIListLayout", {
                     Parent = Items["PlayerHolder"].Instance,
@@ -8481,7 +8509,8 @@ local Library do
                     FontFace = Library.Font,
                     TextColor3 = FromRGB(255, 255, 255),
                     BorderColor3 = FromRGB(0, 0, 0),
-                    Text = "Team: —",
+                    Text = 'Team: <font color="rgb(150,150,150)">—</font>',
+                    RichText = true,
                     AutomaticSize = Enum.AutomaticSize.X,
                     Size = UDim2New(0, 0, 0, 15),
                     BackgroundTransparency = 1,
@@ -8498,7 +8527,8 @@ local Library do
                     FontFace = Library.Font,
                     TextColor3 = FromRGB(255, 255, 255),
                     BorderColor3 = FromRGB(0, 0, 0),
-                    Text = "Leaks: —",
+                    Text = 'Leaks: <font color="rgb(150,150,150)">—</font>',
+                    RichText = true,
                     AutomaticSize = Enum.AutomaticSize.X,
                     Size = UDim2New(0, 0, 0, 15),
                     BackgroundTransparency = 1,
@@ -9182,13 +9212,12 @@ local Library do
                         Items["PlayerAccountAge"].Instance.Text = "Age: " .. tostring(Playerlist.Player.AccountAge) .. " days"
                         if Items["PlayerTeamLabel"] then
                             local teamName  = Playerlist.Player.Team and Playerlist.Player.Team.Name or "None"
-                            local teamColor = Playerlist.Player.Team and Playerlist.Player.Team.TeamColor.Color or FromRGB(150,150,150)
-                            Items["PlayerTeamLabel"].Instance.Text      = "Team: " .. teamName
-                            Items["PlayerTeamLabel"].Instance.TextColor3 = teamColor
+                            local teamColor = Playerlist.Player.Team and Playerlist.Player.Team.TeamColor.Color or Color3.new(1,1,1)
+                            local tcStr = string.format("rgb(%d,%d,%d)", math.round(teamColor.R*255), math.round(teamColor.G*255), math.round(teamColor.B*255))
+                            Items["PlayerTeamLabel"].Instance.Text = 'Team: <font color="' .. tcStr .. '">' .. teamName .. '</font>'
                         end
                         if Items["PlayerLeaksLabel"] then
-                            Items["PlayerLeaksLabel"].Instance.Text       = "Leaks: ..."
-                            Items["PlayerLeaksLabel"].Instance.TextColor3 = FromRGB(150, 150, 150)
+                            Items["PlayerLeaksLabel"].Instance.Text = 'Leaks: <font color="rgb(150,150,150)">...</font>'
                         end
                         if Items["PlayerDetailsBtn"] then Items["PlayerDetailsBtn"].Instance.Visible = false end
                         if Items["LeakPanel"]        then Items["LeakPanel"].Instance.Visible = false end
@@ -9201,12 +9230,10 @@ local Library do
                         Items["PlayerUserID"].Instance.Text = "None"
                         Items["PlayerAccountAge"].Instance.Text = "None"
                         if Items["PlayerTeamLabel"] then
-                            Items["PlayerTeamLabel"].Instance.Text      = "Team: —"
-                            Items["PlayerTeamLabel"].Instance.TextColor3 = FromRGB(150,150,150)
+                            Items["PlayerTeamLabel"].Instance.Text = 'Team: <font color="rgb(150,150,150)">—</font>'
                         end
                         if Items["PlayerLeaksLabel"] then
-                            Items["PlayerLeaksLabel"].Instance.Text       = "Leaks: —"
-                            Items["PlayerLeaksLabel"].Instance.TextColor3 = FromRGB(150,150,150)
+                            Items["PlayerLeaksLabel"].Instance.Text = 'Leaks: <font color="rgb(150,150,150)">—</font>'
                         end
                         if Items["PlayerDetailsBtn"] then Items["PlayerDetailsBtn"].Instance.Visible = false end
                         if Items["LeakPanel"]        then Items["LeakPanel"].Instance.Visible = false end
