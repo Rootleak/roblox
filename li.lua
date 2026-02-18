@@ -8410,9 +8410,9 @@ local Library do
                     Name = "\0",
                     BorderColor3 = FromRGB(0, 0, 0),
                     Size = UDim2New(0, 50, 0, 50),
-                    AnchorPoint = Vector2New(0, 1),
+                    AnchorPoint = Vector2New(0, 0.5),
                     Image = "rbxasset://textures/ui/GuiImagePlaceholder.png",
-                    Position = UDim2New(0, 8, 1, -3),
+                    Position = UDim2New(0, 8, 0.5, 0),
                     ZIndex = 2,
                     BorderSizePixel = 0,
                     BackgroundColor3 = FromRGB(16, 18, 21)
@@ -9180,12 +9180,19 @@ local Library do
                         Items["PlayerUsername"].Instance.Text = Playerlist.Player.DisplayName .. " (@" .. Playerlist.Player.Name .. ")"
                         Items["PlayerUserID"].Instance.Text = "ID: " .. tostring(Playerlist.Player.UserId)
                         Items["PlayerAccountAge"].Instance.Text = "Age: " .. tostring(Playerlist.Player.AccountAge) .. " days"
-                        Items["PlayerTeamLabel"].Instance.Text = "Team: " .. (Playerlist.Player.Team and Playerlist.Player.Team.Name or "None")
-                        Items["PlayerLeaksLabel"].Instance.Text = "Leaks: ..."
-                        Items["PlayerLeaksLabel"].Instance.TextColor3 = FromRGB(150, 150, 150)
-                        Items["PlayerDetailsBtn"].Instance.Visible = false
-                        Items["LeakPanel"].Instance.Visible = false
-                        Items["PlayerlistInline"].Instance.Size = UDim2New(1, -16, 1, -90)
+                        if Items["PlayerTeamLabel"] then
+                            local teamName  = Playerlist.Player.Team and Playerlist.Player.Team.Name or "None"
+                            local teamColor = Playerlist.Player.Team and Playerlist.Player.Team.TeamColor.Color or FromRGB(150,150,150)
+                            Items["PlayerTeamLabel"].Instance.Text      = "Team: " .. teamName
+                            Items["PlayerTeamLabel"].Instance.TextColor3 = teamColor
+                        end
+                        if Items["PlayerLeaksLabel"] then
+                            Items["PlayerLeaksLabel"].Instance.Text       = "Leaks: ..."
+                            Items["PlayerLeaksLabel"].Instance.TextColor3 = FromRGB(150, 150, 150)
+                        end
+                        if Items["PlayerDetailsBtn"] then Items["PlayerDetailsBtn"].Instance.Visible = false end
+                        if Items["LeakPanel"]        then Items["LeakPanel"].Instance.Visible = false end
+                        if Items["PlayerlistInline"] then Items["PlayerlistInline"].Instance.Size = UDim2New(1, -16, 1, -90) end
                     else
                         Playerlist.Player = nil
                         PlayerData:Toggle("Inactive")
@@ -9193,11 +9200,17 @@ local Library do
                         Items["PlayerUsername"].Instance.Text = "None"
                         Items["PlayerUserID"].Instance.Text = "None"
                         Items["PlayerAccountAge"].Instance.Text = "None"
-                        Items["PlayerTeamLabel"].Instance.Text = "Team: —"
-                        Items["PlayerLeaksLabel"].Instance.Text = "Leaks: —"
-                        Items["PlayerDetailsBtn"].Instance.Visible = false
-                        Items["LeakPanel"].Instance.Visible = false
-                        Items["PlayerlistInline"].Instance.Size = UDim2New(1, -16, 1, -90)
+                        if Items["PlayerTeamLabel"] then
+                            Items["PlayerTeamLabel"].Instance.Text      = "Team: —"
+                            Items["PlayerTeamLabel"].Instance.TextColor3 = FromRGB(150,150,150)
+                        end
+                        if Items["PlayerLeaksLabel"] then
+                            Items["PlayerLeaksLabel"].Instance.Text       = "Leaks: —"
+                            Items["PlayerLeaksLabel"].Instance.TextColor3 = FromRGB(150,150,150)
+                        end
+                        if Items["PlayerDetailsBtn"] then Items["PlayerDetailsBtn"].Instance.Visible = false end
+                        if Items["LeakPanel"]        then Items["LeakPanel"].Instance.Visible = false end
+                        if Items["PlayerlistInline"] then Items["PlayerlistInline"].Instance.Size = UDim2New(1, -16, 1, -90) end
                     end
 
                     if Data.Callback then 
