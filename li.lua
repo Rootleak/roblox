@@ -8381,41 +8381,13 @@ local Library do
                     MidImage = "rbxassetid://107505658214891",
                     BorderColor3 = FromRGB(0, 0, 0),
                     ScrollBarThickness = 2,
-                    Size = UDim2New(1, -8, 1, -30),
+                    Size = UDim2New(1, -8, 1, 0),
                     BackgroundTransparency = 1,
-                    Position = UDim2New(0, 4, 0, 30),
+                    Position = UDim2New(0, 4, 0, 4),
                     BottomImage = "rbxassetid://107505658214891",
                     TopImage = "rbxassetid://107505658214891",
                     BackgroundColor3 = FromRGB(255, 255, 255)
                 })  Items["PlayerHolder"]:AddToTheme({ScrollBarImageColor3 = "Border"})
-
-                Items["SearchBox"] = Instances:Create("TextBox", {
-                    Parent = Items["PlayerlistInline"].Instance,
-                    Name = "\0",
-                    FontFace = Library.Font,
-                    TextColor3 = FromRGB(200, 210, 220),
-                    PlaceholderText = "search players...",
-                    PlaceholderColor3 = FromRGB(80, 90, 100),
-                    Text = "",
-                    Size = UDim2New(1, -8, 0, 22),
-                    Position = UDim2New(0, 4, 0, 4),
-                    BackgroundColor3 = FromRGB(22, 25, 29),
-                    BorderSizePixel = 0,
-                    ZIndex = 3,
-                    TextSize = 13,
-                    ClearTextOnFocus = false
-                })  Items["SearchBox"]:AddToTheme({BackgroundColor3 = "Inline"})
-                Instances:Create("UICorner", {Parent = Items["SearchBox"].Instance, Name = "\0", CornerRadius = UDimNew(0, 4)})
-                Instances:Create("UIPadding", {Parent = Items["SearchBox"].Instance, Name = "\0", PaddingLeft = UDimNew(0, 6), PaddingRight = UDimNew(0, 6)})
-
-                Items["SearchBox"].Instance:GetPropertyChangedSignal("Text"):Connect(function()
-                    local query = Items["SearchBox"].Instance.Text:lower()
-                    for _, pd in pairs(Playerlist.Players) do
-                        local nm = pd.Name:lower()
-                        local dn = (pd.Player and pd.Player.DisplayName or ""):lower()
-                        pd.PlayerButton.Instance.Visible = query == "" or nm:find(query, 1, true) ~= nil or dn:find(query, 1, true) ~= nil
-                    end
-                end)
 
                 Instances:Create("UIListLayout", {
                     Parent = Items["PlayerHolder"].Instance,
@@ -9252,15 +9224,34 @@ local Library do
                 PlayerItems["NewPlayer"]:OnHover(function()
                 end)
 
+                local PageSearchData = Library.SearchItems[Playerlist.Page]
+                if PageSearchData then
+                    local searchEntry = {
+                        Name = Player.Name .. " " .. Player.DisplayName,
+                        Item = PlayerItems["NewPlayer"]
+                    }
+                    table.insert(PageSearchData, searchEntry)
+                    PlayerData.SearchEntry = searchEntry
+                end
+
                 Playerlist.Players[Player.Name] = PlayerData
                 return PlayerData
             end
 
             function Playerlist:Remove(Name)
                 if Playerlist.Players[Name] then
-                    Playerlist.Players[Name].PlayerButton:Clean()
+                    local pd = Playerlist.Players[Name]
+                    local PageSearchData = Library.SearchItems[Playerlist.Page]
+                    if PageSearchData and pd.SearchEntry then
+                        for i, entry in ipairs(PageSearchData) do
+                            if entry == pd.SearchEntry then
+                                table.remove(PageSearchData, i)
+                                break
+                            end
+                        end
+                    end
+                    pd.PlayerButton:Clean()
                 end
-                
                 Playerlist.Players[Name] = nil
             end
 
