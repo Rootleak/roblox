@@ -8407,7 +8407,7 @@ local Library do
                     Size = UDim2New(0, 50, 0, 50),
                     AnchorPoint = Vector2New(0, 1),
                     Image = "rbxasset://textures/ui/GuiImagePlaceholder.png",
-                    Position = UDim2New(0, 8, 1, -15),
+                    Position = UDim2New(0, 8, 1, -3),
                     ZIndex = 2,
                     BorderSizePixel = 0,
                     BackgroundColor3 = FromRGB(16, 18, 21)
@@ -8429,7 +8429,7 @@ local Library do
                     AutomaticSize = Enum.AutomaticSize.X,
                     Size = UDim2New(0, 0, 0, 15),
                     BackgroundTransparency = 1,
-                    Position = UDim2New(0, 65, 1, -65),
+                    Position = UDim2New(0, 65, 1, -84),
                     BorderSizePixel = 0,
                     ZIndex = 2,
                     TextSize = 14,
@@ -8446,7 +8446,7 @@ local Library do
                     AutomaticSize = Enum.AutomaticSize.X,
                     Size = UDim2New(0, 0, 0, 15),
                     BackgroundTransparency = 1,
-                    Position = UDim2New(0, 65, 1, -50),
+                    Position = UDim2New(0, 65, 1, -67),
                     BorderSizePixel = 0,
                     ZIndex = 2,
                     TextSize = 14,
@@ -8463,15 +8463,166 @@ local Library do
                     AutomaticSize = Enum.AutomaticSize.X,
                     Size = UDim2New(0, 0, 0, 15),
                     BackgroundTransparency = 1,
-                    Position = UDim2New(0, 65, 1, -35),
+                    Position = UDim2New(0, 65, 1, -50),
                     BorderSizePixel = 0,
                     ZIndex = 2,
                     TextSize = 14,
                     BackgroundColor3 = FromRGB(255, 255, 255)
                 })  Items["PlayerAccountAge"]:AddToTheme({TextColor3 = "Text"})
+
+                Items["PlayerTeamLabel"] = Instances:Create("TextLabel", {
+                    Parent = Items["Playerlist"].Instance,
+                    Name = "\0",
+                    FontFace = Library.Font,
+                    TextColor3 = FromRGB(255, 255, 255),
+                    BorderColor3 = FromRGB(0, 0, 0),
+                    Text = "Team: —",
+                    AutomaticSize = Enum.AutomaticSize.X,
+                    Size = UDim2New(0, 0, 0, 15),
+                    BackgroundTransparency = 1,
+                    Position = UDim2New(0, 65, 1, -33),
+                    BorderSizePixel = 0,
+                    ZIndex = 2,
+                    TextSize = 14,
+                    BackgroundColor3 = FromRGB(255, 255, 255)
+                })  Items["PlayerTeamLabel"]:AddToTheme({TextColor3 = "Text"})
+
+                Items["PlayerLeaksLabel"] = Instances:Create("TextLabel", {
+                    Parent = Items["Playerlist"].Instance,
+                    Name = "\0",
+                    FontFace = Library.Font,
+                    TextColor3 = FromRGB(255, 255, 255),
+                    BorderColor3 = FromRGB(0, 0, 0),
+                    Text = "Leaks: —",
+                    AutomaticSize = Enum.AutomaticSize.X,
+                    Size = UDim2New(0, 0, 0, 15),
+                    BackgroundTransparency = 1,
+                    Position = UDim2New(0, 65, 1, -16),
+                    BorderSizePixel = 0,
+                    ZIndex = 2,
+                    TextSize = 14,
+                    BackgroundColor3 = FromRGB(255, 255, 255)
+                })  Items["PlayerLeaksLabel"]:AddToTheme({TextColor3 = "Text"})
+
+                Items["PlayerDetailsBtn"] = Instances:Create("TextButton", {
+                    Parent = Items["Playerlist"].Instance,
+                    Name = "\0",
+                    FontFace = Library.Font,
+                    TextColor3 = FromRGB(196, 231, 255),
+                    BorderColor3 = FromRGB(0, 0, 0),
+                    Text = "Details ▼",
+                    AnchorPoint = Vector2New(1, 0),
+                    Size = UDim2New(0, 72, 0, 14),
+                    BackgroundColor3 = FromRGB(34, 39, 45),
+                    Position = UDim2New(1, -8, 1, -18),
+                    BorderSizePixel = 0,
+                    ZIndex = 3,
+                    TextSize = 12,
+                    AutoButtonColor = false,
+                    Visible = false
+                })  Items["PlayerDetailsBtn"]:AddToTheme({BackgroundColor3 = "Element", TextColor3 = "Accent"})
+
+                Instances:Create("UICorner", {
+                    Parent = Items["PlayerDetailsBtn"].Instance,
+                    Name = "\0",
+                    CornerRadius = UDimNew(0, 4)
+                })
+
+                Items["LeakPanel"] = Instances:Create("Frame", {
+                    Parent = Items["Playerlist"].Instance,
+                    Name = "\0",
+                    Size = UDim2New(1, -16, 0, 112),
+                    Position = UDim2New(0, 8, 1, -207),
+                    BackgroundColor3 = FromRGB(16, 18, 21),
+                    BorderSizePixel = 0,
+                    ZIndex = 2,
+                    Visible = false
+                })  Items["LeakPanel"]:AddToTheme({BackgroundColor3 = "Background"})
+
+                Instances:Create("UICorner", {
+                    Parent = Items["LeakPanel"].Instance,
+                    Name = "\0",
+                    CornerRadius = UDimNew(0, 5)
+                })
+
+                Items["LeakFieldsScroll"] = Instances:Create("ScrollingFrame", {
+                    Parent = Items["LeakPanel"].Instance,
+                    Name = "\0",
+                    Size = UDim2New(1, -8, 1, -28),
+                    Position = UDim2New(0, 4, 0, 4),
+                    BackgroundTransparency = 1,
+                    BorderSizePixel = 0,
+                    ScrollBarThickness = 2,
+                    CanvasSize = UDim2New(0, 0, 0, 0),
+                    AutomaticCanvasSize = Enum.AutomaticSize.Y,
+                    ZIndex = 3
+                })  Items["LeakFieldsScroll"]:AddToTheme({ScrollBarImageColor3 = "Border"})
+
+                Instances:Create("UIListLayout", {
+                    Parent = Items["LeakFieldsScroll"].Instance,
+                    Name = "\0",
+                    Padding = UDimNew(0, 2),
+                    SortOrder = Enum.SortOrder.LayoutOrder
+                })
+
+                Instances:Create("UIPadding", {
+                    Parent = Items["LeakFieldsScroll"].Instance,
+                    Name = "\0",
+                    PaddingLeft = UDimNew(0, 4),
+                    PaddingRight = UDimNew(0, 4)
+                })
+
+                Items["LeakPrevBtn"] = Instances:Create("TextButton", {
+                    Parent = Items["LeakPanel"].Instance,
+                    Name = "\0",
+                    FontFace = Library.Font,
+                    TextColor3 = FromRGB(196, 231, 255),
+                    Text = "◄",
+                    Size = UDim2New(0, 24, 0, 20),
+                    AnchorPoint = Vector2New(0, 1),
+                    Position = UDim2New(0, 4, 1, -4),
+                    BackgroundColor3 = FromRGB(34, 39, 45),
+                    BorderSizePixel = 0,
+                    ZIndex = 3,
+                    TextSize = 12,
+                    AutoButtonColor = false
+                })  Items["LeakPrevBtn"]:AddToTheme({BackgroundColor3 = "Element", TextColor3 = "Accent"})
+                Instances:Create("UICorner", {Parent=Items["LeakPrevBtn"].Instance, Name="\0", CornerRadius=UDimNew(0,4)})
+
+                Items["LeakNextBtn"] = Instances:Create("TextButton", {
+                    Parent = Items["LeakPanel"].Instance,
+                    Name = "\0",
+                    FontFace = Library.Font,
+                    TextColor3 = FromRGB(196, 231, 255),
+                    Text = "►",
+                    Size = UDim2New(0, 24, 0, 20),
+                    AnchorPoint = Vector2New(1, 1),
+                    Position = UDim2New(1, -4, 1, -4),
+                    BackgroundColor3 = FromRGB(34, 39, 45),
+                    BorderSizePixel = 0,
+                    ZIndex = 3,
+                    TextSize = 12,
+                    AutoButtonColor = false
+                })  Items["LeakNextBtn"]:AddToTheme({BackgroundColor3 = "Element", TextColor3 = "Accent"})
+                Instances:Create("UICorner", {Parent=Items["LeakNextBtn"].Instance, Name="\0", CornerRadius=UDimNew(0,4)})
+
+                Items["LeakPageLabel"] = Instances:Create("TextLabel", {
+                    Parent = Items["LeakPanel"].Instance,
+                    Name = "\0",
+                    FontFace = Library.Font,
+                    TextColor3 = FromRGB(255, 255, 255),
+                    Text = "1 / 1",
+                    Size = UDim2New(1, -64, 0, 20),
+                    AnchorPoint = Vector2New(0.5, 1),
+                    Position = UDim2New(0.5, 0, 1, -4),
+                    BackgroundTransparency = 1,
+                    BorderSizePixel = 0,
+                    ZIndex = 3,
+                    TextSize = 12
+                })  Items["LeakPageLabel"]:AddToTheme({TextColor3 = "Text"})
             end
 
-            do
+            do --[[ Dropdown removed — status replaced by leak scanning ]]
                 local DropdownItems = { } do
                     DropdownItems["Dropdown"] = Instances:Create("Frame", {
                         Parent = Items["Playerlist"].Instance,
@@ -8884,9 +9035,8 @@ local Library do
                     Dropdown:SetOpen(not Dropdown.IsOpen)
                 end)
 
-                Dropdown:AddOption("Neutral")
-                Dropdown:AddOption("Priority")
-                Dropdown:AddOption("Friendly")
+                -- options removed; dropdown hidden
+                DropdownItems["Dropdown"].Instance.Visible = false
             end
 
             function Playerlist:Add(Player)
@@ -9023,16 +9173,26 @@ local Library do
                         local PlayerAvatar = Players:GetUserThumbnailAsync(Playerlist.Player.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size420x420)
                         Items["PlayerAvatar"].Instance.Image = PlayerAvatar
                         Items["PlayerUsername"].Instance.Text = Playerlist.Player.DisplayName .. " (@" .. Playerlist.Player.Name .. ")"
-                        Items["PlayerUserID"].Instance.Text = tostring(Playerlist.Player.UserId)
-                        Items["PlayerAccountAge"].Instance.Text = tostring(Playerlist.Player.AccountAge) .. " days old"
+                        Items["PlayerUserID"].Instance.Text = "ID: " .. tostring(Playerlist.Player.UserId)
+                        Items["PlayerAccountAge"].Instance.Text = "Age: " .. tostring(Playerlist.Player.AccountAge) .. " days"
+                        Items["PlayerTeamLabel"].Instance.Text = "Team: " .. (Playerlist.Player.Team and Playerlist.Player.Team.Name or "None")
+                        Items["PlayerLeaksLabel"].Instance.Text = "Leaks: ..."
+                        Items["PlayerLeaksLabel"].Instance.TextColor3 = FromRGB(150, 150, 150)
+                        Items["PlayerDetailsBtn"].Instance.Visible = false
+                        Items["LeakPanel"].Instance.Visible = false
+                        Items["PlayerlistInline"].Instance.Size = UDim2New(1, -16, 1, -90)
                     else
-                        --print("this shit rigged")
                         Playerlist.Player = nil
                         PlayerData:Toggle("Inactive")
                         Items["PlayerAvatar"].Instance.Image = "rbxassetid://98200387761744"
                         Items["PlayerUsername"].Instance.Text = "None"
                         Items["PlayerUserID"].Instance.Text = "None"
                         Items["PlayerAccountAge"].Instance.Text = "None"
+                        Items["PlayerTeamLabel"].Instance.Text = "Team: \u2014"
+                        Items["PlayerLeaksLabel"].Instance.Text = "Leaks: \u2014"
+                        Items["PlayerDetailsBtn"].Instance.Visible = false
+                        Items["LeakPanel"].Instance.Visible = false
+                        Items["PlayerlistInline"].Instance.Size = UDim2New(1, -16, 1, -90)
                     end
 
                     if Data.Callback then 
@@ -9059,39 +9219,6 @@ local Library do
                 Playerlist.Players[Name] = nil
             end
 
-            Dropdown.Callback = function(Value) -- horrible code ik
-                if Playerlist.Player then
-                    if Playerlist.Player == LocalPlayer then
-                        return
-                    end
-
-                    if Value == "Neutral" then
-                        Playerlist.Players[Playerlist.Player.Name].PlayerStatus:Tween(nil, {
-                            TextColor3 = Library.Theme["Inactive Text"]
-                        })
-
-                        Playerlist.Players[Playerlist.Player.Name].PlayerStatus.Instance.Text = "Neutral"
-                    elseif Value == "Priority" then
-                        Playerlist.Players[Playerlist.Player.Name].PlayerStatus:Tween(nil, {
-                            TextColor3 = FromRGB(255, 50, 50)
-                        })
-
-                        Playerlist.Players[Playerlist.Player.Name].PlayerStatus.Instance.Text = "Priority"
-                    elseif Value == "Friendly" then
-                        Playerlist.Players[Playerlist.Player.Name].PlayerStatus:Tween(nil, {
-                            TextColor3 = FromRGB(83, 255, 83)
-                        })
-
-                        Playerlist.Players[Playerlist.Player.Name].PlayerStatus.Instance.Text = "Friendly"
-                    else
-                        Playerlist.Players[Playerlist.Player.Name].PlayerStatus:Tween(nil, {
-                            TextColor3 = Library.Theme["Inactive Text"]
-                        })
-
-                        Playerlist.Players[Playerlist.Player.Name].PlayerStatus.Instance.Text = "Neutral"
-                    end
-                end
-            end
 
             for Index, Value in Players:GetPlayers() do 
                 Playerlist:Add(Value)
@@ -9107,6 +9234,7 @@ local Library do
                 Playerlist:Add(Player)
             end)
 
+            Playerlist.Items = Items
             return Playerlist
         end
 
