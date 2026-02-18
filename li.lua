@@ -8412,7 +8412,7 @@ local Library do
                     Size = UDim2New(0, 50, 0, 50),
                     AnchorPoint = Vector2New(0, 0.5),
                     Image = "rbxasset://textures/ui/GuiImagePlaceholder.png",
-                    Position = UDim2New(0, 8, 0.5, 0),
+                    Position = UDim2New(0, 8, 1, -48),
                     ZIndex = 2,
                     BorderSizePixel = 0,
                     BackgroundColor3 = FromRGB(16, 18, 21)
