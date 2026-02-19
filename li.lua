@@ -2444,7 +2444,7 @@ local Library do
         local ConfigFolderName = StringGSub(Library.Folders.Configs, Library.Folders.Directory .. "/", "")
 
         for Index, Value in listfiles(Library.Folders.Configs) do
-            local FileName = StringGSub(Value, Library.Folders.Directory .. "\\" .. ConfigFolderName .. "\\", "")
+            local FileName = StringGSub(Value, Library.Folders.Directory .. "[/\\]" .. ConfigFolderName .. "[/\\]", "")
             List[Index] = FileName
         end
 
