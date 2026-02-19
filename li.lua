@@ -8540,50 +8540,84 @@ local Library do
                     Items["PlayerDetailsBtn"].Instance.Position = UDim2New(0, 195 + w + 3, 1, -31)
                 end)
 
-                Items["LeakPanel"] = Instances:Create("Frame", {
-                    Parent = Items["Playerlist"].Instance,
-                    Name = "\0",
-                    Size = UDim2New(0.5, -12, 0, 78),
-                    Position = UDim2New(0.5, 4, 1, -84),
-                    BackgroundColor3 = FromRGB(16, 18, 21),
-                    BorderSizePixel = 0,
-                    ZIndex = 2,
-                    Visible = false
-                })  Items["LeakPanel"]:AddToTheme({BackgroundColor3 = "Background"})
-
-                Instances:Create("UICorner", {
-                    Parent = Items["LeakPanel"].Instance,
-                    Name = "\0",
-                    CornerRadius = UDimNew(0, 5)
-                })
-
-                Items["LeakFieldsScroll"] = Instances:Create("ScrollingFrame", {
-                    Parent = Items["LeakPanel"].Instance,
-                    Name = "\0",
-                    Size = UDim2New(1, -8, 1, -8),
-                    Position = UDim2New(0, 4, 0, 4),
-                    BackgroundTransparency = 1,
-                    BorderSizePixel = 0,
-                    ScrollBarThickness = 2,
-                    CanvasSize = UDim2New(0, 0, 0, 0),
-                    AutomaticCanvasSize = Enum.AutomaticSize.Y,
-                    ZIndex = 3
-                })  Items["LeakFieldsScroll"]:AddToTheme({ScrollBarImageColor3 = "Border"})
-
-                Instances:Create("UIListLayout", {
-                    Parent = Items["LeakFieldsScroll"].Instance,
-                    Name = "\0",
-                    Padding = UDimNew(0, 2),
-                    SortOrder = Enum.SortOrder.LayoutOrder
-                })
-
-                Instances:Create("UIPadding", {
-                    Parent = Items["LeakFieldsScroll"].Instance,
-                    Name = "\0",
-                    PaddingLeft = UDimNew(0, 3),
-                    PaddingRight = UDimNew(0, 3),
-                    PaddingTop = UDimNew(0, 2)
-                })
+                Items["LeakSourceLabel"] = Instances:Create("TextLabel", {
+                    Parent = Items["Playerlist"].Instance, Name = "\0",
+                    FontFace = Library.Font, TextColor3 = FromRGB(196, 231, 255),
+                    BorderColor3 = FromRGB(0,0,0), Text = "",
+                    TextTruncate = Enum.TextTruncate.AtEnd,
+                    Size = UDim2New(0.5,-12,0,13), BackgroundTransparency = 1,
+                    Position = UDim2New(0.5,8,1,-76), BorderSizePixel = 0,
+                    ZIndex = 2, TextSize = 11, TextXAlignment = Enum.TextXAlignment.Left,
+                    Visible = false, BackgroundColor3 = FromRGB(255,255,255)
+                })  Items["LeakSourceLabel"]:AddToTheme({TextColor3 = "Accent"})
+                Items["LeakField1"] = Instances:Create("TextLabel", {
+                    Parent = Items["Playerlist"].Instance, Name = "\0",
+                    FontFace = Library.Font, TextColor3 = FromRGB(200,210,220),
+                    BorderColor3 = FromRGB(0,0,0), Text = "",
+                    TextTruncate = Enum.TextTruncate.AtEnd,
+                    Size = UDim2New(0.5,-12,0,12), BackgroundTransparency = 1,
+                    Position = UDim2New(0.5,8,1,-61), BorderSizePixel = 0,
+                    ZIndex = 2, TextSize = 11, TextXAlignment = Enum.TextXAlignment.Left,
+                    Visible = false, BackgroundColor3 = FromRGB(255,255,255)
+                })  Items["LeakField1"]:AddToTheme({TextColor3 = "Text"})
+                Items["LeakField2"] = Instances:Create("TextLabel", {
+                    Parent = Items["Playerlist"].Instance, Name = "\0",
+                    FontFace = Library.Font, TextColor3 = FromRGB(200,210,220),
+                    BorderColor3 = FromRGB(0,0,0), Text = "",
+                    TextTruncate = Enum.TextTruncate.AtEnd,
+                    Size = UDim2New(0.5,-12,0,12), BackgroundTransparency = 1,
+                    Position = UDim2New(0.5,8,1,-47), BorderSizePixel = 0,
+                    ZIndex = 2, TextSize = 11, TextXAlignment = Enum.TextXAlignment.Left,
+                    Visible = false, BackgroundColor3 = FromRGB(255,255,255)
+                })  Items["LeakField2"]:AddToTheme({TextColor3 = "Text"})
+                Items["LeakField3"] = Instances:Create("TextLabel", {
+                    Parent = Items["Playerlist"].Instance, Name = "\0",
+                    FontFace = Library.Font, TextColor3 = FromRGB(200,210,220),
+                    BorderColor3 = FromRGB(0,0,0), Text = "",
+                    TextTruncate = Enum.TextTruncate.AtEnd,
+                    Size = UDim2New(0.5,-12,0,12), BackgroundTransparency = 1,
+                    Position = UDim2New(0.5,8,1,-33), BorderSizePixel = 0,
+                    ZIndex = 2, TextSize = 11, TextXAlignment = Enum.TextXAlignment.Left,
+                    Visible = false, BackgroundColor3 = FromRGB(255,255,255)
+                })  Items["LeakField3"]:AddToTheme({TextColor3 = "Text"})
+                Items["LeakField4"] = Instances:Create("TextLabel", {
+                    Parent = Items["Playerlist"].Instance, Name = "\0",
+                    FontFace = Library.Font, TextColor3 = FromRGB(200,210,220),
+                    BorderColor3 = FromRGB(0,0,0), Text = "",
+                    TextTruncate = Enum.TextTruncate.AtEnd,
+                    Size = UDim2New(0.5,-12,0,12), BackgroundTransparency = 1,
+                    Position = UDim2New(0.5,8,1,-19), BorderSizePixel = 0,
+                    ZIndex = 2, TextSize = 11, TextXAlignment = Enum.TextXAlignment.Left,
+                    Visible = false, BackgroundColor3 = FromRGB(255,255,255)
+                })  Items["LeakField4"]:AddToTheme({TextColor3 = "Text"})
+                Items["LeakPrevBtn"] = Instances:Create("TextButton", {
+                    Parent = Items["Playerlist"].Instance, Name = "\0",
+                    FontFace = Library.Font, TextColor3 = FromRGB(196,231,255),
+                    Text = "\u25c4", Size = UDim2New(0,18,0,11),
+                    Position = UDim2New(0.5,8,1,-7),
+                    BackgroundColor3 = FromRGB(34,39,45), BorderSizePixel = 0,
+                    ZIndex = 2, TextSize = 9, AutoButtonColor = false, Visible = false
+                })  Items["LeakPrevBtn"]:AddToTheme({BackgroundColor3 = "Element", TextColor3 = "Accent"})
+                Instances:Create("UICorner",{Parent=Items["LeakPrevBtn"].Instance,Name="\0",CornerRadius=UDimNew(0,3)})
+                Items["LeakPageLabel"] = Instances:Create("TextLabel", {
+                    Parent = Items["Playerlist"].Instance, Name = "\0",
+                    FontFace = Library.Font, TextColor3 = FromRGB(180,180,190),
+                    Text = "1/1", Size = UDim2New(0,36,0,11),
+                    AnchorPoint = Vector2New(0.5,0), Position = UDim2New(0.75,0,1,-7),
+                    BackgroundTransparency = 1, BorderSizePixel = 0,
+                    ZIndex = 2, TextSize = 10, Visible = false,
+                    TextXAlignment = Enum.TextXAlignment.Center,
+                    BackgroundColor3 = FromRGB(255,255,255)
+                })  Items["LeakPageLabel"]:AddToTheme({TextColor3 = "Text"})
+                Items["LeakNextBtn"] = Instances:Create("TextButton", {
+                    Parent = Items["Playerlist"].Instance, Name = "\0",
+                    FontFace = Library.Font, TextColor3 = FromRGB(196,231,255),
+                    Text = "\u25ba", Size = UDim2New(0,18,0,11),
+                    AnchorPoint = Vector2New(1,0), Position = UDim2New(1,-8,1,-7),
+                    BackgroundColor3 = FromRGB(34,39,45), BorderSizePixel = 0,
+                    ZIndex = 2, TextSize = 9, AutoButtonColor = false, Visible = false
+                })  Items["LeakNextBtn"]:AddToTheme({BackgroundColor3 = "Element", TextColor3 = "Accent"})
+                Instances:Create("UICorner",{Parent=Items["LeakNextBtn"].Instance,Name="\0",CornerRadius=UDimNew(0,3)})
 
             end
 
