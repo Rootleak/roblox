@@ -285,6 +285,7 @@ local Options, MiscOptions do
             }) 
 
             Fonts[name] = Font.new(RegisteredFont, Enum.FontWeight.Regular, Enum.FontStyle.Normal)
+            ESPFonts[name] = Fonts[name]
         end
     end
 
@@ -1497,7 +1498,9 @@ local Library do
         return CoreGui
     end
 
-    getgenv().Options = { }
+    getgenv().Options = Options
+    getgenv().MiscOptions = MiscOptions
+    getgenv().ESPFonts = ESPFonts
 
     -- Library
     Library = {
