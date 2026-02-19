@@ -2493,6 +2493,15 @@ local Library do
                 end
             end)
         end
+        if self.Holder then
+            for _, desc in self.Holder.Instance:GetDescendants() do
+                pcall(function()
+                    if desc.FontFace ~= nil then
+                        desc.FontFace = fontObj
+                    end
+                end)
+            end
+        end
     end
 
     Library.LoadFont = function(self, name, url)
