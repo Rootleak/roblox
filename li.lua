@@ -1501,6 +1501,7 @@ local Library do
     getgenv().Options = Options
     getgenv().MiscOptions = MiscOptions
     getgenv().ESPFonts = ESPFonts
+    getgenv().LoadingTick = LoadingTick
 
     -- Library
     Library = {
