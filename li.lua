@@ -8405,78 +8405,89 @@ local Library do
                     PaddingLeft = UDimNew(0, 4)
                 })
 
-                Items["PlayerAvatar"] = Instances:Create("ImageLabel", {
+                Items["InfoBg"] = Instances:Create("Frame", {
                     Parent = Items["Playerlist"].Instance,
+                    Name = "\0",
+                    AnchorPoint = Vector2New(0, 1),
+                    Position = UDim2New(0, 4, 1, -4),
+                    Size = UDim2New(1, -8, 0, 82),
+                    BackgroundColor3 = FromRGB(16, 18, 21),
+                    BorderSizePixel = 0,
+                    ZIndex = 2,
+                    ClipsDescendants = true
+                })  Items["InfoBg"]:AddToTheme({BackgroundColor3 = "Background"})
+                Instances:Create("UICorner", {Parent = Items["InfoBg"].Instance, Name = "\0", CornerRadius = UDimNew(0, 5)})
+
+                Items["PlayerAvatar"] = Instances:Create("ImageLabel", {
+                    Parent = Items["InfoBg"].Instance,
                     Name = "\0",
                     BorderColor3 = FromRGB(0, 0, 0),
                     Size = UDim2New(0, 50, 0, 50),
-                    AnchorPoint = Vector2New(0, 0.5),
+                    AnchorPoint = Vector2New(0, 0),
                     Image = "rbxasset://textures/ui/GuiImagePlaceholder.png",
-                    Position = UDim2New(0, 8, 1, -48),
-                    ZIndex = 2,
+                    Position = UDim2New(0, 6, 0, 6),
+                    ZIndex = 3,
                     BorderSizePixel = 0,
                     BackgroundColor3 = FromRGB(16, 18, 21)
                 })  Items["PlayerAvatar"]:AddToTheme({BackgroundColor3 = "Background"})
-
-                Instances:Create("UICorner", {
-                    Parent = Items["PlayerAvatar"].Instance,
-                    Name = "\0",
-                    CornerRadius = UDimNew(0, 5)
-                })
+                Instances:Create("UICorner", {Parent = Items["PlayerAvatar"].Instance, Name = "\0", CornerRadius = UDimNew(0, 5)})
 
                 Items["PlayerUsername"] = Instances:Create("TextLabel", {
-                    Parent = Items["Playerlist"].Instance,
+                    Parent = Items["InfoBg"].Instance,
                     Name = "\0",
                     FontFace = Library.Font,
                     TextColor3 = FromRGB(255, 255, 255),
                     BorderColor3 = FromRGB(0, 0, 0),
-                    Text = "?",
-                    AutomaticSize = Enum.AutomaticSize.X,
-                    Size = UDim2New(0, 0, 0, 15),
+                    Text = "None",
+                    TextTruncate = Enum.TextTruncate.AtEnd,
+                    Size = UDim2New(1, -68, 0, 15),
                     BackgroundTransparency = 1,
-                    Position = UDim2New(0, 65, 1, -75),
+                    Position = UDim2New(0, 62, 0, 6),
                     BorderSizePixel = 0,
-                    ZIndex = 2,
-                    TextSize = 14,
+                    ZIndex = 3,
+                    TextSize = 13,
+                    TextXAlignment = Enum.TextXAlignment.Left,
                     BackgroundColor3 = FromRGB(255, 255, 255)
                 })  Items["PlayerUsername"]:AddToTheme({TextColor3 = "Text"})
 
                 Items["PlayerUserID"] = Instances:Create("TextLabel", {
-                    Parent = Items["Playerlist"].Instance,
+                    Parent = Items["InfoBg"].Instance,
                     Name = "\0",
                     FontFace = Library.Font,
                     TextColor3 = FromRGB(255, 255, 255),
                     BorderColor3 = FromRGB(0, 0, 0),
-                    Text = "?",
+                    Text = "ID: —",
                     AutomaticSize = Enum.AutomaticSize.X,
-                    Size = UDim2New(0, 0, 0, 15),
+                    Size = UDim2New(0, 0, 0, 13),
                     BackgroundTransparency = 1,
-                    Position = UDim2New(0, 65, 1, -57),
+                    Position = UDim2New(0, 62, 0, 24),
                     BorderSizePixel = 0,
-                    ZIndex = 2,
-                    TextSize = 14,
+                    ZIndex = 3,
+                    TextSize = 12,
+                    TextXAlignment = Enum.TextXAlignment.Left,
                     BackgroundColor3 = FromRGB(255, 255, 255)
-                })  Items["PlayerUserID"]:AddToTheme({TextColor3 = "Text"})
+                })  Items["PlayerUserID"]:AddToTheme({TextColor3 = "Inactive Text"})
 
                 Items["PlayerAccountAge"] = Instances:Create("TextLabel", {
-                    Parent = Items["Playerlist"].Instance,
+                    Parent = Items["InfoBg"].Instance,
                     Name = "\0",
                     FontFace = Library.Font,
                     TextColor3 = FromRGB(255, 255, 255),
                     BorderColor3 = FromRGB(0, 0, 0),
-                    Text = "?",
+                    Text = "Age: —",
                     AutomaticSize = Enum.AutomaticSize.X,
-                    Size = UDim2New(0, 0, 0, 15),
+                    Size = UDim2New(0, 0, 0, 13),
                     BackgroundTransparency = 1,
-                    Position = UDim2New(0, 195, 1, -57),
+                    Position = UDim2New(0, 175, 0, 24),
                     BorderSizePixel = 0,
-                    ZIndex = 2,
-                    TextSize = 14,
+                    ZIndex = 3,
+                    TextSize = 12,
+                    TextXAlignment = Enum.TextXAlignment.Left,
                     BackgroundColor3 = FromRGB(255, 255, 255)
-                })  Items["PlayerAccountAge"]:AddToTheme({TextColor3 = "Text"})
+                })  Items["PlayerAccountAge"]:AddToTheme({TextColor3 = "Inactive Text"})
 
                 Items["PlayerTeamLabel"] = Instances:Create("TextLabel", {
-                    Parent = Items["Playerlist"].Instance,
+                    Parent = Items["InfoBg"].Instance,
                     Name = "\0",
                     FontFace = Library.Font,
                     TextColor3 = FromRGB(255, 255, 255),
@@ -8484,17 +8495,36 @@ local Library do
                     Text = 'Team: <font color="rgb(150,150,150)">—</font>',
                     RichText = true,
                     AutomaticSize = Enum.AutomaticSize.X,
-                    Size = UDim2New(0, 0, 0, 15),
+                    Size = UDim2New(0, 0, 0, 13),
                     BackgroundTransparency = 1,
-                    Position = UDim2New(0, 65, 1, -38),
+                    Position = UDim2New(0, 62, 0, 42),
                     BorderSizePixel = 0,
-                    ZIndex = 2,
-                    TextSize = 14,
+                    ZIndex = 3,
+                    TextSize = 12,
+                    TextXAlignment = Enum.TextXAlignment.Left,
                     BackgroundColor3 = FromRGB(255, 255, 255)
                 })  Items["PlayerTeamLabel"]:AddToTheme({TextColor3 = "Text"})
 
+                -- ── Leaks row: label + expand toggle side by side ───────────
+                Items["LeaksRow"] = Instances:Create("Frame", {
+                    Parent = Items["InfoBg"].Instance,
+                    Name = "\0",
+                    BackgroundTransparency = 1,
+                    Position = UDim2New(0, 62, 0, 58),
+                    Size = UDim2New(1, -68, 0, 18),
+                    ZIndex = 3
+                })
+                Instances:Create("UIListLayout", {
+                    Parent = Items["LeaksRow"].Instance,
+                    Name = "\0",
+                    FillDirection = Enum.FillDirection.Horizontal,
+                    VerticalAlignment = Enum.VerticalAlignment.Center,
+                    Padding = UDimNew(0, 5),
+                    SortOrder = Enum.SortOrder.LayoutOrder
+                })
+
                 Items["PlayerLeaksLabel"] = Instances:Create("TextLabel", {
-                    Parent = Items["Playerlist"].Instance,
+                    Parent = Items["LeaksRow"].Instance,
                     Name = "\0",
                     FontFace = Library.Font,
                     TextColor3 = FromRGB(255, 255, 255),
@@ -8502,49 +8532,44 @@ local Library do
                     Text = 'Leaks: <font color="rgb(150,150,150)">—</font>',
                     RichText = true,
                     AutomaticSize = Enum.AutomaticSize.X,
-                    Size = UDim2New(0, 0, 0, 15),
+                    Size = UDim2New(0, 0, 1, 0),
                     BackgroundTransparency = 1,
-                    Position = UDim2New(0, 195, 1, -38),
                     BorderSizePixel = 0,
-                    ZIndex = 2,
-                    TextSize = 14,
-                    BackgroundColor3 = FromRGB(255, 255, 255)
+                    ZIndex = 3,
+                    TextSize = 12,
+                    TextXAlignment = Enum.TextXAlignment.Left,
+                    BackgroundColor3 = FromRGB(255, 255, 255),
+                    LayoutOrder = 1
                 })  Items["PlayerLeaksLabel"]:AddToTheme({TextColor3 = "Text"})
 
                 Items["PlayerDetailsBtn"] = Instances:Create("TextButton", {
-                    Parent = Items["Playerlist"].Instance,
+                    Parent = Items["LeaksRow"].Instance,
                     Name = "\0",
                     FontFace = Library.Font,
                     TextColor3 = FromRGB(196, 231, 255),
                     BorderColor3 = FromRGB(0, 0, 0),
-                    Text = "Details ▼",
-                    AnchorPoint = Vector2New(1, 0),
-                    Size = UDim2New(0, 72, 0, 14),
+                    Text = "+",
+                    Size = UDim2New(0, 16, 0, 14),
                     BackgroundColor3 = FromRGB(34, 39, 45),
-                    Position = UDim2New(1, -8, 1, -40),
                     BorderSizePixel = 0,
-                    ZIndex = 3,
+                    ZIndex = 4,
                     TextSize = 12,
                     AutoButtonColor = false,
-                    Visible = false
+                    Visible = false,
+                    LayoutOrder = 2
                 })  Items["PlayerDetailsBtn"]:AddToTheme({BackgroundColor3 = "Element", TextColor3 = "Accent"})
-
-                Instances:Create("UICorner", {
-                    Parent = Items["PlayerDetailsBtn"].Instance,
-                    Name = "\0",
-                    CornerRadius = UDimNew(0, 4)
-                })
+                Instances:Create("UICorner", {Parent = Items["PlayerDetailsBtn"].Instance, Name = "\0", CornerRadius = UDimNew(0, 3)})
 
                 Items["LeakPanel"] = Instances:Create("Frame", {
-                    Parent = Items["Playerlist"].Instance,
+                    Parent = Items["InfoBg"].Instance,
                     Name = "\0",
-                    Size = UDim2New(1, -16, 0, 112),
-                    Position = UDim2New(0, 8, 1, -207),
-                    BackgroundColor3 = FromRGB(16, 18, 21),
+                    Size = UDim2New(1, -8, 0, 108),
+                    Position = UDim2New(0, 4, 0, 82),
+                    BackgroundColor3 = FromRGB(22, 25, 29),
                     BorderSizePixel = 0,
-                    ZIndex = 2,
+                    ZIndex = 3,
                     Visible = false
-                })  Items["LeakPanel"]:AddToTheme({BackgroundColor3 = "Background"})
+                })  Items["LeakPanel"]:AddToTheme({BackgroundColor3 = "Inline"})
 
                 Instances:Create("UICorner", {
                     Parent = Items["LeakPanel"].Instance,
@@ -9193,14 +9218,14 @@ local Library do
                         end
                         if Items["PlayerDetailsBtn"] then Items["PlayerDetailsBtn"].Instance.Visible = false end
                         if Items["LeakPanel"]        then Items["LeakPanel"].Instance.Visible = false end
-                        if Items["PlayerlistInline"] then Items["PlayerlistInline"].Instance.Size = UDim2New(1, -16, 1, -90) end
+                        if Items["InfoBg"]           then Items["InfoBg"].Instance.Size = UDim2New(1, -8, 0, 82) end
                     else
                         Playerlist.Player = nil
                         PlayerData:Toggle("Inactive")
                         Items["PlayerAvatar"].Instance.Image = "rbxassetid://98200387761744"
                         Items["PlayerUsername"].Instance.Text = "None"
-                        Items["PlayerUserID"].Instance.Text = "None"
-                        Items["PlayerAccountAge"].Instance.Text = "None"
+                        Items["PlayerUserID"].Instance.Text = "ID: —"
+                        Items["PlayerAccountAge"].Instance.Text = "Age: —"
                         if Items["PlayerTeamLabel"] then
                             Items["PlayerTeamLabel"].Instance.Text = 'Team: <font color="rgb(150,150,150)">—</font>'
                         end
@@ -9209,7 +9234,7 @@ local Library do
                         end
                         if Items["PlayerDetailsBtn"] then Items["PlayerDetailsBtn"].Instance.Visible = false end
                         if Items["LeakPanel"]        then Items["LeakPanel"].Instance.Visible = false end
-                        if Items["PlayerlistInline"] then Items["PlayerlistInline"].Instance.Size = UDim2New(1, -16, 1, -90) end
+                        if Items["InfoBg"]           then Items["InfoBg"].Instance.Size = UDim2New(1, -8, 0, 82) end
                     end
 
                     if Data.Callback then 
