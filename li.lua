@@ -286,6 +286,7 @@ local Options, MiscOptions do
 
             Fonts[name] = Font.new(RegisteredFont, Enum.FontWeight.Regular, Enum.FontStyle.Normal)
         end
+        getgenv().KiwiEspFonts = Fonts
     end
 
     getgenv().Esp = { 
@@ -3336,8 +3337,12 @@ local Library do
                     Items["Holder"].Instance.ZIndex = 11
 
                     RenderStepped = RunService.RenderStepped:Connect(function()
-                        Items["OptionHolder"].Instance.Position = UDim2New(0, Items["RealDropdown"].Instance.AbsolutePosition.X, 0, Items["RealDropdown"].Instance.AbsolutePosition.Y + 30)
-                        Items["OptionHolder"].Instance.Size = UDim2New(0, Items["RealDropdown"].Instance.AbsoluteSize.X, 0, Data.MaxSize or 220)
+                        local dropH   = Data.MaxSize or 220
+                        local btnPos  = Items["RealDropdown"].Instance.AbsolutePosition
+                        local viewH   = workspace.CurrentCamera.ViewportSize.Y
+                        local posY    = (btnPos.Y + 30 + dropH <= viewH) and (btnPos.Y + 30) or (btnPos.Y - dropH)
+                        Items["OptionHolder"].Instance.Position = UDim2New(0, btnPos.X, 0, posY)
+                        Items["OptionHolder"].Instance.Size = UDim2New(0, Items["RealDropdown"].Instance.AbsoluteSize.X, 0, dropH)
                     end)
 
                     for Index, Value in Library.OpenFrames do 
