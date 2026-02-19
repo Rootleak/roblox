@@ -8593,7 +8593,7 @@ local Library do
                 Items["LeakPrevBtn"] = Instances:Create("TextButton", {
                     Parent = Items["Playerlist"].Instance, Name = "\0",
                     FontFace = Library.Font, TextColor3 = FromRGB(196,231,255),
-                    Text = "\u25c4", Size = UDim2New(0,18,0,11),
+                    Text = "◄", Size = UDim2New(0,18,0,11),
                     Position = UDim2New(0.5,8,1,-7),
                     BackgroundColor3 = FromRGB(34,39,45), BorderSizePixel = 0,
                     ZIndex = 2, TextSize = 9, AutoButtonColor = false, Visible = false
@@ -8612,7 +8612,7 @@ local Library do
                 Items["LeakNextBtn"] = Instances:Create("TextButton", {
                     Parent = Items["Playerlist"].Instance, Name = "\0",
                     FontFace = Library.Font, TextColor3 = FromRGB(196,231,255),
-                    Text = "\u25ba", Size = UDim2New(0,18,0,11),
+                    Text = "►", Size = UDim2New(0,18,0,11),
                     AnchorPoint = Vector2New(1,0), Position = UDim2New(1,-8,1,-7),
                     BackgroundColor3 = FromRGB(34,39,45), BorderSizePixel = 0,
                     ZIndex = 2, TextSize = 9, AutoButtonColor = false, Visible = false
