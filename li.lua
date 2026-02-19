@@ -237,9 +237,16 @@ local Options, MiscOptions do
     Options = setmetatable({}, {__index = MiscOptions, __newindex = function(self, key, value) Esp.RefreshElements(key, value) end});
 
     local Fonts = {}; do
+        local ESP_FONTS_DIR = "kiwisense/Fonts"
+        if not isfolder("kiwisense") then makefolder("kiwisense") end
+        if not isfolder(ESP_FONTS_DIR) then makefolder(ESP_FONTS_DIR) end
+
         local function RegisterFont(Name, Weight, Style, Asset)
-            if not isfile(Asset.Id) then
-                writefile(Asset.Id, Asset.Font)
+            local ttfPath  = ESP_FONTS_DIR .. "/" .. Asset.Id
+            local fontPath = ESP_FONTS_DIR .. "/" .. Name .. ".font"
+
+            if not isfile(ttfPath) then
+                writefile(ttfPath, Asset.Font)
             end
 
             local Data = {
@@ -249,16 +256,16 @@ local Options, MiscOptions do
                         name = "Normal",
                         weight = Weight,
                         style = Style,
-                        assetId = getcustomasset(Asset.Id),
+                        assetId = getcustomasset(ttfPath),
                     },
                 },
             }
 
-            if not isfile(Name .. ".font") then
-                writefile(Name .. ".font", HttpService:JSONEncode(Data))
+            if not isfile(fontPath) then
+                writefile(fontPath, HttpService:JSONEncode(Data))
             end
 
-            return getcustomasset(Name .. ".font");
+            return getcustomasset(fontPath);
         end
 
         local FontNames = {
@@ -1509,7 +1516,8 @@ local Library do
             Directory = "kiwisense",
             Configs = "kiwisense/Configs",
             Assets = "kiwisense/Assets",
-            Themes = "kiwisense/Themes"
+            Themes = "kiwisense/Themes",
+            Fonts  = "kiwisense/Fonts"
         },
 
         Images = { -- you're welcome to reupload the images and replace it with your own links
@@ -2094,12 +2102,13 @@ local Library do
 
     local CustomFont = { } do
         function CustomFont:New(Name, Weight, Style, Data)
-            if isfile(Library.Folders.Assets .. "/" .. Name .. ".json") then
-                return Font.new(getcustomasset(Library.Folders.Assets .. "/" .. Name .. ".json"))
+            local dir = Library.Folders.Fonts
+            if isfile(dir .. "/" .. Name .. ".json") then
+                return Font.new(getcustomasset(dir .. "/" .. Name .. ".json"))
             end
 
-            if not isfile(Library.Folders.Assets .. "/" .. Name .. ".ttf") then 
-                writefile(Library.Folders.Assets .. "/" .. Name .. ".ttf", game:HttpGet(Data.Url))
+            if not isfile(dir .. "/" .. Name .. ".ttf") then 
+                writefile(dir .. "/" .. Name .. ".ttf", game:HttpGet(Data.Url))
             end
 
             local FontData = {
@@ -2108,17 +2117,18 @@ local Library do
                     name = "Regular",
                     weight = Weight,
                     style = Style,
-                    assetId = getcustomasset(Library.Folders.Assets .. "/" .. Name .. ".ttf")
+                    assetId = getcustomasset(dir .. "/" .. Name .. ".ttf")
                 } }
             }
 
-            writefile(Library.Folders.Assets .. "/" .. Name .. ".json", HttpService:JSONEncode(FontData))
-            return Font.new(getcustomasset(Library.Folders.Assets .. "/" .. Name .. ".json"))
+            writefile(dir .. "/" .. Name .. ".json", HttpService:JSONEncode(FontData))
+            return Font.new(getcustomasset(dir .. "/" .. Name .. ".json"))
         end
 
         function CustomFont:Get(Name)
-            if isfile(Library.Folders.Assets .. "/" .. Name .. ".json") then
-                return Font.new(getcustomasset(Library.Folders.Assets .. "/" .. Name .. ".json"))
+            local dir = Library.Folders.Fonts
+            if isfile(dir .. "/" .. Name .. ".json") then
+                return Font.new(getcustomasset(dir .. "/" .. Name .. ".json"))
             end
         end
 
@@ -2472,6 +2482,40 @@ local Library do
                 end
             end
         end
+    end
+
+    Library.SetFont = function(self, fontObj)
+        self.Font = fontObj
+        for _, Item in self.ThemeItems do
+            pcall(function()
+                if Item.Item.FontFace ~= nil then
+                    Item.Item.FontFace = fontObj
+                end
+            end)
+        end
+    end
+
+    Library.LoadFont = function(self, name, url)
+        local dir      = self.Folders.Fonts
+        local ttfPath  = dir .. "/" .. name .. ".ttf"
+        local jsonPath = dir .. "/" .. name .. ".json"
+        if not isfile(ttfPath) then
+            writefile(ttfPath, game:HttpGet(url))
+        end
+        if not isfile(jsonPath) then
+            local FontData = {
+                name = name,
+                faces = { {
+                    name    = "Regular",
+                    weight  = 400,
+                    style   = "Normal",
+                    assetId = getcustomasset(ttfPath)
+                } }
+            }
+            writefile(jsonPath, HttpService:JSONEncode(FontData))
+        end
+        local fontObj = Font.new(getcustomasset(jsonPath), Enum.FontWeight.Regular, Enum.FontStyle.Normal)
+        self:SetFont(fontObj)
     end
 
     Library.IsMouseOverFrame = function(self, Frame, XOffset, YOffset)
