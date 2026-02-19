@@ -2493,13 +2493,13 @@ local Library do
                 end
             end)
         end
-        if self.Holder then
-            for _, desc in self.Holder.Instance:GetDescendants() do
-                pcall(function()
-                    if desc.FontFace ~= nil then
+        for _, holder in {self.Holder, self.UnusedHolder} do
+            if holder then
+                for _, desc in holder.Instance:GetDescendants() do
+                    pcall(function()
                         desc.FontFace = fontObj
-                    end
-                end)
+                    end)
+                end
             end
         end
     end
@@ -2605,7 +2605,7 @@ local Library do
         local ConfigFolderName = StringGSub(Library.Folders.Themes, Library.Folders.Directory .. "/", "")
 
         for Index, Value in listfiles(Library.Folders.Themes) do
-            local FileName = StringGSub(Value, Library.Folders.Directory .. "\\" .. ConfigFolderName .. "\\", "")
+            local FileName = StringGSub(Value, Library.Folders.Directory .. "[/\\]" .. ConfigFolderName .. "[/\\]", "")
             List[Index] = FileName
         end
 
