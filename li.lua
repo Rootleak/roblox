@@ -8548,7 +8548,7 @@ local Library do
                     TextTruncate = Enum.TextTruncate.AtEnd,
                     Size = UDim2New(0.5,-12,0,14), BackgroundTransparency = 1,
                     Position = UDim2New(0.5,8,1,-75), BorderSizePixel = 0,
-                    ZIndex = 2, TextSize = 11, TextXAlignment = Enum.TextXAlignment.Left,
+                    ZIndex = 2, TextSize = 14, TextXAlignment = Enum.TextXAlignment.Left,
                     Visible = false, BackgroundColor3 = FromRGB(255,255,255)
                 })  Items["LeakSourceLabel"]:AddToTheme({TextColor3 = "Accent"})
                 -- Row 2 (Y=-57): Field1 left sub-col, Field2 right sub-col
@@ -8559,7 +8559,7 @@ local Library do
                     TextTruncate = Enum.TextTruncate.AtEnd,
                     Size = UDim2New(0.25,-10,0,14), BackgroundTransparency = 1,
                     Position = UDim2New(0.5,8,1,-57), BorderSizePixel = 0,
-                    ZIndex = 2, TextSize = 11, TextXAlignment = Enum.TextXAlignment.Left,
+                    ZIndex = 2, TextSize = 14, TextXAlignment = Enum.TextXAlignment.Left,
                     Visible = false, BackgroundColor3 = FromRGB(255,255,255)
                 })  Items["LeakField1"]:AddToTheme({TextColor3 = "Text"})
                 Items["LeakField2"] = Instances:Create("TextLabel", {
@@ -8569,7 +8569,7 @@ local Library do
                     TextTruncate = Enum.TextTruncate.AtEnd,
                     Size = UDim2New(0.25,-10,0,14), BackgroundTransparency = 1,
                     Position = UDim2New(0.75,2,1,-57), BorderSizePixel = 0,
-                    ZIndex = 2, TextSize = 11, TextXAlignment = Enum.TextXAlignment.Left,
+                    ZIndex = 2, TextSize = 14, TextXAlignment = Enum.TextXAlignment.Left,
                     Visible = false, BackgroundColor3 = FromRGB(255,255,255)
                 })  Items["LeakField2"]:AddToTheme({TextColor3 = "Text"})
                 -- Row 3 (Y=-38): Field3 left sub-col, Field4 right sub-col
@@ -8580,7 +8580,7 @@ local Library do
                     TextTruncate = Enum.TextTruncate.AtEnd,
                     Size = UDim2New(0.25,-10,0,14), BackgroundTransparency = 1,
                     Position = UDim2New(0.5,8,1,-38), BorderSizePixel = 0,
-                    ZIndex = 2, TextSize = 11, TextXAlignment = Enum.TextXAlignment.Left,
+                    ZIndex = 2, TextSize = 14, TextXAlignment = Enum.TextXAlignment.Left,
                     Visible = false, BackgroundColor3 = FromRGB(255,255,255)
                 })  Items["LeakField3"]:AddToTheme({TextColor3 = "Text"})
                 Items["LeakField4"] = Instances:Create("TextLabel", {
@@ -8590,7 +8590,7 @@ local Library do
                     TextTruncate = Enum.TextTruncate.AtEnd,
                     Size = UDim2New(0.25,-10,0,14), BackgroundTransparency = 1,
                     Position = UDim2New(0.75,2,1,-38), BorderSizePixel = 0,
-                    ZIndex = 2, TextSize = 11, TextXAlignment = Enum.TextXAlignment.Left,
+                    ZIndex = 2, TextSize = 14, TextXAlignment = Enum.TextXAlignment.Left,
                     Visible = false, BackgroundColor3 = FromRGB(255,255,255)
                 })  Items["LeakField4"]:AddToTheme({TextColor3 = "Text"})
                 -- Row 4 (Y=-20): pagination centered in right half
