@@ -286,7 +286,6 @@ local Options, MiscOptions do
 
             Fonts[name] = Font.new(RegisteredFont, Enum.FontWeight.Regular, Enum.FontStyle.Normal)
         end
-        getgenv().KiwiEspFonts = Fonts
     end
 
     getgenv().Esp = { 
@@ -2939,7 +2938,7 @@ local Library do
                     BorderColor3 = FromRGB(0, 0, 0),
                     Text = "",
                     AutoButtonColor = false,
-                    Size = UDim2New(1, 0, 0, 220),
+                    Size = UDim2New(1, 0, 0, 125),
                     AutomaticSize = Enum.AutomaticSize.None,
                     Position = UDim2New(0, 0, 0, 0),
                     Visible = false,
@@ -2979,10 +2978,10 @@ local Library do
                     AutomaticCanvasSize = Enum.AutomaticSize.Y,
                     ScrollBarThickness = 2,
                     BorderColor3 = FromRGB(0, 0, 0),
-                    Size = UDim2New(1, -8, 1, -46),
+                    Size = UDim2New(1, -8, 1, -8),
                     CanvasSize = UDim2New(0, 0, 0, 0),
                     BackgroundTransparency = 1,
-                    Position = UDim2New(0, 0, 0, 38),
+                    Position = UDim2New(0, 0, 0, 4),
                     BorderSizePixel = 0,
                     ScrollBarImageColor3 = Library.Theme.Border,
                     BottomImage = "rbxassetid://123813291349824",
@@ -3002,82 +3001,10 @@ local Library do
                 Instances:Create("UIPadding", {
                     Parent = Items["Holder"].Instance,
                     Name = "\0",
-                    PaddingTop = UDimNew(0, 8),
-                    PaddingBottom = UDimNew(0, 8),
+                    PaddingTop = UDimNew(0, 6),
+                    PaddingBottom = UDimNew(0, 6),
                     PaddingRight = UDimNew(0, 8),
                     PaddingLeft = UDimNew(0, 8)
-                })
-
-                Items["Search"] = Instances:Create("Frame", {
-                    Parent = Items["OptionHolder"].Instance,
-                    Name = "\0",
-                    Size = UDim2New(1, -16, 0, 25),
-                    Position = UDim2New(0, 8, 0, 8),
-                    BorderColor3 = FromRGB(0, 0, 0),
-                    ZIndex = 5,
-                    BorderSizePixel = 0,
-                    BackgroundColor3 = FromRGB(22, 25, 29)
-                })  Items["Search"]:AddToTheme({BackgroundColor3 = "Inline"})
-
-                Instances:Create("UIGradient", {
-                    Parent = Items["Search"].Instance,
-                    Name = "\0",
-                    Rotation = 84,
-                    Color = RGBSequence{RGBSequenceKeypoint(0, FromRGB(255, 255, 255)), RGBSequenceKeypoint(1, FromRGB(211, 211, 211))}
-                }):AddToTheme({Color = function()
-                    return RGBSequence{RGBSequenceKeypoint(0, FromRGB(255, 255, 255)), RGBSequenceKeypoint(1, Library.Theme["Dark Gradient"])}
-                end})
-
-                Instances:Create("UICorner", {
-                    Parent = Items["Search"].Instance,
-                    Name = "\0",
-                    CornerRadius = UDimNew(0, 5)
-                })
-
-                Instances:Create("UIStroke", {
-                    Parent = Items["Search"].Instance,
-                    Name = "\0",
-                    Color = FromRGB(32, 36, 42),
-                    Transparency = 0.4000000059604645,
-                    ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-                }):AddToTheme({Color = "Border"})
-
-                Items["SearchIcon"] = Instances:Create("ImageLabel", {
-                    Parent = Items["Search"].Instance,
-                    Name = "\0",
-                    ScaleType = Enum.ScaleType.Fit,
-                    ImageTransparency = 0.5,
-                    BorderColor3 = FromRGB(0, 0, 0),
-                    Size = UDim2New(0, 20, 0, 20),
-                    AnchorPoint = Vector2New(0, 0.5),
-                    Image = "rbxassetid://71924825350727",
-                    BackgroundTransparency = 1,
-                    Position = UDim2New(0, 8, 0.5, 0),
-                    ZIndex = 5,
-                    BorderSizePixel = 0,
-                    BackgroundColor3 = FromRGB(255, 255, 255)
-                })  Items["SearchIcon"]:AddToTheme({ImageColor3 = "Image"})
-
-                Items["Input"] = Instances:Create("TextBox", {
-                    Parent = Items["Search"].Instance,
-                    Name = "\0",
-                    FontFace = Library.Font,
-                    AnchorPoint = Vector2New(0, 0.5),
-                    PlaceholderColor3 = FromRGB(185, 185, 185),
-                    PlaceholderText = "search",
-                    TextSize = 14,
-                    Size = UDim2New(1, -45, 0, 15),
-                    ClipsDescendants = true,
-                    BorderColor3 = FromRGB(0, 0, 0),
-                    Text = "",
-                    ZIndex = 5,
-                    Position = UDim2New(0, 35, 0.5, 0),
-                    BackgroundTransparency = 1,
-                    TextXAlignment = Enum.TextXAlignment.Left,
-                    TextColor3 = FromRGB(255, 255, 255),
-                    ClearTextOnFocus = false,
-                    BorderSizePixel = 0,
-                    BackgroundColor3 = FromRGB(255, 255, 255)
                 })
             end
 
@@ -3186,7 +3113,7 @@ local Library do
                 local OptionText = Instances:Create("TextLabel", {
                     Parent = OptionButton.Instance,
                     Name = "\0",
-                    FontFace = (Data.OptionFonts and Data.OptionFonts[Option]) or Library.Font,
+                    FontFace = Library.Font,
                     TextTransparency = 0.5,
                     AnchorPoint = Vector2New(0, 0.5),
                     ZIndex = 5,
@@ -3201,12 +3128,7 @@ local Library do
                     Position = UDim2New(0, 7, 0.5, 0),
                     BorderSizePixel = 0,
                     BackgroundColor3 = FromRGB(255, 255, 255)
-                })
-                if Data.OptionFonts and Data.OptionFonts[Option] then
-                    OptionText.Instance.FontFace = Data.OptionFonts[Option]
-                else
-                    OptionText:AddToTheme({TextColor3 = "Text"})
-                end
+                })  OptionText:AddToTheme({TextColor3 = "Text"})
 
                 local OptionData = {
                     Selected = false,
@@ -3337,12 +3259,8 @@ local Library do
                     Items["Holder"].Instance.ZIndex = 11
 
                     RenderStepped = RunService.RenderStepped:Connect(function()
-                        local dropH   = Data.MaxSize or 220
-                        local btnPos  = Items["RealDropdown"].Instance.AbsolutePosition
-                        local viewH   = workspace.CurrentCamera.ViewportSize.Y
-                        local posY    = (btnPos.Y + 30 + dropH <= viewH) and (btnPos.Y + 30) or (btnPos.Y - dropH)
-                        Items["OptionHolder"].Instance.Position = UDim2New(0, btnPos.X, 0, posY)
-                        Items["OptionHolder"].Instance.Size = UDim2New(0, Items["RealDropdown"].Instance.AbsoluteSize.X, 0, dropH)
+                        Items["OptionHolder"].Instance.Position = UDim2New(0, Items["RealDropdown"].Instance.AbsolutePosition.X, 0, Items["RealDropdown"].Instance.AbsolutePosition.Y + 30)
+                        Items["OptionHolder"].Instance.Size = UDim2New(0, Items["RealDropdown"].Instance.AbsoluteSize.X, 0, Data.MaxSize or 165)
                     end)
 
                     for Index, Value in Library.OpenFrames do 
@@ -3417,31 +3335,6 @@ local Library do
                     end
 
                     Dropdown:SetOpen(false)
-                end
-            end)
-
-            local SearchStepped
-
-            Items["Input"]:Connect("Focused", function()
-                if SearchStepped then
-                    return
-                end
-
-                SearchStepped = RunService.RenderStepped:Connect(function()
-                    for Index, Value in Dropdown.Options do 
-                        if StringFind(Value.Name:lower(), Items["Input"].Instance.Text:lower()) then 
-                            Value.Button.Instance.Visible = true
-                        else
-                            Value.Button.Instance.Visible = false
-                        end
-                    end
-                end)
-            end)
-
-            Items["Input"]:Connect("FocusLost", function()
-                if SearchStepped then
-                    SearchStepped:Disconnect()
-                    SearchStepped = nil
                 end
             end)
 
