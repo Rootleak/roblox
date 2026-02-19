@@ -2938,7 +2938,7 @@ local Library do
                     BorderColor3 = FromRGB(0, 0, 0),
                     Text = "",
                     AutoButtonColor = false,
-                    Size = UDim2New(1, 0, 0, 125),
+                    Size = UDim2New(1, 0, 0, 220),
                     AutomaticSize = Enum.AutomaticSize.None,
                     Position = UDim2New(0, 0, 0, 0),
                     Visible = false,
@@ -3185,7 +3185,7 @@ local Library do
                 local OptionText = Instances:Create("TextLabel", {
                     Parent = OptionButton.Instance,
                     Name = "\0",
-                    FontFace = Library.Font,
+                    FontFace = (Data.OptionFonts and Data.OptionFonts[Option]) or Library.Font,
                     TextTransparency = 0.5,
                     AnchorPoint = Vector2New(0, 0.5),
                     ZIndex = 5,
@@ -3200,7 +3200,12 @@ local Library do
                     Position = UDim2New(0, 7, 0.5, 0),
                     BorderSizePixel = 0,
                     BackgroundColor3 = FromRGB(255, 255, 255)
-                })  OptionText:AddToTheme({TextColor3 = "Text"})
+                })
+                if Data.OptionFonts and Data.OptionFonts[Option] then
+                    OptionText.Instance.FontFace = Data.OptionFonts[Option]
+                else
+                    OptionText:AddToTheme({TextColor3 = "Text"})
+                end
 
                 local OptionData = {
                     Selected = false,
@@ -3332,7 +3337,7 @@ local Library do
 
                     RenderStepped = RunService.RenderStepped:Connect(function()
                         Items["OptionHolder"].Instance.Position = UDim2New(0, Items["RealDropdown"].Instance.AbsolutePosition.X, 0, Items["RealDropdown"].Instance.AbsolutePosition.Y + 30)
-                        Items["OptionHolder"].Instance.Size = UDim2New(0, Items["RealDropdown"].Instance.AbsoluteSize.X, 0, Data.MaxSize or 165)
+                        Items["OptionHolder"].Instance.Size = UDim2New(0, Items["RealDropdown"].Instance.AbsoluteSize.X, 0, Data.MaxSize or 220)
                     end)
 
                     for Index, Value in Library.OpenFrames do 
