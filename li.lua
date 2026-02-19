@@ -8543,8 +8543,8 @@ local Library do
                 Items["LeakPanel"] = Instances:Create("Frame", {
                     Parent = Items["Playerlist"].Instance,
                     Name = "\0",
-                    Size = UDim2New(1, -16, 0, 112),
-                    Position = UDim2New(0, 8, 1, -207),
+                    Size = UDim2New(0.5, -12, 0, 78),
+                    Position = UDim2New(0.5, 4, 1, -84),
                     BackgroundColor3 = FromRGB(16, 18, 21),
                     BorderSizePixel = 0,
                     ZIndex = 2,
@@ -8560,7 +8560,7 @@ local Library do
                 Items["LeakFieldsScroll"] = Instances:Create("ScrollingFrame", {
                     Parent = Items["LeakPanel"].Instance,
                     Name = "\0",
-                    Size = UDim2New(1, -8, 1, -28),
+                    Size = UDim2New(1, -8, 1, -8),
                     Position = UDim2New(0, 4, 0, 4),
                     BackgroundTransparency = 1,
                     BorderSizePixel = 0,
@@ -8580,58 +8580,11 @@ local Library do
                 Instances:Create("UIPadding", {
                     Parent = Items["LeakFieldsScroll"].Instance,
                     Name = "\0",
-                    PaddingLeft = UDimNew(0, 4),
-                    PaddingRight = UDimNew(0, 4)
+                    PaddingLeft = UDimNew(0, 3),
+                    PaddingRight = UDimNew(0, 3),
+                    PaddingTop = UDimNew(0, 2)
                 })
 
-                Items["LeakPrevBtn"] = Instances:Create("TextButton", {
-                    Parent = Items["LeakPanel"].Instance,
-                    Name = "\0",
-                    FontFace = Library.Font,
-                    TextColor3 = FromRGB(196, 231, 255),
-                    Text = "◄",
-                    Size = UDim2New(0, 24, 0, 20),
-                    AnchorPoint = Vector2New(0, 1),
-                    Position = UDim2New(0, 4, 1, -4),
-                    BackgroundColor3 = FromRGB(34, 39, 45),
-                    BorderSizePixel = 0,
-                    ZIndex = 3,
-                    TextSize = 12,
-                    AutoButtonColor = false
-                })  Items["LeakPrevBtn"]:AddToTheme({BackgroundColor3 = "Element", TextColor3 = "Accent"})
-                Instances:Create("UICorner", {Parent=Items["LeakPrevBtn"].Instance, Name="\0", CornerRadius=UDimNew(0,4)})
-
-                Items["LeakNextBtn"] = Instances:Create("TextButton", {
-                    Parent = Items["LeakPanel"].Instance,
-                    Name = "\0",
-                    FontFace = Library.Font,
-                    TextColor3 = FromRGB(196, 231, 255),
-                    Text = "►",
-                    Size = UDim2New(0, 24, 0, 20),
-                    AnchorPoint = Vector2New(1, 1),
-                    Position = UDim2New(1, -4, 1, -4),
-                    BackgroundColor3 = FromRGB(34, 39, 45),
-                    BorderSizePixel = 0,
-                    ZIndex = 3,
-                    TextSize = 12,
-                    AutoButtonColor = false
-                })  Items["LeakNextBtn"]:AddToTheme({BackgroundColor3 = "Element", TextColor3 = "Accent"})
-                Instances:Create("UICorner", {Parent=Items["LeakNextBtn"].Instance, Name="\0", CornerRadius=UDimNew(0,4)})
-
-                Items["LeakPageLabel"] = Instances:Create("TextLabel", {
-                    Parent = Items["LeakPanel"].Instance,
-                    Name = "\0",
-                    FontFace = Library.Font,
-                    TextColor3 = FromRGB(255, 255, 255),
-                    Text = "1 / 1",
-                    Size = UDim2New(1, -64, 0, 20),
-                    AnchorPoint = Vector2New(0.5, 1),
-                    Position = UDim2New(0.5, 0, 1, -4),
-                    BackgroundTransparency = 1,
-                    BorderSizePixel = 0,
-                    ZIndex = 3,
-                    TextSize = 12
-                })  Items["LeakPageLabel"]:AddToTheme({TextColor3 = "Text"})
             end
 
             do --[[ Dropdown removed — status replaced by leak scanning ]]
