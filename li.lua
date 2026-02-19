@@ -8517,14 +8517,14 @@ local Library do
                     FontFace = Library.Font,
                     TextColor3 = FromRGB(196, 231, 255),
                     BorderColor3 = FromRGB(0, 0, 0),
-                    Text = "Details ▼",
-                    AnchorPoint = Vector2New(1, 0),
-                    Size = UDim2New(0, 72, 0, 14),
+                    Text = "+",
+                    AnchorPoint = Vector2New(0, 0.5),
+                    Size = UDim2New(0, 14, 0, 14),
                     BackgroundColor3 = FromRGB(34, 39, 45),
-                    Position = UDim2New(1, -8, 1, -40),
+                    Position = UDim2New(0, 195, 1, -31),
                     BorderSizePixel = 0,
                     ZIndex = 3,
-                    TextSize = 12,
+                    TextSize = 11,
                     AutoButtonColor = false,
                     Visible = false
                 })  Items["PlayerDetailsBtn"]:AddToTheme({BackgroundColor3 = "Element", TextColor3 = "Accent"})
@@ -8532,8 +8532,13 @@ local Library do
                 Instances:Create("UICorner", {
                     Parent = Items["PlayerDetailsBtn"].Instance,
                     Name = "\0",
-                    CornerRadius = UDimNew(0, 4)
+                    CornerRadius = UDimNew(0, 3)
                 })
+
+                Items["PlayerLeaksLabel"].Instance:GetPropertyChangedSignal("AbsoluteSize"):Connect(function()
+                    local w = Items["PlayerLeaksLabel"].Instance.AbsoluteSize.X
+                    Items["PlayerDetailsBtn"].Instance.Position = UDim2New(0, 195 + w + 3, 1, -31)
+                end)
 
                 Items["LeakPanel"] = Instances:Create("Frame", {
                     Parent = Items["Playerlist"].Instance,
