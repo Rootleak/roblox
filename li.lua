@@ -8540,23 +8540,25 @@ local Library do
                     Items["PlayerDetailsBtn"].Instance.Position = UDim2New(0, 195 + w + 3, 1, -31)
                 end)
 
+                -- Row 1 (Y=-75): source header spanning full right half
                 Items["LeakSourceLabel"] = Instances:Create("TextLabel", {
                     Parent = Items["Playerlist"].Instance, Name = "\0",
                     FontFace = Library.Font, TextColor3 = FromRGB(196, 231, 255),
                     BorderColor3 = FromRGB(0,0,0), Text = "",
                     TextTruncate = Enum.TextTruncate.AtEnd,
-                    Size = UDim2New(0.5,-12,0,13), BackgroundTransparency = 1,
-                    Position = UDim2New(0.5,8,1,-76), BorderSizePixel = 0,
+                    Size = UDim2New(0.5,-12,0,14), BackgroundTransparency = 1,
+                    Position = UDim2New(0.5,8,1,-75), BorderSizePixel = 0,
                     ZIndex = 2, TextSize = 11, TextXAlignment = Enum.TextXAlignment.Left,
                     Visible = false, BackgroundColor3 = FromRGB(255,255,255)
                 })  Items["LeakSourceLabel"]:AddToTheme({TextColor3 = "Accent"})
+                -- Row 2 (Y=-57): Field1 left sub-col, Field2 right sub-col
                 Items["LeakField1"] = Instances:Create("TextLabel", {
                     Parent = Items["Playerlist"].Instance, Name = "\0",
                     FontFace = Library.Font, TextColor3 = FromRGB(200,210,220),
                     BorderColor3 = FromRGB(0,0,0), Text = "",
                     TextTruncate = Enum.TextTruncate.AtEnd,
-                    Size = UDim2New(0.5,-12,0,12), BackgroundTransparency = 1,
-                    Position = UDim2New(0.5,8,1,-61), BorderSizePixel = 0,
+                    Size = UDim2New(0.25,-10,0,14), BackgroundTransparency = 1,
+                    Position = UDim2New(0.5,8,1,-57), BorderSizePixel = 0,
                     ZIndex = 2, TextSize = 11, TextXAlignment = Enum.TextXAlignment.Left,
                     Visible = false, BackgroundColor3 = FromRGB(255,255,255)
                 })  Items["LeakField1"]:AddToTheme({TextColor3 = "Text"})
@@ -8565,18 +8567,19 @@ local Library do
                     FontFace = Library.Font, TextColor3 = FromRGB(200,210,220),
                     BorderColor3 = FromRGB(0,0,0), Text = "",
                     TextTruncate = Enum.TextTruncate.AtEnd,
-                    Size = UDim2New(0.5,-12,0,12), BackgroundTransparency = 1,
-                    Position = UDim2New(0.5,8,1,-47), BorderSizePixel = 0,
+                    Size = UDim2New(0.25,-10,0,14), BackgroundTransparency = 1,
+                    Position = UDim2New(0.75,2,1,-57), BorderSizePixel = 0,
                     ZIndex = 2, TextSize = 11, TextXAlignment = Enum.TextXAlignment.Left,
                     Visible = false, BackgroundColor3 = FromRGB(255,255,255)
                 })  Items["LeakField2"]:AddToTheme({TextColor3 = "Text"})
+                -- Row 3 (Y=-38): Field3 left sub-col, Field4 right sub-col
                 Items["LeakField3"] = Instances:Create("TextLabel", {
                     Parent = Items["Playerlist"].Instance, Name = "\0",
                     FontFace = Library.Font, TextColor3 = FromRGB(200,210,220),
                     BorderColor3 = FromRGB(0,0,0), Text = "",
                     TextTruncate = Enum.TextTruncate.AtEnd,
-                    Size = UDim2New(0.5,-12,0,12), BackgroundTransparency = 1,
-                    Position = UDim2New(0.5,8,1,-33), BorderSizePixel = 0,
+                    Size = UDim2New(0.25,-10,0,14), BackgroundTransparency = 1,
+                    Position = UDim2New(0.5,8,1,-38), BorderSizePixel = 0,
                     ZIndex = 2, TextSize = 11, TextXAlignment = Enum.TextXAlignment.Left,
                     Visible = false, BackgroundColor3 = FromRGB(255,255,255)
                 })  Items["LeakField3"]:AddToTheme({TextColor3 = "Text"})
@@ -8585,16 +8588,17 @@ local Library do
                     FontFace = Library.Font, TextColor3 = FromRGB(200,210,220),
                     BorderColor3 = FromRGB(0,0,0), Text = "",
                     TextTruncate = Enum.TextTruncate.AtEnd,
-                    Size = UDim2New(0.5,-12,0,12), BackgroundTransparency = 1,
-                    Position = UDim2New(0.5,8,1,-19), BorderSizePixel = 0,
+                    Size = UDim2New(0.25,-10,0,14), BackgroundTransparency = 1,
+                    Position = UDim2New(0.75,2,1,-38), BorderSizePixel = 0,
                     ZIndex = 2, TextSize = 11, TextXAlignment = Enum.TextXAlignment.Left,
                     Visible = false, BackgroundColor3 = FromRGB(255,255,255)
                 })  Items["LeakField4"]:AddToTheme({TextColor3 = "Text"})
+                -- Row 4 (Y=-20): pagination centered in right half
                 Items["LeakPrevBtn"] = Instances:Create("TextButton", {
                     Parent = Items["Playerlist"].Instance, Name = "\0",
                     FontFace = Library.Font, TextColor3 = FromRGB(196,231,255),
-                    Text = "◄", Size = UDim2New(0,18,0,11),
-                    Position = UDim2New(0.5,8,1,-7),
+                    Text = "◄", Size = UDim2New(0,18,0,12),
+                    AnchorPoint = Vector2New(1,0), Position = UDim2New(0.75,-20,1,-20),
                     BackgroundColor3 = FromRGB(34,39,45), BorderSizePixel = 0,
                     ZIndex = 2, TextSize = 9, AutoButtonColor = false, Visible = false
                 })  Items["LeakPrevBtn"]:AddToTheme({BackgroundColor3 = "Element", TextColor3 = "Accent"})
@@ -8602,8 +8606,8 @@ local Library do
                 Items["LeakPageLabel"] = Instances:Create("TextLabel", {
                     Parent = Items["Playerlist"].Instance, Name = "\0",
                     FontFace = Library.Font, TextColor3 = FromRGB(180,180,190),
-                    Text = "1/1", Size = UDim2New(0,36,0,11),
-                    AnchorPoint = Vector2New(0.5,0), Position = UDim2New(0.75,0,1,-7),
+                    Text = "1/1", Size = UDim2New(0,32,0,12),
+                    AnchorPoint = Vector2New(0.5,0), Position = UDim2New(0.75,0,1,-20),
                     BackgroundTransparency = 1, BorderSizePixel = 0,
                     ZIndex = 2, TextSize = 10, Visible = false,
                     TextXAlignment = Enum.TextXAlignment.Center,
@@ -8612,8 +8616,8 @@ local Library do
                 Items["LeakNextBtn"] = Instances:Create("TextButton", {
                     Parent = Items["Playerlist"].Instance, Name = "\0",
                     FontFace = Library.Font, TextColor3 = FromRGB(196,231,255),
-                    Text = "►", Size = UDim2New(0,18,0,11),
-                    AnchorPoint = Vector2New(1,0), Position = UDim2New(1,-8,1,-7),
+                    Text = "►", Size = UDim2New(0,18,0,12),
+                    AnchorPoint = Vector2New(0,0), Position = UDim2New(0.75,20,1,-20),
                     BackgroundColor3 = FromRGB(34,39,45), BorderSizePixel = 0,
                     ZIndex = 2, TextSize = 9, AutoButtonColor = false, Visible = false
                 })  Items["LeakNextBtn"]:AddToTheme({BackgroundColor3 = "Element", TextColor3 = "Accent"})
