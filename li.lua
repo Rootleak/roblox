@@ -2416,7 +2416,7 @@ local Library do
             delfile(Library.Folders.Configs .. "/" .. Config)
             Library:Notification({
                 Name = "Success",
-                Description = "Succesfully deleted config: ".. Config .. ".json",
+                Description = "Succesfully deleted config: ".. Config,
                 Duration = 5,
                 Icon = "116339777575852",
                 IconColor = FromRGB(52, 255, 164)
