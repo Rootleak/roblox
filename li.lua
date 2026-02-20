@@ -1507,7 +1507,7 @@ local Library do
     Library = {
         Theme = nil,
 
-        MenuKeybind = tostring(Enum.KeyCode.Z), 
+        MenuKeybind = tostring(Enum.KeyCode.Tab), 
         Flags = { },
         KeybindNames = { },
         KeybindResets = { },
