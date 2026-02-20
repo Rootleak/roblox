@@ -5337,6 +5337,7 @@ local Library do
 
                 Keybind.Picking = true
 
+                Items["KeyButton"].Instance.Text = "..."
                 Items["KeyButton"]:Tween(nil, {TextTransparency = 0})
 
                 local InputBegan 
