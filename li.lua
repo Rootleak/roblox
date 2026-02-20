@@ -1,6 +1,6 @@
 --[[
 
-    assign different flags to each element to prevent from configs overriding eachother
+    Assign different flags to each element to prevent from configs overriding eachother
     example is at the bottom
 
     documentation:
