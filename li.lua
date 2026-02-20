@@ -5272,11 +5272,14 @@ local Library do
                         for conflictFlag, conflictData in pairs(Library.Flags) do
                             if conflictFlag ~= Data.Flag and type(conflictData) == "table" and conflictData.Key ~= nil and conflictData.Key == Keybind.Key then
                                 local conflictName = Library.KeybindNames[conflictFlag] or conflictFlag
-                                if Library.KeybindResets[conflictFlag] then
-                                    Library.KeybindResets[conflictFlag]()
-                                end
-                                Library:Notification({Name = "Keybind Conflict", Description = "\"" .. conflictName .. "\" already had " .. TextToDisplay .. " — it has been cleared", Duration = 4, Icon = "97118059177470", IconColor = Color3.fromRGB(255, 120, 120)})
-                                break
+                                Keybind.Key = nil
+                                Keybind.Value = "None"
+                                Items["KeyButton"].Instance.Text = "None"
+                                Items["KeyButton"]:Tween(nil, {TextTransparency = 0.5})
+                                Library.Flags[Data.Flag] = {Mode = Keybind.Mode, Key = nil, Toggled = Keybind.Toggled}
+                                Library:Notification({Name = "Keybind Conflict", Description = TextToDisplay .. " is already used by \"" .. conflictName .. "\"", Duration = 4, Icon = "97118059177470", IconColor = Color3.fromRGB(255, 120, 120)})
+                                Update()
+                                return
                             end
                         end
                     end
