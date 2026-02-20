@@ -2045,7 +2045,8 @@ local Library do
                 ZIndex = 5,
 				AutoButtonColor = false,
                 Visible = true,
-			})  ResizeButton:AddToTheme({ImageColor3 = "Accent"})
+			})            ResizeButton:AddToTheme({ImageColor3 = "Accent"})
+            self.ResizeButton = ResizeButton
 
             local InputChanged
 
@@ -7464,12 +7465,12 @@ local Library do
                     Parent = Items["Topbar"].Instance,
                     Name = "\0",
                     BorderColor3 = FromRGB(0, 0, 0),
-                    Size = UDim2New(0, 17, 0, 17),
+                    Size = UDim2New(0, 26, 0, 26),
                     AutoButtonColor = false,
                     AnchorPoint = Vector2New(1, 0.5),
                     Image = "rbxassetid://94817928404736",
                     BackgroundTransparency = 1,
-                    Position = UDim2New(1, -27, 0.5, -5),
+                    Position = UDim2New(1, -30, 0.5, 0),
                     ZIndex = 2,
                     BorderSizePixel = 0,
                     BackgroundColor3 = FromRGB(255, 255, 255)
@@ -7479,13 +7480,13 @@ local Library do
                     Parent = Items["Topbar"].Instance,
                     Name = "\0",
                     BorderColor3 = FromRGB(0, 0, 0),
-                    Size = UDim2New(0, 17, 0, 17),
+                    Size = UDim2New(0, 26, 0, 26),
                     ImageTransparency = 1,
                     AutoButtonColor = false,
                     AnchorPoint = Vector2New(1, 0.5),
                     Image = "rbxassetid://77419631183448",
                     BackgroundTransparency = 1,
-                    Position = UDim2New(1, -27, 0.5, 0),
+                    Position = UDim2New(1, -30, 0.5, 0),
                     ZIndex = 2,
                     BorderSizePixel = 0,
                     BackgroundColor3 = FromRGB(255, 255, 255)
@@ -7780,15 +7781,19 @@ local Library do
             Items["MinimizeButton"]:Connect("MouseButton1Down", function()
                 IsMinimized = not IsMinimized
 
+                local ResizeBtn = Items["MainFrame"].ResizeButton
+
                 if IsMinimized then
                     OldSize = Items["MainFrame"].Instance.AbsoluteSize
                     Items["MainFrame"]:Tween(nil, {Size = UDim2New(0, Items["MainFrame"].Instance.Size.X.Offset, 0, 35)})
                     Items["MinimizeButton"]:Tween(nil, {ImageTransparency = 1})
                     Items["UnMinimizeButton"]:Tween(nil, {ImageTransparency = 0})
+                    if ResizeBtn then ResizeBtn.Instance.Visible = false end
                 else
                     Items["MainFrame"]:Tween(nil, {Size = UDim2New(0, Items["MainFrame"].Instance.Size.X.Offset, 0, OldSize.Y)})
                     Items["MinimizeButton"]:Tween(nil, {ImageTransparency = 0})
                     Items["UnMinimizeButton"]:Tween(nil, {ImageTransparency = 1})
+                    if ResizeBtn then ResizeBtn.Instance.Visible = true end
                 end
             end)
 
