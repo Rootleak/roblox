@@ -1510,6 +1510,7 @@ local Library do
         MenuKeybind = tostring(Enum.KeyCode.Z), 
         Flags = { },
         KeybindNames = { },
+        KeybindResets = { },
 
         Tween = {
             Time = 0.3,
@@ -5268,7 +5269,10 @@ local Library do
                         for conflictFlag, conflictData in pairs(Library.Flags) do
                             if conflictFlag ~= Data.Flag and type(conflictData) == "table" and conflictData.Key ~= nil and conflictData.Key == Keybind.Key then
                                 local conflictName = Library.KeybindNames[conflictFlag] or conflictFlag
-                                Library:Notification({Name = "Keybind Conflict", Description = TextToDisplay .. " is already used by \"" .. conflictName .. "\"", Duration = 4, Icon = "97118059177470", IconColor = Color3.fromRGB(255, 120, 120)})
+                                if Library.KeybindResets[conflictFlag] then
+                                    Library.KeybindResets[conflictFlag]()
+                                end
+                                Library:Notification({Name = "Keybind Conflict", Description = "\"" .. conflictName .. "\" already had " .. TextToDisplay .. " — it has been cleared", Duration = 4, Icon = "97118059177470", IconColor = Color3.fromRGB(255, 120, 120)})
                                 break
                             end
                         end
@@ -5330,6 +5334,9 @@ local Library do
                     Key = nil,
                     Toggled = Keybind.Toggled
                 }
+                if Data.Callback then
+                    Library:SafeCall(Data.Callback, Keybind.Toggled)
+                end
                 Update()
             end
 
@@ -5421,6 +5428,7 @@ local Library do
             end
 
             Library.KeybindNames[Data.Flag] = Data.Name
+            Library.KeybindResets[Data.Flag] = function() Keybind:Reset() end
 
             Keybind.UpdateList = Update
 
@@ -9533,7 +9541,7 @@ local Library do
 
                     Name = Data.Name or Data.name or "Keybind",
                     Flag = Data.Flag or Data.flag or Library:NextFlag(),
-                    Default = Data.Default or Data.default or Enum.KeyCode.RightShift,
+                    Default = Data.Default or Data.default or nil,
                     Callback = Data.Callback or Data.callback or function() end,
                     Mode = Data.Mode or Data.mode or "Toggle",
                 }
@@ -10060,7 +10068,7 @@ local Library do
 
                     Name = Data.Name or Data.name or "Keybind",
                     Flag = Data.Flag or Data.flag or Library:NextFlag(),
-                    Default = Data.Default or Data.default or Enum.KeyCode.RightShift,
+                    Default = Data.Default or Data.default or nil,
                     Callback = Data.Callback or Data.callback or function() end,
                     Mode = Data.Mode or Data.mode or "Toggle",
                 }
