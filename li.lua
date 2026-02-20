@@ -7464,6 +7464,7 @@ local Library do
                 Items["MinimizeButton"] = Instances:Create("ImageButton", {
                     Parent = Items["Topbar"].Instance,
                     Name = "\0",
+                    ScaleType = Enum.ScaleType.Fit,
                     BorderColor3 = FromRGB(0, 0, 0),
                     Size = UDim2New(0, 17, 0, 17),
                     AutoButtonColor = false,
@@ -7471,7 +7472,7 @@ local Library do
                     Image = "rbxassetid://94817928404736",
                     BackgroundTransparency = 1,
                     Position = UDim2New(1, -36, 0.5, 0),
-                    ZIndex = 2,
+                    ZIndex = 3,
                     BorderSizePixel = 0,
                     BackgroundColor3 = FromRGB(255, 255, 255)
                 })  Items["MinimizeButton"]:AddToTheme({ImageColor3 = "Image"})
@@ -7479,6 +7480,7 @@ local Library do
                 Items["UnMinimizeButton"] = Instances:Create("ImageButton", {
                     Parent = Items["Topbar"].Instance,
                     Name = "\0",
+                    ScaleType = Enum.ScaleType.Fit,
                     BorderColor3 = FromRGB(0, 0, 0),
                     Size = UDim2New(0, 17, 0, 17),
                     ImageTransparency = 1,
