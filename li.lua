@@ -7470,7 +7470,7 @@ local Library do
                     AnchorPoint = Vector2New(1, 0.5),
                     Image = "rbxassetid://94817928404736",
                     BackgroundTransparency = 1,
-                    Position = UDim2New(1, -50, 0.5, -5),
+                    Position = UDim2New(1, -36, 0.5, -5),
                     ZIndex = 2,
                     BorderSizePixel = 0,
                     BackgroundColor3 = FromRGB(255, 255, 255)
@@ -7486,7 +7486,7 @@ local Library do
                     AnchorPoint = Vector2New(1, 0.5),
                     Image = "rbxassetid://77419631183448",
                     BackgroundTransparency = 1,
-                    Position = UDim2New(1, -50, 0.5, 0),
+                    Position = UDim2New(1, -36, 0.5, 0),
                     ZIndex = 2,
                     BorderSizePixel = 0,
                     BackgroundColor3 = FromRGB(255, 255, 255)
