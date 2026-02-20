@@ -1507,7 +1507,7 @@ local Library do
     Library = {
         Theme = nil,
 
-        MenuKeybind = tostring(Enum.KeyCode.Tab), 
+        MenuKeybind = tostring(Enum.KeyCode.Delete), 
         Flags = { },
         KeybindNames = { },
         KeybindResets = { },
@@ -4490,8 +4490,8 @@ local Library do
                 IsOpen = false,
 
                 Key = nil,
-                Value = "",
-                Mode = "",
+                Value = "None",
+                Mode = Data.Mode or "toggle",
 
                 Toggled = false 
             }
@@ -5155,15 +5155,20 @@ local Library do
                     return 
                 end
 
-                KeylistItem:SetText(Keybind.Value, Data.Name)
-                
-                if Keybind.Mode == "hold" then 
-                    KeylistItem:SetStatus(Keybind.Toggled and "holding" or "off")
+                if Keybind.Key then
+                    KeylistItem:SetText(Keybind.Value or "None", Data.Name)
+                    if Keybind.Mode == "hold" then 
+                        KeylistItem:SetStatus(Keybind.Toggled and "holding" or "off")
+                    else
+                        KeylistItem:SetStatus(Keybind.Toggled and "on" or "off")
+                    end
+                    KeylistItem:Set(Keybind.Toggled)
+                    if Toggle.Value then
+                        KeylistItem:SetVisibility(true)
+                    end
                 else
-                    KeylistItem:SetStatus(Keybind.Toggled and "on" or "off")
+                    KeylistItem:SetVisibility(false)
                 end
-
-                KeylistItem:Set(Keybind.Toggled)
             end
 
             local Debounce = false
@@ -5421,10 +5426,12 @@ local Library do
                 Keybind:SetOpen(not Keybind.IsOpen)
             end)
 
+            Modes[Keybind.Mode]:Set()
+
             if Data.Default then
-               Keybind.Mode = Data.Mode or "toggle"
-               Modes[Keybind.Mode]:Set()
                Keybind:Set({Key = Data.Default, Mode = Data.Mode})
+            else
+               Update()
             end
 
             Library.KeybindNames[Data.Flag] = Data.Name
@@ -7206,7 +7213,7 @@ local Library do
                 })
 
                 function NewKey:SetText(Key, Name)
-                    NewKey.Instance.Text =  "(" .. Key .. ") - ".. Name .. ""
+                    NewKey.Instance.Text = "(" .. (Key or "None") .. ") - " .. (Name or "")
                 end
 
                 function NewKey:SetStatus(Status)
