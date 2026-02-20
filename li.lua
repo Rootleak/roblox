@@ -2581,7 +2581,7 @@ local Library do
             delfile(Library.Folders.Themes .. "/" .. Config)
             Library:Notification({
                 Name = "Success",
-                Description = "Succesfully deleted config: ".. Config .. ".json",
+                Description = "Succesfully deleted theme: ".. Config,
                 Duration = 5,
                 Icon = "116339777575852",
                 IconColor = FromRGB(52, 255, 164)
@@ -3248,6 +3248,10 @@ local Library do
                 for Index, Value in Dropdown.Options do 
                     Dropdown:RemoveOption(Value.Name)
                 end
+
+                Dropdown.Value = nil
+                Library.Flags[Dropdown.Flag] = nil
+                Items["Value"].Instance.Text = "--"
 
                 for Index, Value in List do 
                     Dropdown:AddOption(Value)
