@@ -5393,6 +5393,8 @@ local Library do
                Keybind:Set({Key = Data.Default, Mode = Data.Mode})
             end
 
+            Keybind.UpdateList = Update
+
             Library.SetFlags[Data.Flag] = function(Value)
                 Keybind:Set(Value)
             end
