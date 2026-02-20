@@ -1563,7 +1563,7 @@ local Library do
     }
 
     local Keys = {
-        ["Unknown"]           = "Unknown",
+        ["Unknown"]           = "None",
         ["Backspace"]         = "Back",
         ["Tab"]               = "Tab",
         ["Clear"]             = "Clear",
@@ -5252,6 +5252,7 @@ local Library do
 
                     local KeyString = Keys[Keybind.Key] or StringGSub(Key, "Enum.", "") or "None"
                     local TextToDisplay = StringGSub(StringGSub(KeyString, "KeyCode.", ""), "UserInputType.", "") or "None"
+                    if TextToDisplay == "Unknown" then TextToDisplay = "None" end
 
                     Keybind.Value = TextToDisplay
                     Items["KeyButton"].Instance.Text = TextToDisplay
@@ -5283,6 +5284,7 @@ local Library do
                     local TextToDisplay = KeyString and StringGSub(StringGSub(KeyString, "KeyCode.", ""), "UserInputType.", "") or "None"
 
                     TextToDisplay = StringGSub(StringGSub(KeyString, "KeyCode.", ""), "UserInputType.", "")
+                    if TextToDisplay == "Unknown" then TextToDisplay = "None" end
 
                     Keybind.Value = TextToDisplay
                     Items["KeyButton"].Instance.Text = TextToDisplay
@@ -5305,6 +5307,19 @@ local Library do
 
                 Items["KeyButton"]:Tween(nil, {TextTransparency = 0.5})
                 Keybind.Picking = false
+            end
+
+            function Keybind:Reset()
+                Keybind.Key = nil
+                Keybind.Value = "None"
+                Items["KeyButton"].Instance.Text = "None"
+                Items["KeyButton"]:Tween(nil, {TextTransparency = 0.5})
+                Library.Flags[Data.Flag] = {
+                    Mode = Keybind.Mode,
+                    Key = nil,
+                    Toggled = Keybind.Toggled
+                }
+                Update()
             end
 
             function Keybind:Press(Bool)
@@ -5395,6 +5410,12 @@ local Library do
             end
 
             Keybind.UpdateList = Update
+
+            if KeylistItem then
+                KeylistItem:SetResetCallback(function()
+                    Keybind:Reset()
+                end)
+            end
 
             Library.SetFlags[Data.Flag] = function(Value)
                 Keybind:Set(Value)
@@ -7121,7 +7142,7 @@ local Library do
             end
 
             function KeybindList:Add(Key, Name)
-                local NewKey = Instances:Create("TextLabel", {
+                local NewKey = Instances:Create("TextButton", {
                     Parent = Items["Content"].Instance,
                     Name = "\0",
                     FontFace = Library.Font,
@@ -7130,6 +7151,7 @@ local Library do
                     Text = "(" .. Key .. ") - ".. Name .. "",
                     Size = UDim2New(1, 0, 0, 20),
                     BorderSizePixel = 0,
+                    AutoButtonColor = false,
                     BackgroundTransparency = 1,
                     TextXAlignment = Enum.TextXAlignment.Left,
                     BorderColor3 = FromRGB(0, 0, 0),
@@ -7187,6 +7209,29 @@ local Library do
                         NewKeyStatus:Tween(nil, {TextTransparency = 0.5, TextColor3 = Library.Theme.Text})
                     end
                 end
+
+                local _resetCallback = nil
+
+                function NewKey:SetResetCallback(fn)
+                    _resetCallback = fn
+                end
+
+                NewKey:Connect("MouseEnter", function()
+                    NewKey:Tween(nil, {TextTransparency = 0.1})
+                    NewKeyStatus:Tween(nil, {TextTransparency = 0.1})
+                end)
+
+                NewKey:Connect("MouseLeave", function()
+                    local active = NewKey.Instance.TextColor3 == FromRGB(52, 255, 164)
+                    NewKey:Tween(nil, {TextTransparency = active and 0 or 0.5})
+                    NewKeyStatus:Tween(nil, {TextTransparency = active and 0 or 0.5})
+                end)
+
+                NewKey:Connect("MouseButton1Click", function()
+                    if _resetCallback then
+                        _resetCallback()
+                    end
+                end)
 
                 return NewKey
             end
