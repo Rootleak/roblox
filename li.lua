@@ -5163,9 +5163,7 @@ local Library do
                         KeylistItem:SetStatus(Keybind.Toggled and "on" or "off")
                     end
                     KeylistItem:Set(Keybind.Toggled)
-                    if Toggle.Value then
-                        KeylistItem:SetVisibility(true)
-                    end
+                    KeylistItem:SetVisibility(true)
                 else
                     KeylistItem:SetVisibility(false)
                 end
