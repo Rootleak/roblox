@@ -7177,11 +7177,11 @@ local Library do
 
                 function NewKey:Set(Bool)
                     if Bool then 
-                        NewKey:Tween(nil, {TextTransparency = 0})
-                        NewKeyStatus:Tween(nil, {TextTransparency = 0})
+                        NewKey:Tween(nil, {TextTransparency = 0, TextColor3 = FromRGB(52, 255, 164)})
+                        NewKeyStatus:Tween(nil, {TextTransparency = 0, TextColor3 = FromRGB(52, 255, 164)})
                     else 
-                        NewKey:Tween(nil, {TextTransparency = 0.5})
-                        NewKeyStatus:Tween(nil, {TextTransparency = 0.5})
+                        NewKey:Tween(nil, {TextTransparency = 0.5, TextColor3 = Library.Theme.Text})
+                        NewKeyStatus:Tween(nil, {TextTransparency = 0.5, TextColor3 = Library.Theme.Text})
                     end
                 end
 
