@@ -1509,6 +1509,7 @@ local Library do
 
         MenuKeybind = tostring(Enum.KeyCode.Z), 
         Flags = { },
+        KeybindNames = { },
 
         Tween = {
             Time = 0.3,
@@ -5263,6 +5264,16 @@ local Library do
                         Toggled = Keybind.Toggled
                     }
 
+                    if TextToDisplay ~= "None" then
+                        for conflictFlag, conflictData in pairs(Library.Flags) do
+                            if conflictFlag ~= Data.Flag and type(conflictData) == "table" and conflictData.Key ~= nil and conflictData.Key == Keybind.Key then
+                                local conflictName = Library.KeybindNames[conflictFlag] or conflictFlag
+                                Library:Notification({Name = "Keybind Conflict", Description = TextToDisplay .. " is already used by \"" .. conflictName .. "\"", Duration = 4, Icon = "97118059177470", IconColor = Color3.fromRGB(255, 120, 120)})
+                                break
+                            end
+                        end
+                    end
+
                     if Data.Callback then 
                         Library:SafeCall(Data.Callback, Keybind.Toggled)
                     end
@@ -5408,6 +5419,8 @@ local Library do
                Modes[Keybind.Mode]:Set()
                Keybind:Set({Key = Data.Default, Mode = Data.Mode})
             end
+
+            Library.KeybindNames[Data.Flag] = Data.Name
 
             Keybind.UpdateList = Update
 
