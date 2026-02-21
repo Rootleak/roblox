@@ -5129,13 +5129,7 @@ local Library do
 
                 Toggle.Callback = function(Value)
                     showInList = Value
-                    if KeylistItem then 
-                        if Value and Keybind.Key then
-                            KeylistItem:SetVisibility(true)
-                        else
-                            KeylistItem:SetVisibility(false)
-                        end
-                    end
+                    Update()
                 end
 
                 ToggleItems["Toggle"]:Connect("MouseButton1Down", function()
