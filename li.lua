@@ -4964,7 +4964,7 @@ local Library do
                             continue
                         end
 
-                        Value.ZIndex = Bool and 10 or 0
+                        Value.ZIndex = Bool and 15 or 0
 
                         if type(TransparencyProperty) == "table" then 
                             for _, Property in TransparencyProperty do 
@@ -5090,6 +5090,8 @@ local Library do
 
                 getgenv().Options[Dropdown.Flag] = Dropdown
 
+                local showInList = true
+
                 local Toggle = { 
                     Value = false,
                     Flag = Data.Flag .. "keybindToggle",
@@ -5126,8 +5128,13 @@ local Library do
                 end
 
                 Toggle.Callback = function(Value)
+                    showInList = Value
                     if KeylistItem then 
-                        KeylistItem:SetVisibility(Value)
+                        if not Value then
+                            KeylistItem:SetVisibility(false)
+                        elseif Keybind.Key then
+                            KeylistItem:SetVisibility(true)
+                        end
                     end
                 end
 
@@ -5163,7 +5170,7 @@ local Library do
                         KeylistItem:SetStatus(Keybind.Toggled and "on" or "off")
                     end
                     KeylistItem:Set(Keybind.Toggled)
-                    KeylistItem:SetVisibility(true)
+                    KeylistItem:SetVisibility(showInList)
                 else
                     KeylistItem:SetVisibility(false)
                 end
