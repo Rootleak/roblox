@@ -5130,7 +5130,11 @@ local Library do
                 Toggle.Callback = function(Value)
                     showInList = Value
                     if KeylistItem then 
-                        KeylistItem:SetVisibility(Value)
+                        if Value and Keybind.Key then
+                            KeylistItem:SetVisibility(true)
+                        else
+                            KeylistItem:SetVisibility(false)
+                        end
                     end
                 end
 
