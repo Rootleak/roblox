@@ -5090,8 +5090,6 @@ local Library do
                 end
 
                 getgenv().Options[Dropdown.Flag] = Dropdown
-
-                local showInList = true
             end
 
             local Update = function()
