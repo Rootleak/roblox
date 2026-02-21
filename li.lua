@@ -4501,6 +4501,7 @@ local Library do
             local ModesDropdown
             local ModesDropdownItems 
             local KeylistItem 
+            local showInList = true
 
             if Library.KeyList then 
                 KeylistItem = Library.KeyList:Add("", "")
