@@ -4500,6 +4500,7 @@ local Library do
             Library.Flags[Data.Flag] = { }
             local ModesDropdown
             local ModesDropdownItems 
+            local ToggleItems
             local KeylistItem 
             local showInList = true
 
@@ -4989,7 +4990,7 @@ local Library do
                 ModesDropdown = Dropdown
                 ModesDropdownItems = DropdownItems
 
-                local ToggleItems = { } do
+                ToggleItems = { } do
                     ToggleItems["Toggle"] = Instances:Create("TextButton", {
                         Parent = Items["KeybindWindow"].Instance,
                         Name = "\0",
