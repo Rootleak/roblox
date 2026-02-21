@@ -5091,7 +5091,28 @@ local Library do
                 getgenv().Options[Dropdown.Flag] = Dropdown
 
                 local showInList = true
+            end
 
+            local Update = function()
+                if not KeylistItem then 
+                    return 
+                end
+
+                if Keybind.Key then
+                    KeylistItem:SetText(Keybind.Value or "None", Data.Name)
+                    if Keybind.Mode == "hold" then 
+                        KeylistItem:SetStatus(Keybind.Toggled and "holding" or "off")
+                    else
+                        KeylistItem:SetStatus(Keybind.Toggled and "on" or "off")
+                    end
+                    KeylistItem:Set(Keybind.Toggled)
+                    KeylistItem:SetVisibility(showInList)
+                else
+                    KeylistItem:SetVisibility(false)
+                end
+            end
+
+            do
                 local Toggle = { 
                     Value = false,
                     Flag = Data.Flag .. "keybindToggle",
@@ -5149,25 +5170,6 @@ local Library do
                 end 
 
                 getgenv().Options[Toggle.Flag] = Toggle
-            end
-
-            local Update = function()
-                if not KeylistItem then 
-                    return 
-                end
-
-                if Keybind.Key then
-                    KeylistItem:SetText(Keybind.Value or "None", Data.Name)
-                    if Keybind.Mode == "hold" then 
-                        KeylistItem:SetStatus(Keybind.Toggled and "holding" or "off")
-                    else
-                        KeylistItem:SetStatus(Keybind.Toggled and "on" or "off")
-                    end
-                    KeylistItem:Set(Keybind.Toggled)
-                    KeylistItem:SetVisibility(showInList)
-                else
-                    KeylistItem:SetVisibility(false)
-                end
             end
 
             local Debounce = false
