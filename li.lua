@@ -9988,7 +9988,7 @@ local Library do
                 Items["Text"] = Instances:Create("TextLabel", {
                     Parent = Items["Label"].Instance,
                     FontFace = Library.Font,
-                    TextColor3 = FromRGB(255, 255, 255),
+                    TextColor3 = Label.TextColor,
                     BorderColor3 = FromRGB(0, 0, 0),
                     ZIndex = 2,
                     Text = Label.Name,
@@ -10003,7 +10003,11 @@ local Library do
                     BorderSizePixel = 0,
                     TextSize = 14,
                     BackgroundColor3 = FromRGB(255, 255, 255)
-                })  Items["Text"]:AddToTheme({TextColor3 = "Text"})
+                })
+                
+                if Label.TextColor == FromRGB(255, 255, 255) then
+                    Items["Text"]:AddToTheme({TextColor3 = "Text"})
+                end
 
                 Instances:Create("UIPadding", {
                     Parent = Items["Label"].Instance,
