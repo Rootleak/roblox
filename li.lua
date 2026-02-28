@@ -2465,7 +2465,7 @@ local Library do
             fadeInWelcome.Completed:Wait()
             
             -- Wait a moment to show Welcome
-            task.wait(0.35)
+            task.wait(0.6)
             
             -- Fade out everything
             local fadeOut = TweenService:Create(Container, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
