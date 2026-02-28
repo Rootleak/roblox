@@ -2424,29 +2424,46 @@ local Library do
                 task.wait(0.05) -- Small delay for visual feedback
             end
             
-            -- Fade out loading screen
+            -- Stop dot animation
             task.cancel(dotAnimation)
             
-            local fadeOut = TweenService:Create(Container, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+            -- Hide dots and progress
+            Dots.Visible = false
+            Progress.Visible = false
+            
+            -- Show "Ready" message in green
+            local fadeOutLoading = TweenService:Create(Title, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+                TextTransparency = 1
+            })
+            fadeOutLoading:Play()
+            fadeOutLoading.Completed:Wait()
+            
+            Title.Text = "Ready"
+            Title.TextColor3 = Color3.fromRGB(52, 255, 164)
+            Title.TextSize = 18
+            Title.Position = UDim2.new(0, 20, 0, 35)
+            Title.TextXAlignment = Enum.TextXAlignment.Center
+            
+            local fadeInReady = TweenService:Create(Title, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+                TextTransparency = 0
+            })
+            fadeInReady:Play()
+            fadeInReady.Completed:Wait()
+            
+            -- Wait a moment to show Ready
+            task.wait(0.5)
+            
+            -- Fade out everything
+            local fadeOut = TweenService:Create(Container, TweenInfo.new(0.4, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
                 BackgroundTransparency = 1
             })
             
-            local fadeOutText = TweenService:Create(Title, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
-                TextTransparency = 1
-            })
-            
-            local fadeOutDots = TweenService:Create(Dots, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
-                TextTransparency = 1
-            })
-            
-            local fadeOutProgress = TweenService:Create(Progress, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+            local fadeOutText = TweenService:Create(Title, TweenInfo.new(0.4, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
                 TextTransparency = 1
             })
             
             fadeOut:Play()
             fadeOutText:Play()
-            fadeOutDots:Play()
-            fadeOutProgress:Play()
             
             fadeOut.Completed:Wait()
             LoadingScreen:Destroy()
