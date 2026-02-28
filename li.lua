@@ -1577,6 +1577,9 @@ local Library do
             -- Notifications
             ["SuccessInfo"] = {"SuccessInfo.png", "https://raw.githubusercontent.com/Rootleak/Stalkie-2.0/refs/heads/main/assets/SuccessInfo.png"},
             ["ErrorWarning"] = {"ErrorWarning.png", "https://raw.githubusercontent.com/Rootleak/Stalkie-2.0/refs/heads/main/assets/ErrorWarning.png"},
+            
+            -- Keybinds List
+            ["Keybinds"] = {"Keybinds.png", "https://github.com/Rootleak/Stalkie-2.0/blob/main/assets/Keybinds.png?raw=true"},
         },
 
         -- Ignore below
