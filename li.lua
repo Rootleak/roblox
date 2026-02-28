@@ -1697,6 +1697,15 @@ local Library do
             makefolder(Value)
         end
     end
+    
+    -- Force re-download notification icons to ensure correct versions
+    local notificationIcons = {"SuccessInfo.png", "ErrorWarning.png", "Keybinds.png"}
+    for _, iconFile in ipairs(notificationIcons) do
+        local iconPath = Library.Folders.Assets .. "/" .. iconFile
+        if isfile(iconPath) then
+            delfile(iconPath)
+        end
+    end
 
     for Index, Value in Library.Images do 
         local ImageData = Value
