@@ -2383,7 +2383,7 @@ local Library do
         local Progress = loaderElements.Progress
         
         -- Show progress after a brief moment
-        task.wait(0.3)
+        task.wait(0.15)
         Progress.Visible = true
         
         -- Download all assets
@@ -2415,11 +2415,11 @@ local Library do
                 local percent = math.floor((downloaded / totalIcons) * 100)
                 Progress.Text = percent .. "%"
                 
-                task.wait(0.08) -- Small delay for visual feedback
+                task.wait(0.04) -- Small delay for visual feedback
             end
             
             -- Brief pause to let user see 100%
-            task.wait(0.4)
+            task.wait(0.2)
             
             -- Hide dots and progress
             Dots.Visible = false
@@ -2445,14 +2445,14 @@ local Library do
             fadeInWelcome.Completed:Wait()
             
             -- Wait a moment to show Welcome
-            task.wait(0.7)
+            task.wait(0.35)
             
             -- Fade out everything
-            local fadeOut = TweenService:Create(Container, TweenInfo.new(0.4, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+            local fadeOut = TweenService:Create(Container, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
                 BackgroundTransparency = 1
             })
             
-            local fadeOutText = TweenService:Create(Title, TweenInfo.new(0.4, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+            local fadeOutText = TweenService:Create(Title, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
                 TextTransparency = 1
             })
             
