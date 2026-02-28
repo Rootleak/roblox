@@ -1580,6 +1580,9 @@ local Library do
             
             -- Keybinds List
             ["Keybinds"] = {"Keybinds.png", "https://github.com/Rootleak/Stalkie-2.0/blob/main/assets/Keybinds.png?raw=true"},
+            
+            -- Sounds
+            ["WelcomeSound"] = {"Welcome.mp3", "https://raw.githubusercontent.com/Rootleak/Stalkie-2.0/refs/heads/main/assets/Welcome.mp3"},
         },
 
         -- Ignore below
@@ -2420,6 +2423,23 @@ local Library do
             
             -- Brief pause to let user see 100%
             task.wait(0.2)
+            
+            -- Play welcome sound at 100%
+            local welcomeSoundPath = self.Folders.Assets .. "/Welcome.mp3"
+            if isfile(welcomeSoundPath) then
+                pcall(function()
+                    local welcomeSound = Instance.new("Sound")
+                    welcomeSound.SoundId = getcustomasset(welcomeSoundPath)
+                    welcomeSound.Volume = 6
+                    welcomeSound.Parent = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
+                    welcomeSound:Play()
+                    
+                    -- Clean up after playing
+                    welcomeSound.Ended:Connect(function()
+                        welcomeSound:Destroy()
+                    end)
+                end)
+            end
             
             -- Hide dots and progress
             Dots.Visible = false
