@@ -2331,6 +2331,34 @@ local Library do
         return getcustomasset(self.Folders.Assets .. "/" .. ImageData[1])
     end
 
+    Library.GetIcon = function(self, IconName)
+        local IconData = self.Icons[IconName]
+        
+        if not IconData then
+            return "rbxassetid://116339777575852" -- Fallback to default icon
+        end
+        
+        local fileName = IconData[1]
+        local githubUrl = IconData[2]
+        local filePath = self.Folders.Assets .. "/" .. fileName
+        
+        -- Check if icon exists locally
+        if not isfile(filePath) then
+            -- Download from GitHub
+            local success, result = pcall(function()
+                local content = game:HttpGet(githubUrl)
+                writefile(filePath, content)
+            end)
+            
+            if not success then
+                return "rbxassetid://116339777575852" -- Fallback on download failure
+            end
+        end
+        
+        -- Return local asset
+        return getcustomasset(filePath)
+    end
+
     Library.Round = function(self, Number, Float)
         local Multiplier = 1 / (Float or 1)
         return MathFloor(Number * Multiplier) / Multiplier
