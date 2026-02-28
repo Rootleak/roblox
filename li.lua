@@ -9407,7 +9407,7 @@ local Library do
 
                 Name = Data.Name or Data.name or "Section",
                 Side = Data.Side or Data.side or 1,
-                Icon = Data.Icon or Data.icon or "9080568477801",
+                Icon = Data.Icon or Data.icon or "Movement Section",
 
                 Items = { }
             }
