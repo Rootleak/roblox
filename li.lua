@@ -6926,7 +6926,7 @@ local Library do
                 Name = Data.Name or Data.name or "Title",
                 Description = Data.Description or Data.description or "Description",
                 Duration = Data.Duration or Data.duration or 5,
-                Icon = Data.Icon or Data.icon or "9080568477801",
+                Icon = Data.Icon or Data.icon or "SuccessInfo",
                 IconColor = Data.IconColor or Data.iconcolor or FromRGB(255, 255, 255),
             }
 
