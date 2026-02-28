@@ -2372,70 +2372,15 @@ local Library do
         end
     end
 
-    Library.PreloadAssets = function(self, callback)
+    Library.PreloadAssets = function(self, loaderElements, callback)
         local TweenService = game:GetService("TweenService")
-        local Players = game:GetService("Players")
-        local Player = Players.LocalPlayer
-        local PlayerGui = Player:WaitForChild("PlayerGui")
         
-        -- Create loading screen
-        local LoadingScreen = Instance.new("ScreenGui")
-        LoadingScreen.Name = "StalkieLoader"
-        LoadingScreen.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-        LoadingScreen.ResetOnSpawn = false
-        LoadingScreen.Parent = PlayerGui
-        
-        local Container = Instance.new("Frame")
-        Container.Size = UDim2.new(0, 280, 0, 100)
-        Container.Position = UDim2.new(0.5, -140, 0.5, -50)
-        Container.BackgroundColor3 = Color3.fromRGB(16, 18, 21)
-        Container.BorderSizePixel = 0
-        Container.Parent = LoadingScreen
-        
-        local Corner = Instance.new("UICorner")
-        Corner.CornerRadius = UDim.new(0, 8)
-        Corner.Parent = Container
-        
-        local Gradient = Instance.new("UIGradient")
-        Gradient.Rotation = 84
-        Gradient.Color = ColorSequence.new{
-            ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 255, 255)),
-            ColorSequenceKeypoint.new(1, Color3.fromRGB(40, 45, 52))
-        }
-        Gradient.Parent = Container
-        
-        local Title = Instance.new("TextLabel")
-        Title.Size = UDim2.new(1, -40, 0, 30)
-        Title.Position = UDim2.new(0, 20, 0, 20)
-        Title.BackgroundTransparency = 1
-        Title.Text = "downloading assets"
-        Title.TextColor3 = Color3.fromRGB(255, 255, 255)
-        Title.TextSize = 16
-        Title.Font = Enum.Font.GothamBold
-        Title.TextXAlignment = Enum.TextXAlignment.Left
-        Title.Parent = Container
-        
-        local Dots = Instance.new("TextLabel")
-        Dots.Size = UDim2.new(0, 30, 0, 30)
-        Dots.Position = UDim2.new(1, -50, 0, 20)
-        Dots.BackgroundTransparency = 1
-        Dots.Text = "."
-        Dots.TextColor3 = Color3.fromRGB(196, 231, 255)
-        Dots.TextSize = 16
-        Dots.Font = Enum.Font.GothamBold
-        Dots.TextXAlignment = Enum.TextXAlignment.Left
-        Dots.Parent = Container
-        
-        local Progress = Instance.new("TextLabel")
-        Progress.Size = UDim2.new(1, -40, 0, 20)
-        Progress.Position = UDim2.new(0, 20, 1, -35)
-        Progress.BackgroundTransparency = 1
-        Progress.Text = "0%"
-        Progress.TextColor3 = Color3.fromRGB(196, 231, 255)
-        Progress.TextSize = 14
-        Progress.Font = Enum.Font.Gotham
-        Progress.TextXAlignment = Enum.TextXAlignment.Center
-        Progress.Parent = Container
+        -- Use existing loading screen elements
+        local LoadingScreen = loaderElements.Screen
+        local Container = loaderElements.Container
+        local Title = loaderElements.Title
+        local Dots = loaderElements.Dots
+        local Progress = loaderElements.Progress
         
         -- Animate dots
         local dotCount = 0
