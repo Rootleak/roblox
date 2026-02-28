@@ -2334,7 +2334,7 @@ local Library do
         return getcustomasset(self.Folders.Assets .. "/" .. ImageData[1])
     end
 
-    Library.GetIcon = function(self, IconName)
+    Library.GetIcon = function(self, IconName, ForceRedownload)
         local IconData = self.Icons[IconName]
         
         if not IconData then
@@ -2345,8 +2345,8 @@ local Library do
         local githubUrl = IconData[2]
         local filePath = self.Folders.Assets .. "/" .. fileName
         
-        -- Check if icon exists locally
-        if not isfile(filePath) then
+        -- Check if icon exists locally (or force re-download)
+        if not isfile(filePath) or ForceRedownload then
             -- Download from GitHub
             local success, result = pcall(function()
                 local content = game:HttpGet(githubUrl)
