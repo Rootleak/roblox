@@ -7199,7 +7199,7 @@ local Library do
                     ImageColor3 = FromRGB(196, 231, 255),
                     ScaleType = Enum.ScaleType.Fit,
                     BorderColor3 = FromRGB(0, 0, 0),
-                    Image = "rbxassetid://89224403789635",
+                    Image = Library:GetIcon("Keybinds"),
                     BackgroundTransparency = 1,
                     Size = UDim2New(0, 22, 0, 22),
                     BorderSizePixel = 0,
@@ -7212,7 +7212,7 @@ local Library do
                     FontFace = Library.Font,
                     TextColor3 = FromRGB(255, 255, 255),
                     BorderColor3 = FromRGB(0, 0, 0),
-                    Text = "keybinds",
+                    Text = "keybinds (click to delete)",
                     Size = UDim2New(0, 0, 0, 15),
                     Position = UDim2New(0, 28, 0, 3),
                     BackgroundTransparency = 1,
@@ -7251,13 +7251,14 @@ local Library do
             end
 
             function KeybindList:Add(Key, Name)
+                local DisplayName = Name:gsub("Keybind$", "")
                 local NewKey = Instances:Create("TextButton", {
                     Parent = Items["Content"].Instance,
                     Name = "\0",
                     FontFace = Library.Font,
                     TextColor3 = FromRGB(255, 255, 255),
                     TextTransparency = 0.5,
-                    Text = "(" .. Key .. ") - ".. Name .. "",
+                    Text = "(" .. Key .. ") - ".. DisplayName .. "",
                     Size = UDim2New(1, 0, 0, 20),
                     BorderSizePixel = 0,
                     AutoButtonColor = false,
@@ -7294,7 +7295,8 @@ local Library do
                 })
 
                 function NewKey:SetText(Key, Name)
-                    NewKey.Instance.Text = "(" .. (Key or "None") .. ") - " .. (Name or "")
+                    local DisplayName = (Name or ""):gsub("Keybind$", "")
+                    NewKey.Instance.Text = "(" .. (Key or "None") .. ") - " .. DisplayName
                 end
 
                 function NewKey:SetStatus(Status)
