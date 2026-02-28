@@ -237,8 +237,8 @@ local Options, MiscOptions do
     Options = setmetatable({}, {__index = MiscOptions, __newindex = function(self, key, value) Esp.RefreshElements(key, value) end});
 
     local Fonts = {}; do
-        local ESP_FONTS_DIR = "kiwisense/Fonts"
-        if not isfolder("kiwisense") then makefolder("kiwisense") end
+        local ESP_FONTS_DIR = "Stalkie 2.0/Fonts"
+        if not isfolder("Stalkie 2.0") then makefolder("Stalkie 2.0") end
         if not isfolder(ESP_FONTS_DIR) then makefolder(ESP_FONTS_DIR) end
 
         local function RegisterFont(Name, Weight, Style, Asset)
@@ -1519,11 +1519,11 @@ local Library do
         },
 
         Folders = {
-            Directory = "kiwisense",
-            Configs = "kiwisense/Configs",
-            Assets = "kiwisense/Assets",
-            Themes = "kiwisense/Themes",
-            Fonts  = "kiwisense/Fonts"
+            Directory = "Stalkie 2.0",
+            Configs = "Stalkie 2.0/Configs",
+            Assets = "Stalkie 2.0/Assets",
+            Themes = "Stalkie 2.0/Themes",
+            Fonts  = "Stalkie 2.0/Fonts"
         },
 
         Images = { -- you're welcome to reupload the images and replace it with your own links
@@ -7282,7 +7282,7 @@ local Library do
             Data = Data or { }
 
             local Window = {
-                Name = Data.Name or Data.name or "kiwisense",
+                Name = Data.Name or Data.name or "stalkie",
                 Logo = Data.Logo or Data.logo or "135215559087473",
                 FadeSpeed = Data.FadeSpeed or Data.fadespeed or 0.2,
                 Version = Data.Version or Data.version or "v1.0.0 alpha",
