@@ -2379,8 +2379,12 @@ local Library do
         local LoadingScreen = loaderElements.Screen
         local Container = loaderElements.Container
         local Title = loaderElements.Title
-        local Spinner = loaderElements.Spinner
+        local Dots = loaderElements.Dots
         local Progress = loaderElements.Progress
+        
+        -- Show progress after a brief moment
+        task.wait(0.3)
+        Progress.Visible = true
         
         -- Download all assets
         task.spawn(function()
@@ -2411,11 +2415,14 @@ local Library do
                 local percent = math.floor((downloaded / totalIcons) * 100)
                 Progress.Text = percent .. "%"
                 
-                task.wait(0.05) -- Small delay for visual feedback
+                task.wait(0.08) -- Small delay for visual feedback
             end
             
-            -- Hide spinner and progress
-            Spinner.Visible = false
+            -- Brief pause to let user see 100%
+            task.wait(0.4)
+            
+            -- Hide dots and progress
+            Dots.Visible = false
             Progress.Visible = false
             
             -- Show "Welcome" message
@@ -2431,14 +2438,14 @@ local Library do
             Title.Position = UDim2.new(0, 20, 0, 35)
             Title.TextXAlignment = Enum.TextXAlignment.Center
             
-            local fadeInReady = TweenService:Create(Title, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+            local fadeInWelcome = TweenService:Create(Title, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
                 TextTransparency = 0
             })
-            fadeInReady:Play()
-            fadeInReady.Completed:Wait()
+            fadeInWelcome:Play()
+            fadeInWelcome.Completed:Wait()
             
-            -- Wait a moment to show Ready
-            task.wait(0.5)
+            -- Wait a moment to show Welcome
+            task.wait(0.7)
             
             -- Fade out everything
             local fadeOut = TweenService:Create(Container, TweenInfo.new(0.4, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
