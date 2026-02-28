@@ -9957,14 +9957,15 @@ local Library do
             return Dropdown
         end
 
-        Library.Sections.Label = function(self, Text, Alignment, Tooltip)
+        Library.Sections.Label = function(self, Text, Alignment, Tooltip, TextColor)
             local Label = {
                 Window = self.Window,
                 Page = self.Page,
                 Section = self,
 
                 Name = Text or "Label",
-                Alignment = Alignment or "Left", 
+                Alignment = Alignment or "Left",
+                TextColor = TextColor or FromRGB(255, 255, 255),
                 
                 Count = 0
             }
