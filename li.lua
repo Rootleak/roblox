@@ -2379,18 +2379,8 @@ local Library do
         local LoadingScreen = loaderElements.Screen
         local Container = loaderElements.Container
         local Title = loaderElements.Title
-        local Dots = loaderElements.Dots
+        local Spinner = loaderElements.Spinner
         local Progress = loaderElements.Progress
-        
-        -- Animate dots
-        local dotCount = 0
-        local dotAnimation = task.spawn(function()
-            while LoadingScreen.Parent do
-                dotCount = (dotCount % 3) + 1
-                Dots.Text = string.rep(".", dotCount)
-                task.wait(0.5)
-            end
-        end)
         
         -- Download all assets
         task.spawn(function()
@@ -2424,22 +2414,19 @@ local Library do
                 task.wait(0.05) -- Small delay for visual feedback
             end
             
-            -- Stop dot animation
-            task.cancel(dotAnimation)
-            
-            -- Hide dots and progress
-            Dots.Visible = false
+            -- Hide spinner and progress
+            Spinner.Visible = false
             Progress.Visible = false
             
-            -- Show "Ready" message in green
+            -- Show "Welcome" message
             local fadeOutLoading = TweenService:Create(Title, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
                 TextTransparency = 1
             })
             fadeOutLoading:Play()
             fadeOutLoading.Completed:Wait()
             
-            Title.Text = "Ready"
-            Title.TextColor3 = Color3.fromRGB(52, 255, 164)
+            Title.Text = "Welcome"
+            Title.TextColor3 = Color3.fromRGB(196, 231, 255)
             Title.TextSize = 18
             Title.Position = UDim2.new(0, 20, 0, 35)
             Title.TextXAlignment = Enum.TextXAlignment.Center
