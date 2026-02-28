@@ -8247,7 +8247,7 @@ local Library do
                 Page = self,
 
                 Name = Data.Name or Data.name or "SubPage",
-                Icon = Data.Icon or Data.icon or "9080568477801",
+                Icon = Data.Icon or Data.icon or "Main Subpage",
                 Columns = Data.Columns or Data.columns or 2,
                 
                 Items = { },
