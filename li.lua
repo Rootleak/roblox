@@ -6970,7 +6970,7 @@ local Library do
                         ImageColor3 = Notification.IconColor,
                         BorderColor3 = FromRGB(0, 0, 0),
                         AnchorPoint = Vector2New(1, 0),
-                        Image = "rbxassetid://"..Notification.Icon,
+                        Image = Library:GetIcon(Notification.Icon),
                         BackgroundTransparency = 1,
                         Position = UDim2New(1, 5, 0, 0),
                         Size = UDim2New(0, 22, 0, 22),
@@ -7357,7 +7357,7 @@ local Library do
 
             local Window = {
                 Name = Data.Name or Data.name or "stalkie",
-                Logo = Data.Logo or Data.logo or "135215559087473",
+                Logo = Data.Logo or Data.logo or "Logo",
                 FadeSpeed = Data.FadeSpeed or Data.fadespeed or 0.2,
                 Version = Data.Version or Data.version or "v1.0.0 alpha",
                 Size = not IsMobile and UDim2New(0, 659, 0, 511) or UDim2New(0, 511, 0, 459),
