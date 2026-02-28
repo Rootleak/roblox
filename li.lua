@@ -2370,8 +2370,6 @@ local Library do
             warn("[Stalkie] Failed to load local icon '" .. IconName .. "': " .. tostring(result))
             return "rbxassetid://116339777575852"
         end
-        
-        return result
     end
 
     Library.PreloadAssets = function(self, callback)
