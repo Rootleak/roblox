@@ -7972,7 +7972,7 @@ local Library do
                 Window = self,
 
                 Name = Data.Name or Data.name or "combat",
-                Icon = Data.Icon or Data.icon or "111178525804834",
+                Icon = Data.Icon or Data.icon or "Character Page",
                 Columns = Data.Columns or Data.columns or 2,
                 SubPages = Data.SubPages or Data.subpages or false,
 
