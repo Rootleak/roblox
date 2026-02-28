@@ -1697,15 +1697,6 @@ local Library do
             makefolder(Value)
         end
     end
-    
-    -- Force re-download notification icons to ensure correct versions
-    local notificationIcons = {"SuccessInfo.png", "ErrorWarning.png", "Keybinds.png"}
-    for _, iconFile in ipairs(notificationIcons) do
-        local iconPath = Library.Folders.Assets .. "/" .. iconFile
-        if isfile(iconPath) then
-            delfile(iconPath)
-        end
-    end
 
     for Index, Value in Library.Images do 
         local ImageData = Value
@@ -2343,7 +2334,7 @@ local Library do
         return getcustomasset(self.Folders.Assets .. "/" .. ImageData[1])
     end
 
-    Library.GetIcon = function(self, IconName, ForceRedownload)
+    Library.GetIcon = function(self, IconName)
         local IconData = self.Icons[IconName]
         
         if not IconData then
@@ -2354,8 +2345,8 @@ local Library do
         local githubUrl = IconData[2]
         local filePath = self.Folders.Assets .. "/" .. fileName
         
-        -- Check if icon exists locally (or force re-download)
-        if not isfile(filePath) or ForceRedownload then
+        -- Check if icon exists locally
+        if not isfile(filePath) then
             -- Download from GitHub
             local success, result = pcall(function()
                 local content = game:HttpGet(githubUrl)
