@@ -1533,6 +1533,52 @@ local Library do
             ["Checkers"] = { "Checkers.png", "https://github.com/sametexe001/images/blob/main/checkers.png?raw=true" },
         },
 
+        Icons = {
+            -- Main Window
+            ["Logo"] = {"Logo.png", "https://raw.githubusercontent.com/Rootleak/Stalkie-2.0/refs/heads/main/assets/Logo.png"},
+            
+            -- Pages
+            ["Character Page"] = {"Character Page.png", "https://raw.githubusercontent.com/Rootleak/Stalkie-2.0/refs/heads/main/assets/Character%20Page.png"},
+            ["Game Page"] = {"Game Page.png", "https://raw.githubusercontent.com/Rootleak/Stalkie-2.0/refs/heads/main/assets/Game%20Page.png"},
+            ["Settings Page"] = {"Settings Page.png", "https://raw.githubusercontent.com/Rootleak/Stalkie-2.0/refs/heads/main/assets/Settings%20Page.png"},
+            
+            -- Character Subpages
+            ["Main Subpage"] = {"Main Subpage.png", "https://raw.githubusercontent.com/Rootleak/Stalkie-2.0/refs/heads/main/assets/Main%20Subpage.png"},
+            ["Voice Subpage"] = {"Voice Subpage.png", "https://raw.githubusercontent.com/Rootleak/Stalkie-2.0/refs/heads/main/assets/Voice%20Subpage.png"},
+            ["Aimbot Subpage"] = {"Aimbot Subpage.png", "https://raw.githubusercontent.com/Rootleak/Stalkie-2.0/refs/heads/main/assets/Aimbot%20Subpage.png"},
+            ["Visuals Subpage"] = {"Visuals Subpage.png", "https://raw.githubusercontent.com/Rootleak/Stalkie-2.0/refs/heads/main/assets/Visuals%20Subpage.png"},
+            
+            -- Sections
+            ["Movement Section"] = {"Movement Section.png", "https://raw.githubusercontent.com/Rootleak/Stalkie-2.0/refs/heads/main/assets/Movement%20Section.png"},
+            ["Anti Voice Chat Ban"] = {"Anti Voice Chat Ban.png", "https://raw.githubusercontent.com/Rootleak/Stalkie-2.0/refs/heads/main/assets/Anti%20Voice%20Chat%20Ban.png"},
+            ["Mic Up TTS Section"] = {"Mic Up TTS Section.png", "https://raw.githubusercontent.com/Rootleak/Stalkie-2.0/refs/heads/main/assets/Mic%20Up%20TTS%20Section.png"},
+            ["Camera Section"] = {"Camera Section.png", "https://raw.githubusercontent.com/Rootleak/Stalkie-2.0/refs/heads/main/assets/Camera%20Section.png"},
+            ["Time Section"] = {"Time Section.png", "https://raw.githubusercontent.com/Rootleak/Stalkie-2.0/refs/heads/main/assets/Time%20Section.png"},
+            ["Players Section"] = {"Players Section.png", "https://raw.githubusercontent.com/Rootleak/Stalkie-2.0/refs/heads/main/assets/Players%20Section.png"},
+            
+            -- Game Sections
+            ["Utilities Subpage"] = {"Utilities Subpage.png", "https://raw.githubusercontent.com/Rootleak/Stalkie-2.0/refs/heads/main/assets/Utilities%20Subpage.png"},
+            ["Players Subpage"] = {"Players Subpage.png", "https://raw.githubusercontent.com/Rootleak/Stalkie-2.0/refs/heads/main/assets/Players%20Subpage.png"},
+            ["Useful Scripts Section"] = {"Useful Scripts Section.png", "https://raw.githubusercontent.com/Rootleak/Stalkie-2.0/refs/heads/main/assets/Useful%20Scripts%20Section.png"},
+            ["Map Section"] = {"Map Section.png", "https://raw.githubusercontent.com/Rootleak/Stalkie-2.0/refs/heads/main/assets/Map%20Section.png"},
+            
+            -- Settings Sections
+            ["Configurations Subpage"] = {"Configurations Subpage.png", "https://raw.githubusercontent.com/Rootleak/Stalkie-2.0/refs/heads/main/assets/Configurations%20Subpage.png"},
+            ["Theming Subpage"] = {"Theming Subpage.png", "https://raw.githubusercontent.com/Rootleak/Stalkie-2.0/refs/heads/main/assets/Theming%20Subpage.png"},
+            ["About Subpage"] = {"About Subpage.png", "https://raw.githubusercontent.com/Rootleak/Stalkie-2.0/refs/heads/main/assets/About%20Subpage.png"},
+            ["Profiles Section"] = {"Profiles Section.png", "https://raw.githubusercontent.com/Rootleak/Stalkie-2.0/refs/heads/main/assets/Profiles%20Section.png"},
+            ["Autoload Section"] = {"Autoload Section.png", "https://raw.githubusercontent.com/Rootleak/Stalkie-2.0/refs/heads/main/assets/Autoload%20Section.png"},
+            ["Script Information"] = {"Script Information.png", "https://raw.githubusercontent.com/Rootleak/Stalkie-2.0/refs/heads/main/assets/Script%20Information.png"},
+            ["Suggestions Section"] = {"Suggestions Section.png", "https://raw.githubusercontent.com/Rootleak/Stalkie-2.0/refs/heads/main/assets/Suggestions%20Section.png"},
+            ["Theming Section"] = {"Theming Section.png", "https://raw.githubusercontent.com/Rootleak/Stalkie-2.0/refs/heads/main/assets/Theming%20Section.png"},
+            ["Menu Section"] = {"Menu Section.png", "https://raw.githubusercontent.com/Rootleak/Stalkie-2.0/refs/heads/main/assets/Menu%20Section.png"},
+            ["Tweening Section"] = {"Tweening Section.png", "https://raw.githubusercontent.com/Rootleak/Stalkie-2.0/refs/heads/main/assets/Tweening%20Section.png"},
+            
+            -- Notifications
+            ["SuccessInfo"] = {"SuccessInfo.png", "https://raw.githubusercontent.com/Rootleak/Stalkie-2.0/refs/heads/main/assets/SuccessInfo.png"},
+            ["ErrorWarning"] = {"ErrorWarning.png", "https://raw.githubusercontent.com/Rootleak/Stalkie-2.0/refs/heads/main/assets/ErrorWarning.png"},
+        },
+
         -- Ignore below
         Pages = { },
         Sections = { },
