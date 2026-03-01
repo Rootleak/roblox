@@ -9437,7 +9437,14 @@ local Library do
                         Items["PlayerAvatar"].Instance.Image = PlayerAvatar
                         Items["PlayerUsername"].Instance.Text = Playerlist.Player.DisplayName .. " (@" .. Playerlist.Player.Name .. ")"
                         Items["PlayerUserID"].Instance.Text = "ID: " .. tostring(Playerlist.Player.UserId)
-                        Items["PlayerAccountAge"].Instance.Text = "Age: " .. tostring(Playerlist.Player.AccountAge) .. " days"
+                        
+                        -- Calculate join date from account age
+                        local accountAgeDays = Playerlist.Player.AccountAge
+                        local currentTime = os.time()
+                        local joinTime = currentTime - (accountAgeDays * 86400) -- 86400 seconds per day
+                        local joinDate = os.date("%d %b, %Y", joinTime)
+                        local ageText = accountAgeDays .. (accountAgeDays == 1 and " day" or " days")
+                        Items["PlayerAccountAge"].Instance.Text = "Age: " .. ageText .. " (Joined " .. joinDate .. ")"
                         if Items["PlayerTeamLabel"] then
                             local teamName  = Playerlist.Player.Team and Playerlist.Player.Team.Name or "None"
                             local teamColor = Playerlist.Player.Team and Playerlist.Player.Team.TeamColor.Color or Color3.new(1,1,1)
@@ -9456,7 +9463,7 @@ local Library do
                         Items["PlayerAvatar"].Instance.Image = "rbxassetid://98200387761744"
                         Items["PlayerUsername"].Instance.Text = "None"
                         Items["PlayerUserID"].Instance.Text = "None"
-                        Items["PlayerAccountAge"].Instance.Text = "None"
+                        Items["PlayerAccountAge"].Instance.Text = "Age: —"
                         if Items["PlayerTeamLabel"] then
                             Items["PlayerTeamLabel"].Instance.Text = 'Team: <font color="rgb(150,150,150)">—</font>'
                         end
