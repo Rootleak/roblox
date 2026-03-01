@@ -9014,14 +9014,14 @@ local Library do
                         BorderColor3 = FromRGB(0, 0, 0),
                         Text = "--",
                         AutomaticSize = Enum.AutomaticSize.X,
-                        Size = UDim2New(0, 0, 0, 15),
+                        Size = UDim2New(0, 0, 0, 13),
                         AnchorPoint = Vector2New(0, 0.5),
-                        Position = UDim2New(0, 8, 0.5, 0),
+                        Position = UDim2New(0, 6, 0.5, 0),
                         BackgroundTransparency = 1,
                         TextTruncate = Enum.TextTruncate.AtEnd,
                         BorderSizePixel = 0,
                         ZIndex = 2,
-                        TextSize = 14,
+                        TextSize = 12,
                         BackgroundColor3 = FromRGB(255, 255, 255)
                     })  DropdownItems["Value"]:AddToTheme({TextColor3 = "Text"})
 
@@ -9031,7 +9031,7 @@ local Library do
                         ImageColor3 = FromRGB(196, 231, 255),
                         ScaleType = Enum.ScaleType.Fit,
                         BorderColor3 = FromRGB(0, 0, 0),
-                        Size = UDim2New(0, 20, 0, 20),
+                        Size = UDim2New(0, 12, 0, 12),
                         AnchorPoint = Vector2New(1, 0.5),
                         Image = "rbxassetid://114252321536924",
                         BackgroundTransparency = 1,
