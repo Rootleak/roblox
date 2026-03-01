@@ -8883,78 +8883,119 @@ local Library do
                 })  Items["LeakNextBtn"]:AddToTheme({BackgroundColor3 = "Element", TextColor3 = "Accent"})
                 Instances:Create("UICorner",{Parent=Items["LeakNextBtn"].Instance,Name="\0",CornerRadius=UDimNew(0,3)})
 
-                -- Spectate toggle (row 1) - library-style indicator toggle
-                Items["SpectateToggle"] = Instances:Create("TextButton", {
+                -- ── Player controls container (narrow, right edge, exact library style) ─
+                local ControlsContainer = Instances:Create("Frame", {
                     Parent = Items["Playerlist"].Instance, Name = "\0",
-                    FontFace = Library.Font, Text = "",
                     BackgroundTransparency = 1,
-                    Size = UDim2New(0.5,-12,0,18), Position = UDim2New(0.5,4,1,-75),
-                    BorderSizePixel = 0, ZIndex = 2,
-                    AutoButtonColor = false, Visible = false,
-                    BackgroundColor3 = FromRGB(255,255,255)
+                    AnchorPoint = Vector2New(1, 1),
+                    Position = UDim2New(1, -5, 1, -3),
+                    Size = UDim2New(0, 110, 0, 95),
+                    ZIndex = 2, BorderSizePixel = 0, Visible = false,
+                    BackgroundColor3 = FromRGB(0, 0, 0)
+                })
+                Items["ControlsContainer"] = ControlsContainer
+                Instances:Create("UIListLayout", {
+                    Parent = ControlsContainer.Instance, Name = "\0",
+                    SortOrder = Enum.SortOrder.LayoutOrder,
+                    FillDirection = Enum.FillDirection.Vertical,
+                    HorizontalAlignment = Enum.HorizontalAlignment.Left,
+                    VerticalAlignment = Enum.VerticalAlignment.Bottom,
+                    Padding = UDimNew(0, 5)
+                })
+
+                -- Spectate toggle: exact same structure as Components.Toggle
+                Items["SpectateToggle"] = Instances:Create("TextButton", {
+                    Parent = ControlsContainer.Instance, Name = "\0",
+                    FontFace = Library.Font, Text = "",
+                    AutoButtonColor = false, BackgroundTransparency = 1,
+                    BorderSizePixel = 0, Size = UDim2New(1, 0, 0, 20),
+                    ZIndex = 2, TextSize = 14,
+                    BackgroundColor3 = FromRGB(255, 255, 255)
                 })
                 Instances:Create("TextLabel", {
                     Parent = Items["SpectateToggle"].Instance, Name = "\0",
-                    FontFace = Library.Font, TextColor3 = FromRGB(255,255,255),
+                    FontFace = Library.Font, TextColor3 = FromRGB(255, 255, 255),
                     TextTransparency = 0.5, Text = "spectate",
                     AutomaticSize = Enum.AutomaticSize.X,
-                    Size = UDim2New(0,0,0,14), AnchorPoint = Vector2New(0,0.5),
-                    Position = UDim2New(0,0,0.5,0), BorderSizePixel = 0,
-                    BackgroundTransparency = 1, ZIndex = 2, TextSize = 12,
-                    BackgroundColor3 = FromRGB(255,255,255)
+                    Size = UDim2New(0, 0, 0, 15), AnchorPoint = Vector2New(0, 0.5),
+                    Position = UDim2New(0, 0, 0.5, 0), BorderSizePixel = 0,
+                    BackgroundTransparency = 1, ZIndex = 2, TextSize = 14,
+                    BackgroundColor3 = FromRGB(255, 255, 255)
                 }):AddToTheme({TextColor3 = "Text"})
                 local _sInd = Instances:Create("Frame", {
                     Parent = Items["SpectateToggle"].Instance, Name = "\0",
-                    AnchorPoint = Vector2New(1,0.5), Position = UDim2New(1,0,0.5,0),
-                    Size = UDim2New(0,14,0,14), ZIndex = 2, BorderSizePixel = 0,
-                    BackgroundColor3 = FromRGB(34,39,45), BorderColor3 = FromRGB(0,0,0)
+                    AnchorPoint = Vector2New(1, 0.5), Position = UDim2New(1, 0, 0.5, 0),
+                    Size = UDim2New(0, 20, 0, 20), ZIndex = 2, BorderSizePixel = 0,
+                    BackgroundColor3 = FromRGB(34, 39, 45), BorderColor3 = FromRGB(0, 0, 0)
                 })  _sInd:AddToTheme({BackgroundColor3 = "Element"})
-                Instances:Create("UICorner",{Parent=_sInd.Instance,Name="\0",CornerRadius=UDimNew(0,4)})
+                Instances:Create("UICorner", {Parent = _sInd.Instance, Name = "\0", CornerRadius = UDimNew(0, 4)})
                 local _sInline = Instances:Create("Frame", {
                     Parent = _sInd.Instance, Name = "\0",
-                    Size = UDim2New(1,-4,1,-4), Position = UDim2New(0,2,0,2),
+                    Size = UDim2New(1, -4, 1, -4), Position = UDim2New(0, 2, 0, 2),
                     ZIndex = 2, BorderSizePixel = 0,
-                    BackgroundColor3 = FromRGB(34,39,45), BorderColor3 = FromRGB(0,0,0)
+                    BackgroundColor3 = FromRGB(34, 39, 45), BorderColor3 = FromRGB(0, 0, 0)
                 })  _sInline:AddToTheme({BackgroundColor3 = "Element"})
-                Instances:Create("UICorner",{Parent=_sInline.Instance,Name="\0",CornerRadius=UDimNew(0,3)})
-                Instances:Create("UIGradient",{Parent=_sInline.Instance,Name="\0",Rotation=84,
-                    Color=RGBSequence{RGBSequenceKeypoint(0,FromRGB(255,255,255)),RGBSequenceKeypoint(1,FromRGB(211,211,211))}
-                }):AddToTheme({Color=function() return RGBSequence{RGBSequenceKeypoint(0,FromRGB(255,255,255)),RGBSequenceKeypoint(1,Library.Theme["Dark Gradient"])} end})
+                Instances:Create("UICorner", {Parent = _sInline.Instance, Name = "\0", CornerRadius = UDimNew(0, 4)})
+                Instances:Create("UIGradient", {
+                    Parent = _sInline.Instance, Name = "\0", Rotation = 84,
+                    Color = RGBSequence{RGBSequenceKeypoint(0, FromRGB(255, 255, 255)), RGBSequenceKeypoint(1, FromRGB(211, 211, 211))}
+                }):AddToTheme({Color = function() return RGBSequence{RGBSequenceKeypoint(0, FromRGB(255, 255, 255)), RGBSequenceKeypoint(1, Library.Theme["Dark Gradient"])} end})
                 Items["SpectateCheck"] = Instances:Create("ImageLabel", {
                     Parent = _sInline.Instance, Name = "\0",
                     Visible = true, ScaleType = Enum.ScaleType.Fit,
-                    Size = UDim2New(1,-2,1,-2), AnchorPoint = Vector2New(0.5,0.5),
+                    Size = UDim2New(1, -2, 1, -2), AnchorPoint = Vector2New(0.5, 0.5),
                     Image = "rbxassetid://116339777575852",
-                    BackgroundTransparency = 1, Position = UDim2New(0.5,0,0.5,0),
+                    BackgroundTransparency = 1, Position = UDim2New(0.5, 0, 0.5, 0),
                     ImageTransparency = 1, ZIndex = 2, BorderSizePixel = 0,
-                    BackgroundColor3 = FromRGB(255,255,255), ImageColor3 = FromRGB(196,231,255),
-                    BorderColor3 = FromRGB(0,0,0)
+                    BackgroundColor3 = FromRGB(255, 255, 255), ImageColor3 = FromRGB(196, 231, 255),
+                    BorderColor3 = FromRGB(0, 0, 0)
                 })  Items["SpectateCheck"]:AddToTheme({ImageColor3 = "Accent"})
+                Items["SpectateToggle"]:OnHover(function()
+                    _sInd:Tween(nil, {BackgroundColor3 = Library:GetLighterColor(Library.Theme.Element, 1.45)})
+                    _sInline:Tween(nil, {BackgroundColor3 = Library:GetLighterColor(Library.Theme.Element, 1.45)})
+                end)
+                Items["SpectateToggle"]:OnHoverLeave(function()
+                    _sInd:Tween(nil, {BackgroundColor3 = Library.Theme.Element})
+                    _sInline:Tween(nil, {BackgroundColor3 = Library.Theme.Element})
+                end)
 
-                -- Teleport button (row 2)
+                -- Teleport button: exact same structure as Library.Sections.Button
                 Items["TeleportBtn"] = Instances:Create("TextButton", {
-                    Parent = Items["Playerlist"].Instance, Name = "\0",
-                    FontFace = Library.Font, TextColor3 = FromRGB(255,255,255),
-                    Text = "teleport", BackgroundColor3 = FromRGB(34,39,45),
-                    Size = UDim2New(0.5,-12,0,16), Position = UDim2New(0.5,4,1,-53),
-                    BorderSizePixel = 0, ZIndex = 2, TextSize = 12,
-                    AutoButtonColor = false, Visible = false,
-                    TextXAlignment = Enum.TextXAlignment.Center,
-                    BackgroundColor3 = FromRGB(34,39,45)
-                })  Items["TeleportBtn"]:AddToTheme({BackgroundColor3 = "Element", TextColor3 = "Text"})
-                Instances:Create("UICorner",{Parent=Items["TeleportBtn"].Instance,Name="\0",CornerRadius=UDimNew(0,4)})
+                    Parent = ControlsContainer.Instance, Name = "\0",
+                    FontFace = Library.Font, Text = "",
+                    AutoButtonColor = false, BorderSizePixel = 0,
+                    Size = UDim2New(1, 0, 0, 30), ZIndex = 2, TextSize = 14,
+                    BackgroundColor3 = FromRGB(34, 39, 45)
+                })  Items["TeleportBtn"]:AddToTheme({BackgroundColor3 = "Element"})
+                Instances:Create("UICorner", {Parent = Items["TeleportBtn"].Instance, Name = "\0", CornerRadius = UDimNew(0, 4)})
+                Instances:Create("UIGradient", {
+                    Parent = Items["TeleportBtn"].Instance, Name = "\0", Rotation = 84,
+                    Color = RGBSequence{RGBSequenceKeypoint(0, FromRGB(255, 255, 255)), RGBSequenceKeypoint(1, FromRGB(211, 211, 211))}
+                }):AddToTheme({Color = function() return RGBSequence{RGBSequenceKeypoint(0, FromRGB(255, 255, 255)), RGBSequenceKeypoint(1, Library.Theme["Dark Gradient"])} end})
+                Instances:Create("TextLabel", {
+                    Parent = Items["TeleportBtn"].Instance, Name = "\0",
+                    FontFace = Library.Font, TextColor3 = FromRGB(255, 255, 255),
+                    Text = "teleport to player", BackgroundTransparency = 1,
+                    BorderSizePixel = 0, Size = UDim2New(1, 0, 1, 0),
+                    ZIndex = 2, TextSize = 14,
+                    BackgroundColor3 = FromRGB(255, 255, 255)
+                }):AddToTheme({TextColor3 = "Text"})
+                Items["TeleportBtn"]:OnHover(function()
+                    Items["TeleportBtn"]:Tween(nil, {BackgroundColor3 = Library:GetLighterColor(Library.Theme.Element, 1.45)})
+                end)
+                Items["TeleportBtn"]:OnHoverLeave(function()
+                    Items["TeleportBtn"]:Tween(nil, {BackgroundColor3 = Library.Theme.Element})
+                end)
 
             end
 
-            do -- Status multi-dropdown in the control area (row 3-4)
+            do -- Status dropdown inside ControlsContainer
                 local DropdownItems = { } do
                     DropdownItems["Dropdown"] = Instances:Create("Frame", {
-                        Parent = Items["Playerlist"].Instance,
+                        Parent = Items["ControlsContainer"].Instance,
                         Name = "\0",
                         BackgroundTransparency = 1,
-                        AnchorPoint = Vector2New(0, 0),
-                        Size = UDim2New(0.5, -12, 0, 33),
-                        Position = UDim2New(0.5, 4, 1, -34),
+                        Size = UDim2New(1, 0, 0, 43),
                         BorderColor3 = FromRGB(0, 0, 0),
                         ZIndex = 2,
                         BorderSizePixel = 0,
@@ -8967,13 +9008,13 @@ local Library do
                         FontFace = Library.Font,
                         TextColor3 = FromRGB(255, 255, 255),
                         BorderColor3 = FromRGB(0, 0, 0),
-                        Text = "Status",
+                        Text = "status",
                         AutomaticSize = Enum.AutomaticSize.X,
                         BackgroundTransparency = 1,
-                        Size = UDim2New(0, 0, 0, 13),
+                        Size = UDim2New(0, 0, 0, 15),
                         BorderSizePixel = 0,
                         ZIndex = 2,
-                        TextSize = 12,
+                        TextSize = 14,
                         BackgroundColor3 = FromRGB(255, 255, 255)
                     })  DropdownItems["Text"]:AddToTheme({TextColor3 = "Text"})
 
@@ -8985,7 +9026,7 @@ local Library do
                         BorderColor3 = FromRGB(0, 0, 0),
                         AnchorPoint = Vector2New(0, 1),
                         Position = UDim2New(0, 0, 1, 0),
-                        Size = UDim2New(1, 0, 0, 18),
+                        Size = UDim2New(1, 0, 0, 25),
                         ZIndex = 2,
                         BorderSizePixel = 0,
                         BackgroundColor3 = FromRGB(34, 39, 45)
