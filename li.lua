@@ -8888,7 +8888,7 @@ local Library do
                     Parent = Items["Playerlist"].Instance, Name = "\0",
                     BackgroundTransparency = 1,
                     AnchorPoint = Vector2New(1, 1),
-                    Position = UDim2New(1, -5, 1, -3),
+                    Position = UDim2New(1, -15, 1, -3),
                     Size = UDim2New(0, 110, 0, 95),
                     ZIndex = 2, BorderSizePixel = 0, Visible = false,
                     BackgroundColor3 = FromRGB(0, 0, 0)
@@ -8928,6 +8928,7 @@ local Library do
                     Size = UDim2New(0, 20, 0, 20), ZIndex = 2, BorderSizePixel = 0,
                     BackgroundColor3 = FromRGB(34, 39, 45), BorderColor3 = FromRGB(0, 0, 0)
                 })  _sInd:AddToTheme({BackgroundColor3 = "Element"})
+                Items["SpectateIndicator"] = _sInd
                 Instances:Create("UICorner", {Parent = _sInd.Instance, Name = "\0", CornerRadius = UDimNew(0, 4)})
                 local _sInline = Instances:Create("Frame", {
                     Parent = _sInd.Instance, Name = "\0",
@@ -8935,6 +8936,7 @@ local Library do
                     ZIndex = 2, BorderSizePixel = 0,
                     BackgroundColor3 = FromRGB(34, 39, 45), BorderColor3 = FromRGB(0, 0, 0)
                 })  _sInline:AddToTheme({BackgroundColor3 = "Element"})
+                Items["SpectateInline"] = _sInline
                 Instances:Create("UICorner", {Parent = _sInline.Instance, Name = "\0", CornerRadius = UDimNew(0, 4)})
                 Instances:Create("UIGradient", {
                     Parent = _sInline.Instance, Name = "\0", Rotation = 84,
@@ -9403,8 +9405,6 @@ local Library do
                 Dropdown:AddOption("Mute Voice")
                 Dropdown:AddOption("Hide Avatar")
 
-                -- hidden initially; shown by kiwisense when a player is selected
-                DropdownItems["Dropdown"].Instance.Visible = false
                 Items["StatusContainer"] = DropdownItems["Dropdown"]
                 Playerlist.StatusDropdown = Dropdown
             end
