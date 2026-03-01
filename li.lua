@@ -8882,19 +8882,43 @@ local Library do
                     ZIndex = 2, TextSize = 9, AutoButtonColor = false, Visible = false
                 })  Items["LeakNextBtn"]:AddToTheme({BackgroundColor3 = "Element", TextColor3 = "Accent"})
                 Instances:Create("UICorner",{Parent=Items["LeakNextBtn"].Instance,Name="\0",CornerRadius=UDimNew(0,3)})
-                
+
+                -- Spectate toggle (row 1 of control area)
+                Items["SpectateToggle"] = Instances:Create("TextButton", {
+                    Parent = Items["Playerlist"].Instance, Name = "\0",
+                    FontFace = Library.Font, TextColor3 = FromRGB(196,231,255),
+                    Text = "\226\152\144  Spectate", BackgroundTransparency = 1,
+                    Size = UDim2New(0.5,-16,0,15), Position = UDim2New(0.5,8,1,-75),
+                    BorderSizePixel = 0, ZIndex = 2, TextSize = 13,
+                    AutoButtonColor = false, Visible = false,
+                    TextXAlignment = Enum.TextXAlignment.Left,
+                    BackgroundColor3 = FromRGB(255,255,255)
+                })  Items["SpectateToggle"]:AddToTheme({TextColor3 = "Accent"})
+
+                -- Teleport button (row 2 of control area)
+                Items["TeleportBtn"] = Instances:Create("TextButton", {
+                    Parent = Items["Playerlist"].Instance, Name = "\0",
+                    FontFace = Library.Font, TextColor3 = FromRGB(255,255,255),
+                    Text = "teleport", BackgroundColor3 = FromRGB(34,39,45),
+                    Size = UDim2New(0.5,-16,0,17), Position = UDim2New(0.5,8,1,-56),
+                    BorderSizePixel = 0, ZIndex = 2, TextSize = 13,
+                    AutoButtonColor = false, Visible = false,
+                    TextXAlignment = Enum.TextXAlignment.Center,
+                    BackgroundColor3 = FromRGB(34,39,45)
+                })  Items["TeleportBtn"]:AddToTheme({BackgroundColor3 = "Element", TextColor3 = "Text"})
+                Instances:Create("UICorner",{Parent=Items["TeleportBtn"].Instance,Name="\0",CornerRadius=UDimNew(0,4)})
 
             end
 
-            do --[[ Dropdown removed — status replaced by leak scanning ]]
+            do -- Status multi-dropdown in the control area (row 3-4)
                 local DropdownItems = { } do
                     DropdownItems["Dropdown"] = Instances:Create("Frame", {
                         Parent = Items["Playerlist"].Instance,
                         Name = "\0",
                         BackgroundTransparency = 1,
-                        AnchorPoint = Vector2New(1, 1),
-                        Size = UDim2New(0, 235, 0, 47),
-                        Position = UDim2New(1, -8, 1, -20),
+                        AnchorPoint = Vector2New(0, 0),
+                        Size = UDim2New(0.5, -16, 0, 43),
+                        Position = UDim2New(0.5, 8, 1, -46),
                         BorderColor3 = FromRGB(0, 0, 0),
                         ZIndex = 2,
                         BorderSizePixel = 0,
@@ -9051,7 +9075,7 @@ local Library do
                     IsOpen = false,
                     Value = { },
                     Options = { },
-                    Multi = false
+                    Multi = true
                 }
 
                 function Dropdown:AddOption(Option)
@@ -9299,8 +9323,13 @@ local Library do
                     Dropdown:SetOpen(not Dropdown.IsOpen)
                 end)
 
-                -- options removed; dropdown hidden
+                Dropdown:AddOption("Mute Voice")
+                Dropdown:AddOption("Hide Avatar")
+
+                -- hidden initially; shown by kiwisense when a player is selected
                 DropdownItems["Dropdown"].Instance.Visible = false
+                Items["StatusContainer"] = DropdownItems["Dropdown"]
+                Playerlist.StatusDropdown = Dropdown
             end
 
             function Playerlist:Add(Player)
@@ -9442,10 +9471,10 @@ local Library do
                         -- Calculate join date from account age
                         local accountAgeDays = Playerlist.Player.AccountAge
                         local currentTime = os.time()
-                        local joinTime = currentTime - (accountAgeDays * 86400) -- 86400 seconds per day
-                        local joinDate = os.date("%d %b, %Y", joinTime)
-                        local ageText = accountAgeDays .. (accountAgeDays == 1 and " day" or " days")
-                        Items["PlayerAccountAge"].Instance.Text = "Age: " .. ageText .. " (Joined " .. joinDate .. ")"
+                        local joinTime = currentTime - (accountAgeDays * 86400)
+                        local day = tonumber(os.date("%d", joinTime))
+                        local joinDate = os.date("%B", joinTime) .. " " .. tostring(day) .. ", " .. os.date("%Y", joinTime)
+                        Items["PlayerAccountAge"].Instance.Text = "Age: " .. joinDate
                         if Items["PlayerTeamLabel"] then
                             local teamName  = Playerlist.Player.Team and Playerlist.Player.Team.Name or "None"
                             local teamColor = Playerlist.Player.Team and Playerlist.Player.Team.TeamColor.Color or Color3.new(1,1,1)
