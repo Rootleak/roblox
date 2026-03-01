@@ -8883,65 +8883,6 @@ local Library do
                 })  Items["LeakNextBtn"]:AddToTheme({BackgroundColor3 = "Element", TextColor3 = "Accent"})
                 Instances:Create("UICorner",{Parent=Items["LeakNextBtn"].Instance,Name="\0",CornerRadius=UDimNew(0,3)})
                 
-                -- Player control elements (shown when leaks are NOT displayed)
-                Items["SpectateCheckbox"] = Instances:Create("TextButton", {
-                    Parent = Items["Playerlist"].Instance, Name = "\0",
-                    FontFace = Library.Font, TextColor3 = FromRGB(196,231,255),
-                    Text = "☐ Spectate", Size = UDim2New(0,100,0,20),
-                    Position = UDim2New(0.5,8,1,-75), BackgroundColor3 = FromRGB(34,39,45),
-                    BorderSizePixel = 0, ZIndex = 2, TextSize = 13, AutoButtonColor = false,
-                    Visible = false, TextXAlignment = Enum.TextXAlignment.Left
-                })  Items["SpectateCheckbox"]:AddToTheme({BackgroundColor3 = "Element", TextColor3 = "Accent"})
-                Instances:Create("UICorner",{Parent=Items["SpectateCheckbox"].Instance,Name="\0",CornerRadius=UDimNew(0,4)})
-                Instances:Create("UIPadding",{Parent=Items["SpectateCheckbox"].Instance,Name="\0",PaddingLeft=UDimNew(0,6)})
-                
-                Items["TeleportButton"] = Instances:Create("TextButton", {
-                    Parent = Items["Playerlist"].Instance, Name = "\0",
-                    FontFace = Library.Font, TextColor3 = FromRGB(196,231,255),
-                    Text = "Teleport", Size = UDim2New(0,100,0,20),
-                    Position = UDim2New(0.5,116,1,-75), BackgroundColor3 = FromRGB(34,39,45),
-                    BorderSizePixel = 0, ZIndex = 2, TextSize = 13, AutoButtonColor = false,
-                    Visible = false, TextXAlignment = Enum.TextXAlignment.Center
-                })  Items["TeleportButton"]:AddToTheme({BackgroundColor3 = "Element", TextColor3 = "Accent"})
-                Instances:Create("UICorner",{Parent=Items["TeleportButton"].Instance,Name="\0",CornerRadius=UDimNew(0,4)})
-                
-                Items["StatusLabel"] = Instances:Create("TextLabel", {
-                    Parent = Items["Playerlist"].Instance, Name = "\0",
-                    FontFace = Library.Font, TextColor3 = FromRGB(255,255,255),
-                    Text = "Status", Size = UDim2New(0,60,0,15),
-                    Position = UDim2New(0.5,8,1,-50), BackgroundTransparency = 1,
-                    BorderSizePixel = 0, ZIndex = 2, TextSize = 14,
-                    TextXAlignment = Enum.TextXAlignment.Left, Visible = false
-                })  Items["StatusLabel"]:AddToTheme({TextColor3 = "Text"})
-                
-                Items["StatusDropdown"] = Instances:Create("TextButton", {
-                    Parent = Items["Playerlist"].Instance, Name = "\0",
-                    Text = "", AutoButtonColor = false,
-                    BorderColor3 = FromRGB(0,0,0), Position = UDim2New(0.5,8,1,-32),
-                    Size = UDim2New(0.5,-16,0,25), ZIndex = 2, BorderSizePixel = 0,
-                    BackgroundColor3 = FromRGB(34,39,45), Visible = false
-                })  Items["StatusDropdown"]:AddToTheme({BackgroundColor3 = "Element"})
-                Instances:Create("UICorner",{Parent=Items["StatusDropdown"].Instance,Name="\0",CornerRadius=UDimNew(0,4)})
-                Instances:Create("UIGradient",{Parent=Items["StatusDropdown"].Instance,Name="\0",Rotation=84,
-                    Color=RGBSequence{RGBSequenceKeypoint(0,FromRGB(255,255,255)),RGBSequenceKeypoint(1,FromRGB(211,211,211))}
-                }):AddToTheme({Color=function() return RGBSequence{RGBSequenceKeypoint(0,FromRGB(255,255,255)),RGBSequenceKeypoint(1,Library.Theme["Dark Gradient"])} end})
-                
-                Items["StatusValue"] = Instances:Create("TextLabel", {
-                    Parent = Items["StatusDropdown"].Instance, Name = "\0",
-                    FontFace = Library.Font, TextColor3 = FromRGB(255,255,255),
-                    Text = "None", Size = UDim2New(1,-26,1,0),
-                    BackgroundTransparency = 1, Position = UDim2New(0,8,0,0),
-                    BorderSizePixel = 0, ZIndex = 2, TextSize = 13,
-                    TextXAlignment = Enum.TextXAlignment.Left, TextTruncate = Enum.TextTruncate.AtEnd
-                })  Items["StatusValue"]:AddToTheme({TextColor3 = "Text"})
-                
-                Items["StatusArrow"] = Instances:Create("ImageLabel", {
-                    Parent = Items["StatusDropdown"].Instance, Name = "\0",
-                    Image = "rbxassetid://87746850921092", ImageColor3 = FromRGB(255,255,255),
-                    ScaleType = Enum.ScaleType.Fit, BackgroundTransparency = 1,
-                    AnchorPoint = Vector2New(1,0.5), Position = UDim2New(1,-6,0.5,0),
-                    Size = UDim2New(0,12,0,12), BorderSizePixel = 0, ZIndex = 2
-                })  Items["StatusArrow"]:AddToTheme({ImageColor3 = "Text"})
 
             end
 
