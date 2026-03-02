@@ -8889,7 +8889,7 @@ local Library do
                     BackgroundTransparency = 1,
                     AnchorPoint = Vector2New(1, 1),
                     Position = UDim2New(1, -15, 1, -3),
-                    Size = UDim2New(0, 115, 0, 70),
+                    Size = UDim2New(0, 115, 0, 66),
                     ZIndex = 2, BorderSizePixel = 0, Visible = false,
                     BackgroundColor3 = FromRGB(0, 0, 0)
                 })
@@ -8900,7 +8900,7 @@ local Library do
                     Parent = ControlsContainer.Instance, Name = "\0",
                     BackgroundTransparency = 1, BorderSizePixel = 0,
                     Position = UDim2New(0, 0, 0, 47),
-                    Size = UDim2New(1, 0, 0, 22),
+                    Size = UDim2New(1, 0, 0, 18),
                     ZIndex = 2, BackgroundColor3 = FromRGB(0, 0, 0)
                 })
 
@@ -8911,7 +8911,7 @@ local Library do
                     AutoButtonColor = false, BackgroundTransparency = 1,
                     BorderSizePixel = 0, Size = UDim2New(0.5, -2, 1, 0),
                     Position = UDim2New(0, 0, 0, 0),
-                    ZIndex = 2, TextSize = 14,
+                    ZIndex = 2, TextSize = 11,
                     BackgroundColor3 = FromRGB(255, 255, 255)
                 })
                 Items["SpectateToggle"].SpectateActive = false
@@ -8920,15 +8920,15 @@ local Library do
                     FontFace = Library.Font, TextColor3 = FromRGB(255, 255, 255),
                     TextTransparency = 0.5, Text = "spectate",
                     AutomaticSize = Enum.AutomaticSize.X,
-                    Size = UDim2New(0, 0, 0, 15), AnchorPoint = Vector2New(0, 0.5),
+                    Size = UDim2New(0, 0, 0, 13), AnchorPoint = Vector2New(0, 0.5),
                     Position = UDim2New(0, 0, 0.5, 0), BorderSizePixel = 0,
-                    BackgroundTransparency = 1, ZIndex = 2, TextSize = 14,
+                    BackgroundTransparency = 1, ZIndex = 2, TextSize = 11,
                     BackgroundColor3 = FromRGB(255, 255, 255)
                 }):AddToTheme({TextColor3 = "Text"})
                 local _sInd = Instances:Create("Frame", {
                     Parent = Items["SpectateToggle"].Instance, Name = "\0",
                     AnchorPoint = Vector2New(1, 0.5), Position = UDim2New(1, 0, 0.5, 0),
-                    Size = UDim2New(0, 20, 0, 20), ZIndex = 2, BorderSizePixel = 0,
+                    Size = UDim2New(0, 16, 0, 16), ZIndex = 2, BorderSizePixel = 0,
                     BackgroundColor3 = FromRGB(34, 39, 45), BorderColor3 = FromRGB(0, 0, 0)
                 })  _sInd:AddToTheme({BackgroundColor3 = "Element"})
                 Items["SpectateIndicator"] = _sInd
@@ -8972,7 +8972,7 @@ local Library do
                     FontFace = Library.Font, Text = "",
                     AutoButtonColor = false, BorderSizePixel = 0,
                     AnchorPoint = Vector2New(1, 0), Position = UDim2New(1, 0, 0, 0),
-                    Size = UDim2New(0.5, -2, 1, 0), ZIndex = 2, TextSize = 14,
+                    Size = UDim2New(0.5, -2, 1, 0), ZIndex = 2, TextSize = 11,
                     BackgroundColor3 = FromRGB(34, 39, 45)
                 })  Items["TeleportBtn"]:AddToTheme({BackgroundColor3 = "Element"})
                 Instances:Create("UICorner", {Parent = Items["TeleportBtn"].Instance, Name = "\0", CornerRadius = UDimNew(0, 4)})
@@ -8985,7 +8985,7 @@ local Library do
                     FontFace = Library.Font, TextColor3 = FromRGB(255, 255, 255),
                     Text = "teleport", BackgroundTransparency = 1,
                     BorderSizePixel = 0, Size = UDim2New(1, 0, 1, 0),
-                    ZIndex = 2, TextSize = 14,
+                    ZIndex = 2, TextSize = 11,
                     BackgroundColor3 = FromRGB(255, 255, 255)
                 }):AddToTheme({TextColor3 = "Text"})
                 Items["TeleportBtn"]:OnHover(function()
