@@ -9408,6 +9408,7 @@ local Library do
                 Dropdown:AddOption("Mute Voice")
                 Dropdown:AddOption("Hide Avatar")
 
+                DropdownItems["Dropdown"].Instance.LayoutOrder = 1
                 Items["StatusContainer"] = DropdownItems["Dropdown"]
                 Playerlist.StatusDropdown = Dropdown
             end
