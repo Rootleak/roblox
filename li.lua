@@ -8894,21 +8894,15 @@ local Library do
                     BackgroundColor3 = FromRGB(0, 0, 0)
                 })
                 Items["ControlsContainer"] = ControlsContainer
-                Instances:Create("UIListLayout", {
-                    Parent = ControlsContainer.Instance, Name = "\0",
-                    SortOrder = Enum.SortOrder.LayoutOrder,
-                    FillDirection = Enum.FillDirection.Vertical,
-                    HorizontalAlignment = Enum.HorizontalAlignment.Left,
-                    VerticalAlignment = Enum.VerticalAlignment.Bottom,
-                    Padding = UDimNew(0, 5)
-                })
 
-                -- Spectate toggle: exact same structure as Components.Toggle
+                -- Spectate toggle: exact same structure as Components.Toggle (left, top)
                 Items["SpectateToggle"] = Instances:Create("TextButton", {
                     Parent = ControlsContainer.Instance, Name = "\0",
                     FontFace = Library.Font, Text = "",
                     AutoButtonColor = false, BackgroundTransparency = 1,
-                    BorderSizePixel = 0, Size = UDim2New(1, 0, 0, 20),
+                    BorderSizePixel = 0, 
+                    Position = UDim2New(0, 0, 0, 0),
+                    Size = UDim2New(0.5, -3, 0, 20),
                     ZIndex = 2, TextSize = 14,
                     BackgroundColor3 = FromRGB(255, 255, 255)
                 })
@@ -8949,24 +8943,28 @@ local Library do
                     Image = "rbxassetid://116339777575852",
                     BackgroundTransparency = 1, Position = UDim2New(0.5, 0, 0.5, 0),
                     ImageTransparency = 1, ZIndex = 2, BorderSizePixel = 0,
-                    BackgroundColor3 = FromRGB(255, 255, 255), ImageColor3 = FromRGB(196, 231, 255),
+                    BackgroundColor3 = FromRGB(255, 255, 255), ImageColor3 = FromRGB(0, 0, 0),
                     BorderColor3 = FromRGB(0, 0, 0)
-                })  Items["SpectateCheck"]:AddToTheme({ImageColor3 = "Accent"})
+                })
+                Playerlist.SpectateState = false  -- track state for hover
                 Items["SpectateToggle"]:OnHover(function()
+                    if Playerlist.SpectateState then return end
                     _sInd:Tween(nil, {BackgroundColor3 = Library:GetLighterColor(Library.Theme.Element, 1.45)})
                     _sInline:Tween(nil, {BackgroundColor3 = Library:GetLighterColor(Library.Theme.Element, 1.45)})
                 end)
                 Items["SpectateToggle"]:OnHoverLeave(function()
+                    if Playerlist.SpectateState then return end
                     _sInd:Tween(nil, {BackgroundColor3 = Library.Theme.Element})
                     _sInline:Tween(nil, {BackgroundColor3 = Library.Theme.Element})
                 end)
 
-                -- Teleport button: exact same structure as Library.Sections.Button
+                -- Teleport button: exact same structure as Library.Sections.Button (left, below toggle)
                 Items["TeleportBtn"] = Instances:Create("TextButton", {
                     Parent = ControlsContainer.Instance, Name = "\0",
                     FontFace = Library.Font, Text = "",
                     AutoButtonColor = false, BorderSizePixel = 0,
-                    Size = UDim2New(1, 0, 0, 30), ZIndex = 2, TextSize = 14,
+                    Position = UDim2New(0, 0, 0, 25),
+                    Size = UDim2New(0.5, -3, 0, 30), ZIndex = 2, TextSize = 14,
                     BackgroundColor3 = FromRGB(34, 39, 45)
                 })  Items["TeleportBtn"]:AddToTheme({BackgroundColor3 = "Element"})
                 Instances:Create("UICorner", {Parent = Items["TeleportBtn"].Instance, Name = "\0", CornerRadius = UDimNew(0, 4)})
@@ -8991,13 +8989,15 @@ local Library do
 
             end
 
-            do -- Status dropdown inside ControlsContainer
+            do -- Status dropdown inside ControlsContainer (right side, full height)
                 local DropdownItems = { } do
                     DropdownItems["Dropdown"] = Instances:Create("Frame", {
                         Parent = Items["ControlsContainer"].Instance,
                         Name = "\0",
                         BackgroundTransparency = 1,
-                        Size = UDim2New(1, 0, 0, 43),
+                        AnchorPoint = Vector2New(1, 0),
+                        Position = UDim2New(1, 0, 0, 0),
+                        Size = UDim2New(0.5, -3, 0, 43),
                         BorderColor3 = FromRGB(0, 0, 0),
                         ZIndex = 2,
                         BorderSizePixel = 0,
