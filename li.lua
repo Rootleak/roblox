@@ -8883,33 +8883,35 @@ local Library do
                 })  Items["LeakNextBtn"]:AddToTheme({BackgroundColor3 = "Element", TextColor3 = "Accent"})
                 Instances:Create("UICorner",{Parent=Items["LeakNextBtn"].Instance,Name="\0",CornerRadius=UDimNew(0,3)})
 
-                -- ── Player controls container (right half, full-size library components) ─
+                -- ── Player controls container (dropdown top, toggle+teleport row below) ─
                 local ControlsContainer = Instances:Create("Frame", {
                     Parent = Items["Playerlist"].Instance, Name = "\0",
                     BackgroundTransparency = 1,
-                    AnchorPoint = Vector2New(0, 1),
-                    Position = UDim2New(0.5, 5, 1, -5),
-                    Size = UDim2New(0.5, -10, 0, 103),
+                    AnchorPoint = Vector2New(1, 1),
+                    Position = UDim2New(1, -15, 1, -3),
+                    Size = UDim2New(0, 115, 0, 66),
                     ZIndex = 2, BorderSizePixel = 0, Visible = false,
                     BackgroundColor3 = FromRGB(0, 0, 0)
                 })
                 Items["ControlsContainer"] = ControlsContainer
-                Instances:Create("UIListLayout", {
+
+                -- Bottom row: spectate toggle (left) + teleport button (right)
+                local _row = Instances:Create("Frame", {
                     Parent = ControlsContainer.Instance, Name = "\0",
-                    SortOrder = Enum.SortOrder.LayoutOrder,
-                    FillDirection = Enum.FillDirection.Vertical,
-                    HorizontalAlignment = Enum.HorizontalAlignment.Left,
-                    VerticalAlignment = Enum.VerticalAlignment.Bottom,
-                    Padding = UDimNew(0, 5)
+                    BackgroundTransparency = 1, BorderSizePixel = 0,
+                    Position = UDim2New(0, 0, 0, 47),
+                    Size = UDim2New(1, 0, 0, 18),
+                    ZIndex = 2, BackgroundColor3 = FromRGB(0, 0, 0)
                 })
 
-                -- Spectate toggle: exact same structure as Components.Toggle, full size
+                -- Spectate toggle: exact same structure as Components.Toggle (left half)
                 Items["SpectateToggle"] = Instances:Create("TextButton", {
-                    Parent = ControlsContainer.Instance, Name = "\0",
+                    Parent = _row.Instance, Name = "\0",
                     FontFace = Library.Font, Text = "",
                     AutoButtonColor = false, BackgroundTransparency = 1,
-                    BorderSizePixel = 0, Size = UDim2New(1, 0, 0, 20),
-                    ZIndex = 2, TextSize = 14, LayoutOrder = 2,
+                    BorderSizePixel = 0, Size = UDim2New(0.5, -2, 1, 0),
+                    Position = UDim2New(0, 0, 0, 0),
+                    ZIndex = 2, TextSize = 11,
                     BackgroundColor3 = FromRGB(255, 255, 255)
                 })
                 Items["SpectateToggle"].SpectateActive = false
@@ -8918,15 +8920,15 @@ local Library do
                     FontFace = Library.Font, TextColor3 = FromRGB(255, 255, 255),
                     TextTransparency = 0.5, Text = "spectate",
                     AutomaticSize = Enum.AutomaticSize.X,
-                    Size = UDim2New(0, 0, 0, 15), AnchorPoint = Vector2New(0, 0.5),
+                    Size = UDim2New(0, 0, 0, 13), AnchorPoint = Vector2New(0, 0.5),
                     Position = UDim2New(0, 0, 0.5, 0), BorderSizePixel = 0,
-                    BackgroundTransparency = 1, ZIndex = 2, TextSize = 14,
+                    BackgroundTransparency = 1, ZIndex = 2, TextSize = 11,
                     BackgroundColor3 = FromRGB(255, 255, 255)
                 }):AddToTheme({TextColor3 = "Text"})
                 local _sInd = Instances:Create("Frame", {
                     Parent = Items["SpectateToggle"].Instance, Name = "\0",
                     AnchorPoint = Vector2New(1, 0.5), Position = UDim2New(1, 0, 0.5, 0),
-                    Size = UDim2New(0, 20, 0, 20), ZIndex = 2, BorderSizePixel = 0,
+                    Size = UDim2New(0, 16, 0, 16), ZIndex = 2, BorderSizePixel = 0,
                     BackgroundColor3 = FromRGB(34, 39, 45), BorderColor3 = FromRGB(0, 0, 0)
                 })  _sInd:AddToTheme({BackgroundColor3 = "Element"})
                 Items["SpectateIndicator"] = _sInd
@@ -8964,12 +8966,13 @@ local Library do
                     _sInline:Tween(nil, {BackgroundColor3 = Library.Theme.Element})
                 end)
 
-                -- Teleport button: exact same structure as Library.Sections.Button, full size
+                -- Teleport button: exact same structure as Library.Sections.Button (right half)
                 Items["TeleportBtn"] = Instances:Create("TextButton", {
-                    Parent = ControlsContainer.Instance, Name = "\0",
+                    Parent = _row.Instance, Name = "\0",
                     FontFace = Library.Font, Text = "",
                     AutoButtonColor = false, BorderSizePixel = 0,
-                    Size = UDim2New(1, 0, 0, 30), ZIndex = 2, TextSize = 14, LayoutOrder = 3,
+                    AnchorPoint = Vector2New(1, 0), Position = UDim2New(1, 0, 0, 0),
+                    Size = UDim2New(0.5, -2, 1, 0), ZIndex = 2, TextSize = 11,
                     BackgroundColor3 = FromRGB(34, 39, 45)
                 })  Items["TeleportBtn"]:AddToTheme({BackgroundColor3 = "Element"})
                 Instances:Create("UICorner", {Parent = Items["TeleportBtn"].Instance, Name = "\0", CornerRadius = UDimNew(0, 4)})
@@ -8980,9 +8983,9 @@ local Library do
                 Instances:Create("TextLabel", {
                     Parent = Items["TeleportBtn"].Instance, Name = "\0",
                     FontFace = Library.Font, TextColor3 = FromRGB(255, 255, 255),
-                    Text = "teleport to player", BackgroundTransparency = 1,
+                    Text = "teleport", BackgroundTransparency = 1,
                     BorderSizePixel = 0, Size = UDim2New(1, 0, 1, 0),
-                    ZIndex = 2, TextSize = 14,
+                    ZIndex = 2, TextSize = 11,
                     BackgroundColor3 = FromRGB(255, 255, 255)
                 }):AddToTheme({TextColor3 = "Text"})
                 Items["TeleportBtn"]:OnHover(function()
@@ -9408,7 +9411,6 @@ local Library do
                 Dropdown:AddOption("Mute Voice")
                 Dropdown:AddOption("Hide Avatar")
 
-                DropdownItems["Dropdown"].Instance.LayoutOrder = 1
                 Items["StatusContainer"] = DropdownItems["Dropdown"]
                 Playerlist.StatusDropdown = Dropdown
             end
