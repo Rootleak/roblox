@@ -8883,35 +8883,35 @@ local Library do
                 })  Items["LeakNextBtn"]:AddToTheme({BackgroundColor3 = "Element", TextColor3 = "Accent"})
                 Instances:Create("UICorner",{Parent=Items["LeakNextBtn"].Instance,Name="\0",CornerRadius=UDimNew(0,3)})
 
-                -- ── Player controls: left col = toggle+teleport, right col = dropdown ──
+                -- ── Player controls container (dropdown top, toggle+teleport row below) ─
                 local ControlsContainer = Instances:Create("Frame", {
                     Parent = Items["Playerlist"].Instance, Name = "\0",
                     BackgroundTransparency = 1,
                     AnchorPoint = Vector2New(1, 1),
                     Position = UDim2New(1, -15, 1, -3),
-                    Size = UDim2New(0, 120, 0, 44),
+                    Size = UDim2New(0, 115, 0, 66),
                     ZIndex = 2, BorderSizePixel = 0, Visible = false,
                     BackgroundColor3 = FromRGB(0, 0, 0)
                 })
                 Items["ControlsContainer"] = ControlsContainer
 
-                -- Left column frame: spectate toggle (top) + teleport button (bottom)
-                local _leftCol = Instances:Create("Frame", {
+                -- Bottom row: spectate toggle (left) + teleport button (right)
+                local _row = Instances:Create("Frame", {
                     Parent = ControlsContainer.Instance, Name = "\0",
                     BackgroundTransparency = 1, BorderSizePixel = 0,
-                    Position = UDim2New(0, 0, 0, 0),
-                    Size = UDim2New(0.5, -3, 1, 0),
+                    Position = UDim2New(0, 0, 0, 47),
+                    Size = UDim2New(1, 0, 0, 18),
                     ZIndex = 2, BackgroundColor3 = FromRGB(0, 0, 0)
                 })
 
-                -- Spectate toggle: exact same structure as Components.Toggle
+                -- Spectate toggle: exact same structure as Components.Toggle (left half)
                 Items["SpectateToggle"] = Instances:Create("TextButton", {
-                    Parent = _leftCol.Instance, Name = "\0",
+                    Parent = _row.Instance, Name = "\0",
                     FontFace = Library.Font, Text = "",
                     AutoButtonColor = false, BackgroundTransparency = 1,
-                    BorderSizePixel = 0, Size = UDim2New(1, 0, 0, 20),
+                    BorderSizePixel = 0, Size = UDim2New(0.5, -2, 1, 0),
                     Position = UDim2New(0, 0, 0, 0),
-                    ZIndex = 2, TextSize = 12,
+                    ZIndex = 2, TextSize = 11,
                     BackgroundColor3 = FromRGB(255, 255, 255)
                 })
                 Items["SpectateToggle"].SpectateActive = false
@@ -8920,15 +8920,15 @@ local Library do
                     FontFace = Library.Font, TextColor3 = FromRGB(255, 255, 255),
                     TextTransparency = 0.5, Text = "spectate",
                     AutomaticSize = Enum.AutomaticSize.X,
-                    Size = UDim2New(0, 0, 0, 14), AnchorPoint = Vector2New(0, 0.5),
+                    Size = UDim2New(0, 0, 0, 13), AnchorPoint = Vector2New(0, 0.5),
                     Position = UDim2New(0, 0, 0.5, 0), BorderSizePixel = 0,
-                    BackgroundTransparency = 1, ZIndex = 2, TextSize = 12,
+                    BackgroundTransparency = 1, ZIndex = 2, TextSize = 11,
                     BackgroundColor3 = FromRGB(255, 255, 255)
                 }):AddToTheme({TextColor3 = "Text"})
                 local _sInd = Instances:Create("Frame", {
                     Parent = Items["SpectateToggle"].Instance, Name = "\0",
                     AnchorPoint = Vector2New(1, 0.5), Position = UDim2New(1, 0, 0.5, 0),
-                    Size = UDim2New(0, 18, 0, 18), ZIndex = 2, BorderSizePixel = 0,
+                    Size = UDim2New(0, 16, 0, 16), ZIndex = 2, BorderSizePixel = 0,
                     BackgroundColor3 = FromRGB(34, 39, 45), BorderColor3 = FromRGB(0, 0, 0)
                 })  _sInd:AddToTheme({BackgroundColor3 = "Element"})
                 Items["SpectateIndicator"] = _sInd
@@ -8966,13 +8966,13 @@ local Library do
                     _sInline:Tween(nil, {BackgroundColor3 = Library.Theme.Element})
                 end)
 
-                -- Teleport button: exact same structure as Library.Sections.Button
+                -- Teleport button: exact same structure as Library.Sections.Button (right half)
                 Items["TeleportBtn"] = Instances:Create("TextButton", {
-                    Parent = _leftCol.Instance, Name = "\0",
+                    Parent = _row.Instance, Name = "\0",
                     FontFace = Library.Font, Text = "",
                     AutoButtonColor = false, BorderSizePixel = 0,
-                    Position = UDim2New(0, 0, 0, 24),
-                    Size = UDim2New(1, 0, 0, 20), ZIndex = 2, TextSize = 12,
+                    AnchorPoint = Vector2New(1, 0), Position = UDim2New(1, 0, 0, 0),
+                    Size = UDim2New(0.5, -2, 1, 0), ZIndex = 2, TextSize = 11,
                     BackgroundColor3 = FromRGB(34, 39, 45)
                 })  Items["TeleportBtn"]:AddToTheme({BackgroundColor3 = "Element"})
                 Instances:Create("UICorner", {Parent = Items["TeleportBtn"].Instance, Name = "\0", CornerRadius = UDimNew(0, 4)})
@@ -8985,7 +8985,7 @@ local Library do
                     FontFace = Library.Font, TextColor3 = FromRGB(255, 255, 255),
                     Text = "teleport", BackgroundTransparency = 1,
                     BorderSizePixel = 0, Size = UDim2New(1, 0, 1, 0),
-                    ZIndex = 2, TextSize = 12,
+                    ZIndex = 2, TextSize = 11,
                     BackgroundColor3 = FromRGB(255, 255, 255)
                 }):AddToTheme({TextColor3 = "Text"})
                 Items["TeleportBtn"]:OnHover(function()
@@ -9003,9 +9003,7 @@ local Library do
                         Parent = Items["ControlsContainer"].Instance,
                         Name = "\0",
                         BackgroundTransparency = 1,
-                        AnchorPoint = Vector2New(1, 0),
-                        Position = UDim2New(1, 0, 0, 0),
-                        Size = UDim2New(0.5, -3, 1, 0),
+                        Size = UDim2New(1, 0, 0, 43),
                         BorderColor3 = FromRGB(0, 0, 0),
                         ZIndex = 2,
                         BorderSizePixel = 0,
