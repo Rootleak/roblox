@@ -8883,30 +8883,30 @@ local Library do
                 })  Items["LeakNextBtn"]:AddToTheme({BackgroundColor3 = "Element", TextColor3 = "Accent"})
                 Instances:Create("UICorner",{Parent=Items["LeakNextBtn"].Instance,Name="\0",CornerRadius=UDimNew(0,3)})
 
-                -- ── Player controls container (dropdown left, toggle+teleport stacked right) ─
+                -- ── Player controls: left col = toggle+teleport, right col = dropdown ──
                 local ControlsContainer = Instances:Create("Frame", {
                     Parent = Items["Playerlist"].Instance, Name = "\0",
                     BackgroundTransparency = 1,
                     AnchorPoint = Vector2New(1, 1),
-                    Position = UDim2New(1, -8, 1, -3),
-                    Size = UDim2New(0, 130, 0, 43),
+                    Position = UDim2New(1, -15, 1, -3),
+                    Size = UDim2New(0, 120, 0, 44),
                     ZIndex = 2, BorderSizePixel = 0, Visible = false,
                     BackgroundColor3 = FromRGB(0, 0, 0)
                 })
                 Items["ControlsContainer"] = ControlsContainer
 
-                -- Right column: toggle (top) + teleport (bottom) stacked
-                local _rightCol = Instances:Create("Frame", {
+                -- Left column frame: spectate toggle (top) + teleport button (bottom)
+                local _leftCol = Instances:Create("Frame", {
                     Parent = ControlsContainer.Instance, Name = "\0",
                     BackgroundTransparency = 1, BorderSizePixel = 0,
-                    AnchorPoint = Vector2New(1, 0), Position = UDim2New(1, 0, 0, 0),
-                    Size = UDim2New(0, 58, 1, 0),
+                    Position = UDim2New(0, 0, 0, 0),
+                    Size = UDim2New(0.5, -3, 1, 0),
                     ZIndex = 2, BackgroundColor3 = FromRGB(0, 0, 0)
                 })
 
-                -- Spectate toggle: exact same structure as Components.Toggle (top of right column)
+                -- Spectate toggle: exact same structure as Components.Toggle
                 Items["SpectateToggle"] = Instances:Create("TextButton", {
-                    Parent = _rightCol.Instance, Name = "\0",
+                    Parent = _leftCol.Instance, Name = "\0",
                     FontFace = Library.Font, Text = "",
                     AutoButtonColor = false, BackgroundTransparency = 1,
                     BorderSizePixel = 0, Size = UDim2New(1, 0, 0, 20),
@@ -8966,12 +8966,12 @@ local Library do
                     _sInline:Tween(nil, {BackgroundColor3 = Library.Theme.Element})
                 end)
 
-                -- Teleport button: exact same structure as Library.Sections.Button (bottom of right column)
+                -- Teleport button: exact same structure as Library.Sections.Button
                 Items["TeleportBtn"] = Instances:Create("TextButton", {
-                    Parent = _rightCol.Instance, Name = "\0",
+                    Parent = _leftCol.Instance, Name = "\0",
                     FontFace = Library.Font, Text = "",
                     AutoButtonColor = false, BorderSizePixel = 0,
-                    AnchorPoint = Vector2New(0, 1), Position = UDim2New(0, 0, 1, 0),
+                    Position = UDim2New(0, 0, 0, 24),
                     Size = UDim2New(1, 0, 0, 20), ZIndex = 2, TextSize = 12,
                     BackgroundColor3 = FromRGB(34, 39, 45)
                 })  Items["TeleportBtn"]:AddToTheme({BackgroundColor3 = "Element"})
@@ -9003,7 +9003,9 @@ local Library do
                         Parent = Items["ControlsContainer"].Instance,
                         Name = "\0",
                         BackgroundTransparency = 1,
-                        Size = UDim2New(1, 0, 0, 43),
+                        AnchorPoint = Vector2New(1, 0),
+                        Position = UDim2New(1, 0, 0, 0),
+                        Size = UDim2New(0.5, -3, 1, 0),
                         BorderColor3 = FromRGB(0, 0, 0),
                         ZIndex = 2,
                         BorderSizePixel = 0,
