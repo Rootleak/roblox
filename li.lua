@@ -8982,11 +8982,16 @@ local Library do
                     Parent = _leftCol.Instance, Name = "\0",
                     FontFace = Library.Font, Text = "",
                     AutoButtonColor = false, BorderSizePixel = 0,
-                    AnchorPoint = Vector2New(0, 1), Position = UDim2New(0, 0, 1, 0),
-                    Size = UDim2New(1, 0, 0, 24), ZIndex = 2, TextSize = 13,
+                    AnchorPoint = Vector2New(1, 1), Position = UDim2New(1, 0, 1, 0),
+                    AutomaticSize = Enum.AutomaticSize.X,
+                    Size = UDim2New(0, 0, 0, 24), ZIndex = 2, TextSize = 13,
                     BackgroundColor3 = FromRGB(34, 39, 45)
                 })  Items["TeleportBtn"]:AddToTheme({BackgroundColor3 = "Element"})
                 Instances:Create("UICorner", {Parent = Items["TeleportBtn"].Instance, Name = "\0", CornerRadius = UDimNew(0, 4)})
+                Instances:Create("UIPadding", {
+                    Parent = Items["TeleportBtn"].Instance, Name = "\0",
+                    PaddingLeft = UDimNew(0, 10), PaddingRight = UDimNew(0, 10)
+                })
                 Instances:Create("UIGradient", {
                     Parent = Items["TeleportBtn"].Instance, Name = "\0", Rotation = 84,
                     Color = RGBSequence{RGBSequenceKeypoint(0, FromRGB(255, 255, 255)), RGBSequenceKeypoint(1, FromRGB(211, 211, 211))}
@@ -8995,8 +9000,8 @@ local Library do
                     Parent = Items["TeleportBtn"].Instance, Name = "\0",
                     FontFace = Library.Font, TextColor3 = FromRGB(255, 255, 255),
                     Text = "teleport", BackgroundTransparency = 1,
-                    BorderSizePixel = 0, Size = UDim2New(1, 0, 1, 0),
-                    ZIndex = 2, TextSize = 13,
+                    BorderSizePixel = 0, AutomaticSize = Enum.AutomaticSize.X,
+                    Size = UDim2New(0, 0, 1, 0), ZIndex = 2, TextSize = 13,
                     BackgroundColor3 = FromRGB(255, 255, 255)
                 }):AddToTheme({TextColor3 = "Text"})
                 Items["TeleportBtn"]:OnHover(function()
