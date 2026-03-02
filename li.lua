@@ -8888,7 +8888,7 @@ local Library do
                     Parent = Items["Playerlist"].Instance, Name = "\0",
                     BackgroundTransparency = 1,
                     AnchorPoint = Vector2New(0, 1),
-                    Position = UDim2New(0.5, 4, 1, -3),
+                    Position = UDim2New(0.5, 4, 1, -20),
                     Size = UDim2New(0.5, -12, 0, 55),
                     ZIndex = 2, BorderSizePixel = 0, Visible = false,
                     BackgroundColor3 = FromRGB(0, 0, 0)
@@ -8931,8 +8931,8 @@ local Library do
                     FontFace = Library.Font, TextColor3 = FromRGB(255, 255, 255),
                     TextTransparency = 0.5, Text = "spectate",
                     AutomaticSize = Enum.AutomaticSize.X,
-                    Size = UDim2New(0, 0, 0, 15), AnchorPoint = Vector2New(0, 0.5),
-                    Position = UDim2New(0, 0, 0.5, 0), BorderSizePixel = 0,
+                    Size = UDim2New(0, 0, 0, 15), AnchorPoint = Vector2New(1, 0.5),
+                    Position = UDim2New(1, -24, 0.5, 0), BorderSizePixel = 0,
                     BackgroundTransparency = 1, ZIndex = 2, TextSize = 13,
                     BackgroundColor3 = FromRGB(255, 255, 255)
                 }):AddToTheme({TextColor3 = "Text"})
