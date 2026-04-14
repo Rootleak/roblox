@@ -9,7 +9,7 @@ local Hook = {}
 local Http = {}
 
 --// ReGui
-local ReGui = loadstring(game:HttpGet('https://raw.githubusercontent.com/depthso/Dear-ReGui/refs/heads/main/ReGui.lua'))()
+local ReGui = loadstring(game:HttpGet('https://raw.githubusercontent.com/werateys87/ReGui.Lua/refs/heads/main/main'))()
 local PrefabsId = `rbxassetid://{ReGui.PrefabsId}`
 ReGui:Init({
 	Prefabs = game:GetObjects(PrefabsId)[1]
